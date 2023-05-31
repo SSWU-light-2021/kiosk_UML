@@ -1,4 +1,6 @@
-package burger;
+package gui;
+
+import gui.OrderConfirmationFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,7 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 
 public class Hamberger {
     int count = 0;
@@ -100,14 +101,15 @@ public class Hamberger {
         pSouth.setFont(font);
         pSouth.setBackground(new Color(255, 255, 215));
 
+
         Button bt1 = new Button("주문");
-        Button bt2 = new Button("초기화");
+       Button bt2 = new Button("초기화");
         Button bt3 = new Button("닫기");
         pSouth.add(bt1);
         pSouth.add(bt2);
         pSouth.add(bt3);
 
-        // 주문버튼
+        // 주문 버튼 -> 주문 확인 창으로 전환
         bt1.addActionListener(new ActionListener() {
 
             @Override
@@ -121,6 +123,8 @@ public class Hamberger {
                     ta.setText("   상품명        단가        수량        합계\n\n");
 
                 }
+                new OrderConfirmationFrame();
+                frame.setVisible(false); // 창 안보이게 하기
             }
         });
 

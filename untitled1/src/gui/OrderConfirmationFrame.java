@@ -2,8 +2,8 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 
-public class UserPanel extends JFrame{
-    public UserPanel() {
+public class OrderConfirmationFrame extends JFrame{
+    public OrderConfirmationFrame() {
         setTitle("Kiosk");
 
         // 주문 확인 페이지
@@ -85,6 +85,6 @@ public class UserPanel extends JFrame{
     }
 
     public static void main(String[] args) {
-        new UserPanel();
+        new OrderConfirmationFrame();
     }
 }
