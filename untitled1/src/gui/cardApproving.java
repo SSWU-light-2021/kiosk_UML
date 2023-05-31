@@ -16,7 +16,7 @@ public class cardApproving extends JFrame {
         cardApprovalContainer.add(cardApprovalTitleLabel);
         add(cardApprovalContainer);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300,500);
+        setSize(625,1000);
         setVisible(true);
     }
 

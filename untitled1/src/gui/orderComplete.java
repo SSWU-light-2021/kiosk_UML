@@ -15,7 +15,7 @@ public class orderComplete extends JFrame {
         orderCompleteContainer.add(orderCompleteTitleLabel);
         add(orderCompleteContainer);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300,500);
+        setSize(625,1000);
         setVisible(true);
     }
 

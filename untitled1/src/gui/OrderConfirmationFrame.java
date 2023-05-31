@@ -79,7 +79,7 @@ public class OrderConfirmationFrame extends JFrame{
 //        orderConfirmationContainer.setBackground(Color.PINK);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
-        setSize(600, 800);
+        setSize(625, 1000);
         setVisible(true);
 //        getContentPane().setBackground(Color.GREEN);
     }

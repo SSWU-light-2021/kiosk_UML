@@ -22,7 +22,7 @@ public class receipt extends JFrame{
         printReceiptContainer.add(btn);
         add(printReceiptContainer);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600,800);
+        setSize(625,1000);
         setVisible(true);
     }
 

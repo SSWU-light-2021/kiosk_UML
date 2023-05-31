@@ -19,7 +19,7 @@ public class CardAuthorizationError extends JFrame {
         approvalErrorTitleContainer.add(approvalErrorTitleLabel);
         add(approvalErrorTitleContainer, BorderLayout.NORTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300,500);
+        setSize(625,1000);
         setVisible(true);
     }
 
