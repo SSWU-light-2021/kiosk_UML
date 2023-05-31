@@ -1,21 +1,11 @@
-package burger;
+package gui;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.TextArea;
-import java.awt.TextField;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 public class Hamberger {
     int count = 0;
@@ -89,27 +79,20 @@ public class Hamberger {
         pSouth.setFont(font);
         pSouth.setBackground(new Color(255, 255, 215));
 
-        Button bt1 = new Button("주문");
+        Button bt1 = new Button("결제");
         Button bt2 = new Button("초기화");
         Button bt3 = new Button("닫기");
         pSouth.add(bt1);
         pSouth.add(bt2);
         pSouth.add(bt3);
 
-        // 주문버튼
+        // 결제 버튼 -> orderCompleteFrame 창 전환
         bt1.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, ta.getText() + " 주문되었습니다. \n이용해주셔서 감사합니다.");
-                for (int i = 0; i < menu.length; i++) {
-                    if (selected[i]) {
-                        selected[i] = false;
-                        bt[i].setEnabled(true);
-                        suja[i].setText("0");
-                    }
-                }
-                ta.setText("   상품명        단가        수량        합계\n\n");
+                new OrderConfirmationFrame();
+                frame.setVisible(false); // 창 안보이게 하기
             }
         });
 
@@ -137,6 +120,23 @@ public class Hamberger {
                 System.exit(0);
             }
         });
+
+        JPanel HWContainer = new JPanel();
+        HWContainer.setLayout(new GridLayout(2, 2)); // Set GridLayout with 2 rows and 1 column
+
+        JPanel receiptPanel = new JPanel();
+
+        JLabel receiptLabel = new JLabel("영수증 나오는 곳"); // Set the text for the label
+        receiptPanel.add(receiptLabel);
+        JButton cardBtn=new JButton("카드 리더기");
+        HWContainer.add(receiptPanel);
+        HWContainer.add(cardBtn);
+
+        JButton barcodeBtn = new JButton("바코드 인식");
+        HWContainer.add(new JPanel());
+        HWContainer.add(barcodeBtn);
+        HWContainer.add(barcodeBtn);
+        pSouth.add(HWContainer);
 
         // 컴포넌트
         frame.add(pNorth, BorderLayout.NORTH);
