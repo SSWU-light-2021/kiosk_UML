@@ -34,41 +34,38 @@ public class Hamberger {
         // 배열 설정 부분
         String menu[] = { "빅맥버거", "싸이버거", "더블버거", "맘마버거", "김치버거", "새우버거", "라면버거", "치킨버거" };
         int price[] = { 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500 };
-        JButton orderButton[] = new JButton[menu.length];
+        JButton bt[] = new JButton[menu.length];
+        JPanel pic[]=new JPanel[menu.length];
         TextField suja[] = new TextField[menu.length];
         Label l[] = new Label[menu.length];
-        Label menuLabel[] = new Label[menu.length];
+        ImageIcon icon[] = new ImageIcon[menu.length];
 
         // 버튼 설정 부분
         for (int i = 0; i < menu.length; i++) {
 
-            // 햄버거 메뉴 텍스트
-            menuLabel[i] = new Label(menu[i]);
+            // 햄버거 버튼
+            bt[i] = new JButton(menu[i]);
             if (i < 4) {
-                menuLabel[i].setBounds(25 + i * 150, 50, 100, 30);
+                bt[i].setBounds(25 + i * 150, 50, 100, 100);
             } else {
-                menuLabel[i].setBounds(25 + (i - 4) * 150, 300, 100, 30);
+                bt[i].setBounds(25 + (i - 4) * 150, 300, 100, 100);
             }
+            bt[i].setIcon(new ImageIcon(Hamberger.class.getResource("./image/"+(i+1)+".jpeg")));
+            //    bt[i].setIcon(icon[i]);
 
             // 숫자 txt 버튼
             suja[i] = new TextField("0");
             suja[i].setBackground(Color.white);
             suja[i].setEditable(false);
-            suja[i].setVisible(false);
-            suja[i].setBounds(menuLabel[i].getX() + 30, menuLabel[i].getY() + 65, 40, 20);
+            suja[i].setBounds(bt[i].getX() + 30, bt[i].getY() + 130, 40, 20);
 
-            // 가격 버튼
+            // 가격
             l[i] = new Label(price[i] + "원");
-            l[i].setBounds(menuLabel[i].getX() + 10, suja[i].getY() + 5, 100, 20);
+            l[i].setBounds(bt[i].getX() + 20, suja[i].getY() - 25, 100, 20);
 
-            // 주문 버튼
-            orderButton[i] = new JButton("주문");
-            orderButton[i].setBounds(menuLabel[i].getX(), suja[i].getY() + 30, 100, 30);
-
-            pNorth.add(menuLabel[i]);
+            pNorth.add(bt[i]);
             pNorth.add(suja[i]);
             pNorth.add(l[i]);
-            pNorth.add(orderButton[i]);
         }
 
         // 중앙
@@ -105,13 +102,13 @@ public class Hamberger {
         cartMenuContainer.setFont(font);
         cartMenuContainer.setBackground(new Color(255, 255, 215));
 
-        Button paymentBtn = new Button("결제");
-        Button couponBtn = new Button("쿠폰");
-        cartMenuContainer.add(paymentBtn);
-        cartMenuContainer.add(couponBtn);
+        Button bt1 = new Button("결제");
+        Button bt3 = new Button("쿠폰");
+        cartMenuContainer.add(bt1);
+        cartMenuContainer.add(bt3);
 
         // 결제 버튼 -> orderCompleteFrame 창 전환
-        paymentBtn.addActionListener(new ActionListener() {
+        bt1.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -120,21 +117,15 @@ public class Hamberger {
             }
         });
 
-        couponBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ScanCouponFrame();
-                frame.setVisible(false); // 창 안보이게 하기
-            }
-        });
-
         // 전체 취소 버튼
         allOrderCancelBtn.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < menu.length; i++) {
                     if (selected[i]) {
                         selected[i] = false;
+                        bt[i].setEnabled(true);
                         suja[i].setText("0");
                     }
                 }
@@ -159,6 +150,13 @@ public class Hamberger {
         HWContainer.add(barcodeBtn);
         bottomContainer.add("South",HWContainer);
 
+//
+//                JLabel imgLbl = new JLabel();
+//        // ★ 라벨에 넣을 아이콘 생성
+//        ImageIcon bsImg = new ImageIcon(Hamberger.class.getResource("./image/1.jpeg"));
+//        imgLbl.setIcon(bsImg);
+//        HWContainer.add(imgLbl);
+
         // 컴포넌트
         frame.add(pNorth, BorderLayout.NORTH);
         frame.add(orderCartContainer, BorderLayout.CENTER);
@@ -169,7 +167,8 @@ public class Hamberger {
         for (int i = 0; i < menu.length; i++) {
             int j = i;
 
-            orderButton[i].addActionListener(new ActionListener() {
+            // 햄버그 버튼 이벤트
+            bt[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int currentCount = Integer.parseInt(suja[j].getText());
@@ -186,6 +185,7 @@ public class Hamberger {
                     }
                 }
             });
+
         }
 
         // 끄기
