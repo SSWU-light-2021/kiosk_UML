@@ -90,7 +90,7 @@ public class main extends JFrame{
 
         add(mainContainer);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 800);
+        setSize(625, 1000);
         setVisible(true);
     }
     private void changeScreen(Container newScreen) {

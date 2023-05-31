@@ -1,4 +1,4 @@
-package gui;
+package kiosk_class;
 
 public class BarcodeReader {
     private int scannedBarcode;

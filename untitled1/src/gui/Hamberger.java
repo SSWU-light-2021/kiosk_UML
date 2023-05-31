@@ -34,15 +34,16 @@ public class Hamberger {
         // 배열 설정 부분
         String menu[] = { "빅맥버거", "싸이버거", "더블버거", "맘마버거", "김치버거", "새우버거", "라면버거", "치킨버거" };
         int price[] = { 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500 };
-        JButton orderButton[] = new JButton[menu.length];
+        JButton pic[]=new JButton[menu.length];
         TextField suja[] = new TextField[menu.length];
         Label l[] = new Label[menu.length];
         Label menuLabel[] = new Label[menu.length];
+        JButton orderButton[] = new JButton[menu.length];
+
+        ImageIcon icon[] = new ImageIcon[menu.length];
 
         // 버튼 설정 부분
         for (int i = 0; i < menu.length; i++) {
-
-            // 햄버거 메뉴 텍스트
             menuLabel[i] = new Label(menu[i]);
             if (i < 4) {
                 menuLabel[i].setBounds(25 + i * 150, 50, 100, 30);
@@ -50,45 +51,76 @@ public class Hamberger {
                 menuLabel[i].setBounds(25 + (i - 4) * 150, 300, 100, 30);
             }
 
+            // 햄버거 버튼
+            pic[i] = new JButton(menu[i]);
+            if (i < 4) {
+                pic[i].setBounds(25 + i * 150, 50, 100, 100);
+            } else {
+                pic[i].setBounds(25 + (i - 4) * 150, 300, 100, 100);
+            }
+            ImageIcon imageicon = new ImageIcon(Hamberger.class.getResource("./image/"+(i+1)+".jpeg"));
+            Image image = imageicon.getImage().getScaledInstance(100, -1, Image.SCALE_SMOOTH);
+            pic[i].setIcon(new ImageIcon(image));
+
             // 숫자 txt 버튼
             suja[i] = new TextField("0");
             suja[i].setBackground(Color.white);
             suja[i].setEditable(false);
             suja[i].setVisible(false);
-            suja[i].setBounds(menuLabel[i].getX() + 30, menuLabel[i].getY() + 65, 40, 20);
+            suja[i].setBounds(pic[i].getX() + 30, pic[i].getY() + 130, 40, 20);
 
 // 가격튼
             l[i] = new Label(price[i] + "원");
-            l[i].setBounds(menuLabel[i].getX() + 10, suja[i].getY() + 5, 100, 20);
-
+            l[i].setBounds(pic[i].getX() + 20, suja[i].getY() - 25, 100, 20);
             // 주문 버튼
             orderButton[i] = new JButton("주문");
             orderButton[i].setBounds(menuLabel[i].getX(), suja[i].getY() + 30, 100, 30);
 
             pNorth.add(menuLabel[i]);
+            pNorth.add(pic[i]);
             pNorth.add(suja[i]);
             pNorth.add(l[i]);
             pNorth.add(orderButton[i]);
         }
 
         // 중앙
+        JPanel orderCartContainer = new JPanel(new BorderLayout());
+
+        JPanel orderContainer = new JPanel();
+        JLabel orderTitleLabel = new JLabel("주문 내역");
+        JLabel quantityTitleLabel = new JLabel("수량(개)");
+        JLabel quantityLabel = new JLabel("6");
+        JLabel totalPriceTitleLabel = new JLabel("금액(원)");
+        JLabel totalPriceLabel = new JLabel("44,500");
+        Button allOrderCancelBtn = new Button("전체 취소");
+        orderContainer.add(orderTitleLabel);
+        orderContainer.add(quantityTitleLabel);
+        orderContainer.add(quantityLabel);
+        orderContainer.add(totalPriceTitleLabel);
+        orderContainer.add(totalPriceLabel);
+        orderContainer.add(allOrderCancelBtn);
+
         TextArea ta = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
         ta.setText("   상품명        단가        수량        합계\n\n");
         ta.setBackground(Color.white);
         ta.setEditable(false);
         ta.setFont(font1);
 
+        orderCartContainer.add("North", orderContainer);
+        orderCartContainer.add("Center", ta);
+
         // 남쪽
-        Panel pSouth = new Panel();
-        pSouth.setFont(font);
-        pSouth.setBackground(new Color(255, 255, 215));
+        Panel bottomContainer = new Panel(new BorderLayout());
+        Panel cartMenuContainer = new Panel();
+        bottomContainer.add(cartMenuContainer);
+
+        cartMenuContainer.setFont(font);
+        cartMenuContainer.setBackground(new Color(255, 255, 215));
 
         Button bt1 = new Button("결제");
-        Button bt2 = new Button("초기화");
-        Button bt3 = new Button("닫기");
-        pSouth.add(bt1);
-        pSouth.add(bt2);
-        pSouth.add(bt3);
+        Button bt3 = new Button("쿠폰");
+        cartMenuContainer.add(bt1);
+        cartMenuContainer.add(bt3);
 
         // 결제 버튼 -> orderCompleteFrame 창 전환
         bt1.addActionListener(new ActionListener() {
@@ -114,27 +146,20 @@ public class Hamberger {
                 ta.setText("   상품명        단가        수량        합계\n\n");
             }
         });
-        // 초기화 버튼
-        bt2.addActionListener(new ActionListener() {
+
+        // 전체 취소 버튼
+        allOrderCancelBtn.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 for (int i = 0; i < menu.length; i++) {
                     if (selected[i]) {
                         selected[i] = false;
+                        pic[i].setEnabled(true);
                         suja[i].setText("0");
                     }
                 }
                 ta.setText("   상품명        단가        수량        합계\n\n");
-            }
-        });
-
-        // 닫기 버튼
-        bt3.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
             }
         });
 
@@ -153,12 +178,19 @@ public class Hamberger {
         HWContainer.add(new JPanel());
         HWContainer.add(barcodeBtn);
         HWContainer.add(barcodeBtn);
-        pSouth.add(HWContainer);
+        bottomContainer.add("South",HWContainer);
+
+//
+//                JLabel imgLbl = new JLabel();
+//        // ★ 라벨에 넣을 아이콘 생성
+//        ImageIcon bsImg = new ImageIcon(Hamberger.class.getResource("./image/1.jpeg"));
+//        imgLbl.setIcon(bsImg);
+//        HWContainer.add(imgLbl);
 
         // 컴포넌트
         frame.add(pNorth, BorderLayout.NORTH);
-        frame.add(ta, BorderLayout.CENTER);
-        frame.add(pSouth, BorderLayout.SOUTH);
+        frame.add(orderCartContainer, BorderLayout.CENTER);
+        frame.add(bottomContainer, BorderLayout.SOUTH);
         frame.setVisible(true);
 
         // 이벤트단
@@ -183,6 +215,7 @@ public class Hamberger {
                 }
             });
         }
+
 
         // 끄기
         frame.addWindowListener(new WindowAdapter() {
