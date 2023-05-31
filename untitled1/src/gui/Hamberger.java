@@ -1,21 +1,12 @@
 package burger;
 
-import java.awt.BorderLayout;
-import java.awt.Button;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Label;
-import java.awt.Panel;
-import java.awt.TextArea;
-import java.awt.TextField;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 
 public class Hamberger {
     int count = 0;
@@ -26,7 +17,7 @@ public class Hamberger {
         // 디자인단
         // 프레임 설정단
         JFrame frame = new JFrame("햄버거 자동 판매기");
-        frame.setBounds(0, 0, 625, 1000);
+        frame.setBounds(0, 0, 625, 800);
         frame.setBackground(Color.black);
 
         // 폰트
@@ -104,7 +95,7 @@ public class Hamberger {
         ta.setEditable(false);
         ta.setFont(font1);
 
-        // 남쪽
+// 남쪽
         Panel pSouth = new Panel();
         pSouth.setFont(font);
         pSouth.setBackground(new Color(255, 255, 215));
@@ -159,13 +150,29 @@ public class Hamberger {
                 System.exit(0);
             }
         });
+        JPanel HWContainer = new JPanel();
+        HWContainer.setLayout(new GridLayout(2, 2)); // Set GridLayout with 2 rows and 1 column
 
+        JPanel receiptPanel = new JPanel();
+
+        JLabel receiptLabel = new JLabel("영수증 나오는 곳"); // Set the text for the label
+        receiptPanel.add(receiptLabel);
+        JButton cardBtn=new JButton("카드 리더기");
+        HWContainer.add(receiptPanel);
+        HWContainer.add(cardBtn);
+
+        JButton barcodeBtn = new JButton("바코드 인식");
+        HWContainer.add(new JPanel());
+        HWContainer.add(barcodeBtn);
+        HWContainer.add(barcodeBtn);
+        pSouth.add(HWContainer);
 
         // 컴포넌트
         frame.add(pNorth, BorderLayout.NORTH);
         frame.add(ta, BorderLayout.CENTER);
         frame.add(pSouth, BorderLayout.SOUTH);
         frame.setVisible(true);
+
 
         // 이벤트단
         for (int i = 0; i < menu.length; i++) {
