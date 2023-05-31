@@ -68,23 +68,43 @@ public class Hamberger {
         }
 
         // 중앙
+        JPanel orderCartContainer = new JPanel(new BorderLayout());
+
+        JPanel orderContainer = new JPanel();
+        JLabel orderTitleLabel = new JLabel("주문 내역");
+        JLabel quantityTitleLabel = new JLabel("수량(개)");
+        JLabel quantityLabel = new JLabel("6");
+        JLabel totalPriceTitleLabel = new JLabel("금액(원)");
+        JLabel totalPriceLabel = new JLabel("44,500");
+        Button allOrderCancelBtn = new Button("전체 취소");
+        orderContainer.add(orderTitleLabel);
+        orderContainer.add(quantityTitleLabel);
+        orderContainer.add(quantityLabel);
+        orderContainer.add(totalPriceTitleLabel);
+        orderContainer.add(totalPriceLabel);
+        orderContainer.add(allOrderCancelBtn);
+
         TextArea ta = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);
         ta.setText("   상품명        단가        수량        합계\n\n");
         ta.setBackground(Color.white);
         ta.setEditable(false);
         ta.setFont(font1);
 
+        orderCartContainer.add("North", orderContainer);
+        orderCartContainer.add("Center", ta);
+
         // 남쪽
-        Panel pSouth = new Panel();
-        pSouth.setFont(font);
-        pSouth.setBackground(new Color(255, 255, 215));
+        Panel bottomContainer = new Panel(new BorderLayout());
+        Panel cartMenuContainer = new Panel();
+        bottomContainer.add(cartMenuContainer);
+
+        cartMenuContainer.setFont(font);
+        cartMenuContainer.setBackground(new Color(255, 255, 215));
 
         Button bt1 = new Button("결제");
-        Button bt2 = new Button("초기화");
-        Button bt3 = new Button("닫기");
-        pSouth.add(bt1);
-        pSouth.add(bt2);
-        pSouth.add(bt3);
+        Button bt3 = new Button("쿠폰");
+        cartMenuContainer.add(bt1);
+        cartMenuContainer.add(bt3);
 
         // 결제 버튼 -> orderCompleteFrame 창 전환
         bt1.addActionListener(new ActionListener() {
@@ -96,8 +116,8 @@ public class Hamberger {
             }
         });
 
-        // 초기화 버튼
-        bt2.addActionListener(new ActionListener() {
+        // 전체 취소 버튼
+        allOrderCancelBtn.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,15 +129,6 @@ public class Hamberger {
                     }
                 }
                 ta.setText("   상품명        단가        수량        합계\n\n");
-            }
-        });
-
-        // 닫기 버튼
-        bt3.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
             }
         });
 
@@ -136,12 +147,12 @@ public class Hamberger {
         HWContainer.add(new JPanel());
         HWContainer.add(barcodeBtn);
         HWContainer.add(barcodeBtn);
-        pSouth.add(HWContainer);
+        bottomContainer.add("South",HWContainer);
 
         // 컴포넌트
         frame.add(pNorth, BorderLayout.NORTH);
-        frame.add(ta, BorderLayout.CENTER);
-        frame.add(pSouth, BorderLayout.SOUTH);
+        frame.add(orderCartContainer, BorderLayout.CENTER);
+        frame.add(bottomContainer, BorderLayout.SOUTH);
         frame.setVisible(true);
 
         // 이벤트단
