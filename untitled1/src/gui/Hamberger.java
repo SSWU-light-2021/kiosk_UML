@@ -118,18 +118,33 @@ public class Hamberger {
         cartMenuContainer.setFont(font);
         cartMenuContainer.setBackground(new Color(255, 255, 215));
 
-        Button paymentBtn = new Button("결제");
-        Button couponBtn = new Button("쿠폰");
-        cartMenuContainer.add(paymentBtn);
-        cartMenuContainer.add(couponBtn);
+        Button bt1 = new Button("결제");
+        Button bt3 = new Button("쿠폰");
+        cartMenuContainer.add(bt1);
+        cartMenuContainer.add(bt3);
 
         // 결제 버튼 -> orderCompleteFrame 창 전환
-        paymentBtn.addActionListener(new ActionListener() {
+        bt1.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(menu, suja, price);
                 frame.setVisible(false); // 창 안보이게 하기
+            }
+        });
+        // 주문버튼
+        bt1.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, ta.getText() + " 주문되었습니다. \n이용해주셔서 감사합니다.");
+                for (int i = 0; i < menu.length; i++) {
+                    if (selected[i]) {
+                        selected[i] = false;
+                        suja[i].setText("0");
+                    }
+                }
+                ta.setText("   상품명        단가        수량        합계\n\n");
             }
         });
 
@@ -146,14 +161,6 @@ public class Hamberger {
                     }
                 }
                 ta.setText("   상품명        단가        수량        합계\n\n");
-            }
-        });
-
-        couponBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ScanCouponFrame();
-                frame.setVisible(false); // 창 안보이게 하기
             }
         });
 
