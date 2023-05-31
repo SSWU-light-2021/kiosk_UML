@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class main extends JFrame{
 
@@ -70,6 +72,15 @@ public class main extends JFrame{
         HWContainer.add(cardBtn);
 
         JButton barcodeBtn = new JButton("바코드 인식");
+        barcodeBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 바코드 인식 버튼이 클릭되었을 때, cardApprovalScreen으로 화면 전환
+                receiptScreen = new receipt();
+                changeScreen(receiptScreen.getContentPane());
+            }
+        });
+
         HWContainer.add(new JPanel());
         HWContainer.add(barcodeBtn);
 
