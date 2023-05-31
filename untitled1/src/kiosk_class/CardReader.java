@@ -1,4 +1,4 @@
-package gui;
+package kiosk_class;
 
 public class CardReader {
     private int cardNumber;
