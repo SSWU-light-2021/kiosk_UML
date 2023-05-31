@@ -55,11 +55,11 @@ public class Hamberger {
             suja[i].setBackground(Color.white);
             suja[i].setEditable(false);
             suja[i].setVisible(false);
-            suja[i].setBounds(menuLabel[i].getX() + 30, menuLabel[i].getY() + 35, 40, 20);
+            suja[i].setBounds(menuLabel[i].getX() + 30, menuLabel[i].getY() + 65, 40, 20);
 
-            // 가격
+// 가격튼
             l[i] = new Label(price[i] + "원");
-            l[i].setBounds(menuLabel[i].getX() + 20, suja[i].getY() - 25, 100, 20);
+            l[i].setBounds(menuLabel[i].getX() + 10, suja[i].getY() + 5, 100, 20);
 
             // 주문 버튼
             orderButton[i] = new JButton("주문");
