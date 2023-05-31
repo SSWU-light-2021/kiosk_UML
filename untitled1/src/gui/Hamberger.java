@@ -152,19 +152,14 @@ public class Hamberger {
             bt[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (selected[j]) {
-                        int currentCount = Integer.parseInt(suja[j].getText());
-                        currentCount++;
-                        suja[j].setText(Integer.toString(currentCount));
-                    } else {
-                        selected[j] = true;
-                        bt[j].setEnabled(false);
-                        suja[j].setText("1");
-                    }
+                    int currentCount = Integer.parseInt(suja[j].getText());
+                    currentCount++;
+                    suja[j].setText(Integer.toString(currentCount));
+
                     ta.setText("   상품명        단가        수량        합계\n\n");
                     for (int k = 0; k < menu.length; k++) {
-                        if (selected[k]) {
-                            int count = Integer.parseInt(suja[k].getText());
+                        int count = Integer.parseInt(suja[k].getText());
+                        if (count > 0) {
                             ta.append("   " + menu[k] + "       " + price[k] + "        " + count
                                     + "         " + price[k] * count + "원" + "\n");
                         }
