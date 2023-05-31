@@ -35,37 +35,53 @@ public class Hamberger {
         String menu[] = { "빅맥버거", "싸이버거", "더블버거", "맘마버거", "김치버거", "새우버거", "라면버거", "치킨버거" };
         int price[] = { 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500 };
         JButton bt[] = new JButton[menu.length];
-        JPanel pic[]=new JPanel[menu.length];
+        JButton pic[]=new JButton[menu.length];
         TextField suja[] = new TextField[menu.length];
         Label l[] = new Label[menu.length];
+        Label menuLabel[] = new Label[menu.length];
+        JButton orderButton[] = new JButton[menu.length];
+
         ImageIcon icon[] = new ImageIcon[menu.length];
 
         // 버튼 설정 부분
         for (int i = 0; i < menu.length; i++) {
+            menuLabel[i] = new Label(menu[i]);
+            if (i < 4) {
+                menuLabel[i].setBounds(25 + i * 150, 50, 100, 30);
+            } else {
+                menuLabel[i].setBounds(25 + (i - 4) * 150, 300, 100, 30);
+            }
 
             // 햄버거 버튼
-            bt[i] = new JButton(menu[i]);
+            pic[i] = new JButton(menu[i]);
             if (i < 4) {
-                bt[i].setBounds(25 + i * 150, 50, 100, 100);
+                pic[i].setBounds(25 + i * 150, 50, 100, 100);
             } else {
-                bt[i].setBounds(25 + (i - 4) * 150, 300, 100, 100);
+                pic[i].setBounds(25 + (i - 4) * 150, 300, 100, 100);
             }
-            bt[i].setIcon(new ImageIcon(Hamberger.class.getResource("./image/"+(i+1)+".jpeg")));
-            //    bt[i].setIcon(icon[i]);
+            ImageIcon imageicon = new ImageIcon(Hamberger.class.getResource("./image/"+(i+1)+".jpeg"));
+            Image image = imageicon.getImage().getScaledInstance(100, -1, Image.SCALE_SMOOTH);
+            pic[i].setIcon(new ImageIcon(image));
 
             // 숫자 txt 버튼
             suja[i] = new TextField("0");
             suja[i].setBackground(Color.white);
             suja[i].setEditable(false);
-            suja[i].setBounds(bt[i].getX() + 30, bt[i].getY() + 130, 40, 20);
+            suja[i].setVisible(false);
+            suja[i].setBounds(pic[i].getX() + 30, pic[i].getY() + 130, 40, 20);
 
             // 가격
             l[i] = new Label(price[i] + "원");
-            l[i].setBounds(bt[i].getX() + 20, suja[i].getY() - 25, 100, 20);
+            l[i].setBounds(pic[i].getX() + 20, suja[i].getY() - 25, 100, 20);
+            // 주문 버튼
+            orderButton[i] = new JButton("주문");
+            orderButton[i].setBounds(menuLabel[i].getX(), suja[i].getY() + 30, 100, 30);
 
-            pNorth.add(bt[i]);
+            pNorth.add(menuLabel[i]);
+            pNorth.add(pic[i]);
             pNorth.add(suja[i]);
             pNorth.add(l[i]);
+            pNorth.add(orderButton[i]);
         }
 
         // 중앙
@@ -125,7 +141,7 @@ public class Hamberger {
                 for (int i = 0; i < menu.length; i++) {
                     if (selected[i]) {
                         selected[i] = false;
-                        bt[i].setEnabled(true);
+                        pic[i].setEnabled(true);
                         suja[i].setText("0");
                     }
                 }
@@ -167,8 +183,7 @@ public class Hamberger {
         for (int i = 0; i < menu.length; i++) {
             int j = i;
 
-            // 햄버그 버튼 이벤트
-            bt[i].addActionListener(new ActionListener() {
+            orderButton[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int currentCount = Integer.parseInt(suja[j].getText());
@@ -185,8 +200,8 @@ public class Hamberger {
                     }
                 }
             });
-
         }
+
 
         // 끄기
         frame.addWindowListener(new WindowAdapter() {
