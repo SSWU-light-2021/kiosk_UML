@@ -8,6 +8,10 @@ public class Payment {
     private boolean isValidated;
     private boolean isProcessed;
     private boolean isCancelled;
+
+    public Payment() {
+    }
+
     public Payment(String paymentType, String date, int paymentAmount, boolean complete) {
         this.paymentType = paymentType;
         this.date = date;
@@ -50,7 +54,7 @@ public class Payment {
         this.complete = complete;
     }
     public void processPayment() {
-        if (isValidated && !isCancelled) {
+        if (isValidated) {
             // 실제 결제 처리 로직
             System.out.println("결제가 완료되었습니다.");
             isProcessed = true;
@@ -60,24 +64,48 @@ public class Payment {
     }
 
     public void printReceipt() {
+        Order o = new Order();
         if (isProcessed) {
             // 영수증 출력 로직
             System.out.println("영수증을 출력합니다.");
-            System.out.println("결제 금액: " );
+            System.out.println("결제 금액: " + o.getOrderId());
         } else {
             System.out.println("결제가 아직 처리되지 않았습니다.");
         }
     }
 
-    public void validatePayment() {
-        // 결제 유효성 검사 로직
-        isValidated = true;
-        System.out.println("결제가 유효하게 검사되었습니다.");
+    public void validatePayment(String validationCase) {
+        switch (validationCase) {
+            case "overLimit":
+                displayPrompt("Over Limit");
+                break;
+            case "expired":
+                displayPrompt("Expired");
+                break;
+            case "notReadCard":
+                displayPrompt("Card Not Read");
+                break;
+            default:
+                System.out.println("성공");
+        }
+    }
+
+    public void displayPrompt(String message) {
+        System.out.println(message);
     }
 
     public void cancelPayment() {
         // 결제 취소 로직
         isCancelled = true;
         System.out.println("결제가 취소되었습니다.");
+    }
+    public void getOrderInfo(CartMenu[] cartItems) {
+        Order order = new Order();
+        int totalPrice = order.getTotalPrice(cartItems);
+        int totalQuantities = order.getTotalQuantities();
+    }
+    public int getUpdatedPaymentAmount(int totalPrice, int barcodePrice) {
+        if(totalPrice <= barcodePrice ) return 0;
+        else return totalPrice - barcodePrice;
     }
 }
