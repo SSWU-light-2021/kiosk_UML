@@ -44,7 +44,6 @@ public class Hamberger {
         pNorth.setFont(font);
 
         // 배열 설정 부분
-
         JButton pic[]=new JButton[menu.length];
 
         Label l[] = new Label[menu.length];
