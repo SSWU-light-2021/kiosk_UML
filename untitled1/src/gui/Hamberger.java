@@ -1,5 +1,7 @@
 package gui;
 
+import kiosk_class.FoodMenu;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,11 +10,10 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Hamberger {
-    int count = 0;
-    String show = "";
+    FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "경로", 5000);
     boolean selected[] = new boolean[8];
-    String menu[] = { "빅맥버거", "싸이버거", "더블버거", "맘마버거", "김치버거", "새우버거", "라면버거", "치킨버거" };
-    int price[] = { 5000, 5500, 6000, 6500, 7000, 7500, 8000, 8500 };
+    String menu[] = { cheeseBurger.getName(), "싸이버거", "더블버거", "맘마버거", "김치버거", "새우버거", "라면버거", "치킨버거" };
+    int price[] = { cheeseBurger.getPrice(), 5500, 6000, 6500, 7000, 7500, 8000, 8500 };
     TextField suja[] = new TextField[menu.length];
     public Hamberger() {
 
