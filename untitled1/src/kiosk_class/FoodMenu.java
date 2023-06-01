@@ -6,6 +6,9 @@ public class FoodMenu {
     private String image;
     private int price;
 
+    public FoodMenu() {
+    }
+
     public FoodMenu(String category, String name, String image, int price) {
         this.category = category;
         this.name = name;

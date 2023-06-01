@@ -10,10 +10,19 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class Hamberger {
-    FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "경로", 5000);
+    FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "./image/1.jpeg", 5000);
+    FoodMenu doubleBurger = new FoodMenu("Burger", "더블버거", "./image/2.jpeg", 6000);
+    FoodMenu chickenBurger = new FoodMenu("Burger", "치킨버거", "./image/3.jpeg", 5500);
+    FoodMenu coke = new FoodMenu("drink", "콜라", "./image/4.jpeg", 2500);
+    FoodMenu potato = new FoodMenu("side", "감자튀김", "./image/5.jpeg", 1900);
+    FoodMenu cheeseStick = new FoodMenu("side", "치즈스틱", "./image/6.jpeg", 2200);
+    FoodMenu chocoIcecream = new FoodMenu("side", "초코 아이스크림", "./image/7.jpeg", 1500);
+    FoodMenu vanilaIcecream = new FoodMenu("side", "바닐라 아이스크림", "./image/8.jpeg", 1500);
+
     boolean selected[] = new boolean[8];
-    String menu[] = { cheeseBurger.getName(), "싸이버거", "더블버거", "맘마버거", "김치버거", "새우버거", "라면버거", "치킨버거" };
-    int price[] = { cheeseBurger.getPrice(), 5500, 6000, 6500, 7000, 7500, 8000, 8500 };
+    String menu[] = { cheeseBurger.getName(), doubleBurger.getName(), chickenBurger.getName(), coke.getName(), potato.getName(), cheeseStick.getName(), chocoIcecream.getName(), vanilaIcecream.getName() };
+    int price[] = { cheeseBurger.getPrice(), doubleBurger.getPrice(), chickenBurger.getPrice(), coke.getPrice(), potato.getPrice(), cheeseStick.getPrice(), chocoIcecream.getPrice(), vanilaIcecream.getPrice() };
+    String image[]={cheeseBurger.getImage(), doubleBurger.getImage(), chickenBurger.getImage(), coke.getImage(), potato.getImage(), cheeseStick.getImage(), chocoIcecream.getImage(), vanilaIcecream.getImage() };
     TextField suja[] = new TextField[menu.length];
     public Hamberger() {
 
@@ -60,7 +69,7 @@ public class Hamberger {
             } else {
                 pic[i].setBounds(25 + (i - 4) * 150, 300, 100, 100);
             }
-            ImageIcon imageicon = new ImageIcon(Hamberger.class.getResource("./image/"+(i+1)+".jpeg"));
+            ImageIcon imageicon = new ImageIcon(Hamberger.class.getResource(image[i]));
             Image image = imageicon.getImage().getScaledInstance(100, -1, Image.SCALE_SMOOTH);
             pic[i].setIcon(new ImageIcon(image));
 
