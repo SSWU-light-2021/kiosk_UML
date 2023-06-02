@@ -18,9 +18,9 @@ public class Order {
         return totalPrice;
     }
 
-    public void setTotalPrice(CartMenu[] cartItems) {
-        for (CartMenu c:cartItems) {
-            this.totalPrice += c.getTotalPricePerMenu();
+    public void setTotalPrice(CartMenu cm) {
+        for (int i=0;i<cm.getMenuName().length;i++) {
+            totalPrice+=cm.getPrice()[i];
         }
     }
 
@@ -28,9 +28,9 @@ public class Order {
         return totalQuantities;
     }
 
-    public void setTotalQuantities(CartMenu[] cartItems) {
-        for (CartMenu c:cartItems) {
-            this.totalQuantities += c.getMenuQuantity();
-        }
-    }
+//    public void setTotalQuantities(CartMenu[] cartItems) {
+//        for (CartMenu c:cartItems) {
+//            this.totalQuantities += c.getMenuQuantity();
+//        }
+//    }
 }
