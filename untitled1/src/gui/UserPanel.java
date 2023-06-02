@@ -1,11 +1,17 @@
 package gui;
 
+import kiosk_class.Controller;
 import kiosk_class.FoodMenu;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class UserPanel {
+
+
+    Controller controllerObject = new Controller();
     public JFrame userPanelFrame = new JFrame("Hamburger Kiosk");
 
     public JPanel userPanelCenterContainer = new JPanel(new BorderLayout());
@@ -190,8 +196,84 @@ public class UserPanel {
 
         userPanelFrame.setVisible(true);
         userPanelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
-    }
 
+        //eventListener
+        // 결제 버튼 -> orderCompleteFrame 창 전환
+        paymentBtn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress(paymentBtn);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
+
+        //담기버튼
+        // 이벤트단
+        for (int i = 0; i < menu.length; i++) {
+            int j = i;
+            final int index =i;
+
+            pickBtn[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    controllerObject.getCustomerInput(menu[index].getName(),menu[index].getPrice());
+//                    int currentCount = Integer.parseInt(suja[j].getText());
+//                    currentCount++;
+//                    suja[j].setText(Integer.toString(currentCount));
+
+//                    ta.setText("   상품명        단가        수량        합계\n\n");
+//                    for (int k = 0; k < menu.length; k++) {
+//                        int count = Integer.parseInt(suja[k].getText());
+//                        if (count > 0) {
+//                            ta.append("   " + menu[k] + "       " + price[k] + "        " + count
+//                                    + "         " + price[k] * count + "원" + "\n");
+//                        }
+//                    }
+                }
+
+            });
+        }
+        // 카드 버튼
+        insertCardBtn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress(insertCardBtn);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
+
+
+    }
+    public void getBtnPress(JButton button){
+        if (button.getText()=="결제"){
+            controllerObject.accept(button);
+        }
+        else if (button.getText()=="카드"){
+            controllerObject.accept(true);
+        }
+        else if (button.getText()=="기프티콘"){
+
+        }
+        else if (button.getText()=="예"){
+
+        }
+        else if (button.getText()=="아니오"){
+
+        }
+        else
+            System.out.println("ㄴㄴㄴㄴ");
+    }
+    public void scan(int barcode){
+
+    }
+    public void displayPrompt(String text){
+        if (text=="Over Limit" || text=="Expired" || text=="Card Not Read"|| text=="Take Card");
+        JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
+    }
     public static void main(String[] args) {
         FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "./image/1.jpeg", 5000);
         FoodMenu doubleBurger = new FoodMenu("Burger", "더블버거", "./image/2.jpeg", 6000);

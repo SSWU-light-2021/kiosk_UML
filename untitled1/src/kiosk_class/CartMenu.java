@@ -5,15 +5,17 @@ public class CartMenu {
     private String menuName[]=new String[10];
     private int price[]=new int[10];
     static int num=0;
-
-//    public int[] getMenuQuantity() {
-//        return menuQuantity;
-//    }
+int totalPricePerMenu=0;
+    public int[] getMenuQuantity() {
+        return menuQuantity;
+    }
 //
 //    public void setMenuQuantity[] (int menuQuantity) {
 //        this.menuQuantity = menuQuantity;
 //    }
-
+public int getNum(){
+    return num;
+}
     public String[] getMenuName() {
         return menuName;
     }
@@ -21,17 +23,23 @@ public class CartMenu {
         return price;
     }
 
-//    public void setMenuName(String menuName) {
-//        this.menuName = menuName;
-//    }
-//
-//    public int getTotalPricePerMenu() {
-//        return totalPricePerMenu;
-//    }
-//
-//    public void setTotalPricePerMenu(int totalPricePerMenu) {
-//        this.totalPricePerMenu = totalPricePerMenu;
-//    }
+    public void setMenuName(String[] menuName) {
+        this.menuName = menuName;
+    }
+    public void setPrice(int[] price) {
+        this.price = price;
+    }
+    public void setMenuQuantity(int[] num) {
+        this.menuQuantity = num;
+    }
+
+    public int getTotalPricePerMenu() {
+        return totalPricePerMenu;
+    }
+
+    public void setTotalPricePerMenu(int totalPricePerMenu) {
+        this.totalPricePerMenu = totalPricePerMenu;
+    }
 
     public void addCartMenu() {
 
@@ -43,7 +51,8 @@ public class CartMenu {
 
     public void getMenu(String menuName, int price) { //controller->CartMenu 메뉴받아오기
         this.menuName[num]=menuName;
-        this.price[num]=price;
+        this.price[num++]=price;
+        System.out.println("cartmenu "+ this.menuName[num-1]);
         new Controller().ACKorNot(this);
     }
 }

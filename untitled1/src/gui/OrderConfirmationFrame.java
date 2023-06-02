@@ -1,9 +1,13 @@
 package gui;
+
+import kiosk_class.CartMenu;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class OrderConfirmationFrame extends JFrame{
-    public OrderConfirmationFrame(String[] menu, TextField[] suja, int[] price) {
+
+    public OrderConfirmationFrame(CartMenu cm) {
         setTitle("Kiosk");
 
         // 주문 확인 페이지
@@ -13,37 +17,36 @@ public class OrderConfirmationFrame extends JFrame{
         JPanel orderConfirmationContainer = new JPanel(new GridLayout(3,3,5,5)); // 주문 내역 확인 container
         orderConfirmationContainer.setPreferredSize(new Dimension(300,200));
 
-//        JPanel orderConfirmationContainer = new JPanel(new GridLayout(0, 3)); // 주문 내역 확인 container
+        JPanel orderConfirmationRow2Container = new JPanel(new GridLayout(0, 3)); // 주문 내역 확인 container
         JLabel orderProductTitleLabel = new JLabel("주문 제품"); // 주문 제품 title
         JLabel orderProductQuantityTitleLabel = new JLabel("수량"); // 수량 title
         JLabel orderProductAmountTitleLabel = new JLabel("금액"); // 금액 title
         orderConfirmationContainer.add(orderProductTitleLabel);
         orderConfirmationContainer.add(orderProductQuantityTitleLabel);
         orderConfirmationContainer.add(orderProductAmountTitleLabel);
-
+        int totalPrice=0;
 // Loop through the selected menu items to populate the order information dynamically
-        for (int i = 0; i < menu.length; i++) {
-            int count = Integer.parseInt(suja[i].getText());
-            if (count > 0) {
-                JLabel orderProductLabel = new JLabel(menu[i]); // 주문 제품
-                JLabel orderProductQuantityLabel = new JLabel(Integer.toString(count)); // 수량
-                JLabel orderProductAmountLabel = new JLabel(Integer.toString(price[i] * count)); // 금액
+        for (int i = 0; i < cm.getNum(); i++) {
+                JLabel orderProductLabel = new JLabel(cm.getMenuName()[i]); // 주문 제품
+                JLabel orderProductQuantityLabel = new JLabel(Integer.toString(cm.getMenuQuantity()[i])); // 수량
+                JLabel orderProductAmountLabel = new JLabel(Integer.toString(cm.getPrice()[i] * cm.getMenuQuantity()[i]));
+                totalPrice+=cm.getPrice()[i] * cm.getMenuQuantity()[i];// 금액
                 orderConfirmationContainer.add(orderProductLabel);
                 orderConfirmationContainer.add(orderProductQuantityLabel);
                 orderConfirmationContainer.add(orderProductAmountLabel);
-            }
         }
 
 
-//        orderConfirmationContainer.add(orderConfirmationRow2Container); // 주문 내역 확인 container에 포함
 
-        JPanel orderAmountContainer = new JPanel(new GridLayout(3,2,5,5)); // 주문 내역 확인 container
-        JLabel orderAmountTitleLabel = new JLabel("주문 금액"); // 주문 금액 title
-        JLabel orderAmountLabel = new JLabel("16,500"); // 주문 금액
-        JLabel discountAmountTitleLabel = new JLabel("할인 금액"); // 할인 금액 title
-        JLabel discountAmountLabel = new JLabel("16,500"); // 할인 금액
-        JLabel totalPaymentAmountTitleLabel = new JLabel("총 결제 금액"); // 총 결제 금액 title
-        JLabel totalPaymentAmountLabel = new JLabel("0"); // 총 결제 금액
+        orderConfirmationContainer.add(orderConfirmationRow2Container); // 주문 내역 확인 container에 포함
+
+    JPanel orderAmountContainer = new JPanel(new GridLayout(3,2,5,5)); // 주문 내역 확인 container
+    JLabel orderAmountTitleLabel = new JLabel("주문 금액"); // 주문 금액 title
+    JLabel orderAmountLabel = new JLabel(Integer.toString(totalPrice)); // 주문 금액
+    JLabel discountAmountTitleLabel = new JLabel("할인 금액"); // 할인 금액 title
+    JLabel discountAmountLabel = new JLabel(Integer.toString(0)); // 할인 금액
+    JLabel totalPaymentAmountTitleLabel = new JLabel("총 결제 금액"); // 총 결제 금액 title
+    JLabel totalPaymentAmountLabel = new JLabel(Integer.toString(totalPrice-0)); // 총 결제 금액
         orderAmountContainer.add(orderAmountTitleLabel);
         orderAmountContainer.add(orderAmountLabel);
         orderAmountContainer.add(discountAmountTitleLabel);
@@ -74,6 +77,6 @@ public class OrderConfirmationFrame extends JFrame{
 
     public static void main(String[] args) {
         Hamberger hamberger = new Hamberger();
-        OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(hamberger.menu, hamberger.suja, hamberger.price);
+//        OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(hamberger.menu, hamberger.suja, hamberger.price);
 
     }}

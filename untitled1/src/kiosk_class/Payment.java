@@ -99,10 +99,10 @@ public class Payment {
         isCancelled = true;
         System.out.println("결제가 취소되었습니다.");
     }
-    public void getOrderInfo(CartMenu[] cartItems) {
+    public void getOrderInfo(CartMenu cartItems, int price) {
         Order order = new Order();
-        int totalPrice = order.getTotalPrice(cartItems);
-        int totalQuantities = order.getTotalQuantities();
+        int totalPrice = price;
+        System.out.println("페이먼트: "+totalPrice);
     }
     public int getUpdatedPaymentAmount(int totalPrice, int barcodePrice) {
         if(totalPrice <= barcodePrice ) return 0;

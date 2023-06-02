@@ -22,6 +22,7 @@ public class Order {
         for (int i=0;i<cm.getMenuName().length;i++) {
             totalPrice+=cm.getPrice()[i];
         }
+        new Controller().ACKorNot(cm,totalPrice);
     }
 
     public int getTotalQuantities() {

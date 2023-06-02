@@ -137,7 +137,7 @@ public class Hamberger {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getBtnPress(paymentBtn);
-                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(menu, suja, price);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(menu, suja, price);
                 frame.setVisible(false); // 창 안보이게 하기
             }
         });
