@@ -195,11 +195,10 @@ public class Hamberger {
         frame.add(orderCartContainer, BorderLayout.CENTER);
         frame.add(bottomContainer, BorderLayout.SOUTH);
         frame.setVisible(true);
-
+        Controller c = new Controller();
         // 이벤트단
         for (int i = 0; i < menu.length; i++) {
             int j = i;
-
             orderButton[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
