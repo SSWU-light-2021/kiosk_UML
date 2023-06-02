@@ -106,6 +106,15 @@ public class UserPanel {
     public Font font_sans = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
     public Font font_bold = new Font(Font.MONOSPACED, Font.BOLD, 22);
 
+    public UserPanel() {
+        physicalPartsContainer.add(receiptLabel);
+        physicalPartsContainer.add(insertCardBtn);
+        physicalPartsContainer.add(new JPanel());
+        physicalPartsContainer.add(showBarcodeBtn);
+
+//        physicalPartsContainer.setPreferredSize(new Dimension(600, 50));
+    }
+
     // Main Page
     public void mainPage(FoodMenu[] menu, int menu_length) {
         // 프레임 설정
@@ -187,10 +196,10 @@ public class UserPanel {
         userPanelCenterContainer.add("South", paymentContainer);
 
         // South
-        physicalPartsContainer.add(receiptLabel);
-        physicalPartsContainer.add(insertCardBtn);
-        physicalPartsContainer.add(new JPanel());
-        physicalPartsContainer.add(showBarcodeBtn);
+//        physicalPartsContainer.add(receiptLabel);
+//        physicalPartsContainer.add(insertCardBtn);
+//        physicalPartsContainer.add(new JPanel());
+//        physicalPartsContainer.add(showBarcodeBtn);
 
         // 컴포넌트
         userPanelFrame.add("North",foodMenuContainer);
@@ -333,6 +342,8 @@ public class UserPanel {
 
         UserPanel userPanel = new UserPanel();
         userPanel.mainPage(menu, menu.length);
-        userPanel.orderConfirmationPage();
+
+
+
     }
 }
