@@ -3,11 +3,11 @@ package kiosk_class;
 import gui.UserPanel;
 
 import javax.swing.*;
-
 public class Controller {
     UserPanel up = new UserPanel();
     CartMenu cm = new CartMenu();
     Order order = new Order();
+
     CardReader cr = new CardReader();
     BarcodeReader br = new BarcodeReader();
     Payment pay = new Payment();
@@ -25,8 +25,17 @@ public class Controller {
     }
 
     public void ACKorNot(CartMenu cm){
-      new Order().setTotalPrice(cm);
+      order.setTotalPrice(cm);
     }
+    public void ACKorNot(CartMenu[] cm) {
+        pay.getOrderInfo(cm);
+    }
+    public void ACKorNot(CardReader cr) {
+        long cardNumber = cr.getCardNumber();
+        int cardExpirationDate = cr.getCardExpirationDate();
+        pay.getCardInfo(cardNumber, cardExpirationDate);
+    }
+
     //public void accept(JButton Btn) {
 //        switch () {
 //            case "value1":
@@ -41,6 +50,7 @@ public class Controller {
 //        }
 
     //}
+    //order.setTotalPrice(cm);
 public void displayPrompt(String msg) {
     System.out.println(msg);
 }

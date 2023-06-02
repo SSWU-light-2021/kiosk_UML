@@ -89,7 +89,7 @@ public class Payment {
                 System.out.println("성공");
         }
     }
-
+public checkForValid(long cardNumber, int cardExpirationDate, )
     public void displayPrompt(String message) {
         System.out.println(message);
     }
@@ -107,5 +107,9 @@ public class Payment {
     public int getUpdatedPaymentAmount(int totalPrice, int barcodePrice) {
         if(totalPrice <= barcodePrice ) return 0;
         else return totalPrice - barcodePrice;
+    }
+    CardReader c = new CardReader();
+    public String getCardInfo(long cardNumber, int cardExpirationDate) {
+        return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
 }
