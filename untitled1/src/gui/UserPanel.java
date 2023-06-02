@@ -1,100 +1,210 @@
 package gui;
 
+import kiosk_class.FoodMenu;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class UserPanel {
-    JFrame UserPanelFrame;
+    public JFrame userPanelFrame = new JFrame("Hamburger Kiosk");
 
-    JPanel panelContainer;
-    JButton scrollBtn;
-
-    // 카테고리 선택 bar
-    JPanel categoryContainer;
-    JButton setBtn;
-    JButton burgerBtn;
-    JButton sideBtn;
-    JButton drinkBtn;
+    public JPanel userPanelCenterContainer = new JPanel(new BorderLayout());
+    public JButton scrollBtn;
 
     // 메뉴
-    JPanel foodMenuContainer;
-    ImageIcon[] imageicon;
-    Image[] image;
-    JButton[] pic;
-    JLabel menuTitleLabel;
-    JLabel menuPriceLabel;
-    JButton pickBtn;
-
-    // 장바구니
-    JPanel cartMenuContainer;
-    JLabel itemTitleLabel;
-    JLabel itemPriceLabel;
-    JLabel itemQuantityLabel;
-    JButton cartCancelBtn;
-    JButton cartScrollBtn;
+    public JPanel foodMenuContainer = new JPanel();
+    public ImageIcon imageicon;
+    public Image image;
+    public JButton[] pic;
+    public JLabel[] menuTitleLabel;
+    public JLabel[] menuPriceLabel;
+    public JButton[] pickBtn;
 
     // 주문
-    JPanel orderContainer;
-    JLabel orderTitleLabel; // 주문 내역
-    JLabel quantityTitleLabel; // 수량(개)
-    JLabel quantityLabel; // 숫자
-    JLabel totalPriceTitleLabel; // 금액(원)
-    JLabel totalPriceLabel; // 숫자
-    JButton allOrderCancelBtn;
+    public JPanel orderContainer = new JPanel();
+    public JLabel orderTitleLabel = new JLabel("주문 내역"); // 주문 내역
+    public JLabel quantityTitleLabel = new JLabel("수량(개)"); // 수량(개)
+    public JLabel quantityLabel = new JLabel(); // 숫자
+    public JLabel totalPriceTitleLabel = new JLabel("금액(원)"); // 금액(원)
+    public JLabel totalPriceLabel = new JLabel(); // 숫자
+    public JButton allOrderCancelBtn = new JButton("전체 취소");
+
+    // 장바구니
+    public TextArea cartMenuContainer = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);;
+    public JLabel itemTitleLabel;
+    public JLabel itemPriceLabel;
+    public JLabel itemQuantityLabel;
+    public JButton cartCancelBtn;
+    public JButton cartScrollBtn;
 
     // 결제
-    JPanel paymentContainer;
-    JButton paymentBtn;
-    JButton couponBtn;
+    public JPanel paymentContainer = new JPanel();
+    public JButton paymentBtn = new JButton("결제");
+    public JButton couponBtn = new JButton("쿠폰");
 
     // 주문 확인
-    JPanel orderConfirmationContainer;
-    JPanel orderListContainer;
+    public JPanel orderConfirmationContainer;
+    public JPanel orderListContainer;
 
-    JLabel orderConfirmationTitleLabel;
-    JLabel orderProductTitleLabel;
-    JLabel orderProductQuantityTitleLabel;
-    JLabel orderProductAmountTitleLabel;
-    JLabel orderProductLabel;
-    JLabel orderProductQuantityLabel;
-    JLabel orderProductAmountLabel;
+    public JLabel orderConfirmationTitleLabel;
+    public JLabel orderProductTitleLabel;
+    public JLabel orderProductQuantityTitleLabel;
+    public JLabel orderProductAmountTitleLabel;
+    public JLabel orderProductLabel;
+    public JLabel orderProductQuantityLabel;
+    public JLabel orderProductAmountLabel;
 
-    JLabel orderAmountLabel;
-    JLabel orderAmountTitleLabel;
-    JLabel discountAmountLabel;
-    JLabel discountAmountTitleLabel;
-    JLabel totalPaymentAmountLabel;
-    JLabel totalPaymentAmountTitleLabel;
-    JButton cancelBtn;
-    JButton finalpaymentBtn;
+    public JLabel orderAmountLabel;
+    public JLabel orderAmountTitleLabel;
+    public JLabel discountAmountLabel;
+    public JLabel discountAmountTitleLabel;
+    public JLabel totalPaymentAmountLabel;
+    public JLabel totalPaymentAmountTitleLabel;
+    public JButton cancelBtn;
+    public JButton finalpaymentBtn;
 
-    JPanel orderCompleteContainer;
-    JLabel orderCompleteTitleLabel;
+    public JPanel orderCompleteContainer;
+    public JLabel orderCompleteTitleLabel;
 
     //쿠폰 스캔
-    JPanel scanCouponContainer;
-    JLabel scanCouponLabel;
-    JButton orderCancelBtn;
+    public JPanel scanCouponContainer;
+    public JLabel scanCouponLabel;
+    public JButton orderCancelBtn;
 
     // 카드삽입
-    JPanel insertCardContainer;
-    JLabel insertCardTitleLabel;
-    JLabel finalOrderAmountTitleLabel;
-    JLabel finalOrderAmountLabel;
+    public JPanel insertCardContainer;
+    public JLabel insertCardTitleLabel;
+    public JLabel finalOrderAmountTitleLabel;
+    public JLabel finalOrderAmountLabel;
 
     //승인여부
-    JPanel cardApprovalContainer;
-    JLabel approvalErrorTitleLabel;
+    public JPanel cardApprovalContainer;
+    public JLabel approvalErrorTitleLabel;
 
     //결제완료. 영수증출력여부 묻기기
-    JPanel printReceiptContainer;
-    JLabel paymentCompleteTitleLabel;
-    JButton receiptYesBtn;
-    JButton receiptNoBtn;
+    public JPanel printReceiptContainer;
+    public JLabel paymentCompleteTitleLabel;
+    public JButton receiptYesBtn;
+    public JButton receiptNoBtn;
 
     // 물리적인 장치
-    JPanel physicalPartsContainer;
-    JButton insertCardBtn;
-    JButton showBarcodeBtn;
+    public JPanel physicalPartsContainer = new JPanel(new GridLayout(2,2));
+    public JLabel receiptLabel = new JLabel("영수증 나오는 곳");
+    public JButton insertCardBtn = new JButton("카드 리더기");
+    public JButton showBarcodeBtn = new JButton("바코드 인식");
 
+    // 폰트
+    public Font font_sans = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
+    public Font font_bold = new Font(Font.MONOSPACED, Font.BOLD, 22);
+
+    // Main Page
+    public void mainPage(FoodMenu[] menu, int menu_length) {
+        // 프레임 설정
+        userPanelFrame.setBounds(0, 0, 625, 1000);
+
+        // North - foodMenuContainer
+        foodMenuContainer.setBackground(new Color(255, 255, 215));
+        foodMenuContainer.setLayout(null);
+        foodMenuContainer.setPreferredSize(new Dimension(600, 500));
+        foodMenuContainer.setFont(font_sans);
+
+        // 메뉴 관련 배열 설정
+        menuTitleLabel = new JLabel[menu_length];
+        pic = new JButton[menu_length];
+        menuPriceLabel = new JLabel[menu_length];
+        pickBtn = new JButton[menu_length];
+
+        // 메뉴 설정
+        for (int i = 0; i < menu_length; i++) {
+            // 메뉴 이름
+            menuTitleLabel[i] = new JLabel(menu[i].getName());
+            if (i < 4) {
+                menuTitleLabel[i].setBounds(25 + i * 150, 20, 100, 30);
+            }
+            else {
+                menuTitleLabel[i].setBounds(25 + (i - 4) * 150, 250, 100, 30);
+            }
+
+            // 이미지
+            pic[i] = new JButton(menu[i].getName());
+            if (i < 4) {
+                pic[i].setBounds(25 + i * 150, 50, 100, 100);
+            } else {
+                pic[i].setBounds(25 + (i - 4) * 150, 250+30, 100, 100);
+            }
+            imageicon = new ImageIcon(Hamberger.class.getResource(menu[i].getImage()));
+            image = imageicon.getImage().getScaledInstance(100,-1, Image.SCALE_SMOOTH);
+            pic[i].setIcon(new ImageIcon(image));
+
+            // 가격
+            menuPriceLabel[i] = new JLabel(menu[i].getPrice()+"원");
+            menuPriceLabel[i].setBounds(pic[i].getX() + 20, pic[i].getY() + 105, 100, 20);
+
+            // pick 버튼
+            pickBtn[i] = new JButton("담기");
+            pickBtn[i].setBounds(menuTitleLabel[i].getX(), pic[i].getY() + 140, 100, 30);
+
+            foodMenuContainer.add(menuTitleLabel[i]);
+            foodMenuContainer.add(pic[i]);
+            foodMenuContainer.add(menuPriceLabel[i]);
+            foodMenuContainer.add(pickBtn[i]);
+        }
+
+        // Center
+        // orderContainer
+        // * quantityLabel, totalPriceLabel 설정해야 함
+        orderContainer.add(orderTitleLabel);
+        orderContainer.add(quantityTitleLabel);
+        orderContainer.add(quantityLabel);
+        orderContainer.add(totalPriceTitleLabel);
+        orderContainer.add(totalPriceLabel);
+        orderContainer.add(allOrderCancelBtn);
+
+        // cartMenuContainer
+        cartMenuContainer.setText("   상품명        단가        수량        합계\n\n");
+        cartMenuContainer.setBackground(Color.white);
+        cartMenuContainer.setEditable(false);
+        cartMenuContainer.setFont(font_bold);
+
+        // paymentContainer
+        paymentContainer.setFont(font_sans);
+        paymentContainer.setBackground(new Color(255, 255, 215));
+        paymentContainer.add(paymentBtn);
+        paymentContainer.add(couponBtn);
+
+        // Center add
+        userPanelCenterContainer.add("North", orderContainer);
+        userPanelCenterContainer.add("Center", cartMenuContainer);
+        userPanelCenterContainer.add("South", paymentContainer);
+
+        // South
+        physicalPartsContainer.add(receiptLabel);
+        physicalPartsContainer.add(insertCardBtn);
+        physicalPartsContainer.add(new JPanel());
+        physicalPartsContainer.add(showBarcodeBtn);
+
+        // 컴포넌트
+        userPanelFrame.add("North",foodMenuContainer);
+        userPanelFrame.add("Center",userPanelCenterContainer);
+        userPanelFrame.add("South",physicalPartsContainer);
+
+        userPanelFrame.setVisible(true);
+        userPanelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+    }
+
+    public static void main(String[] args) {
+        FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "./image/1.jpeg", 5000);
+        FoodMenu doubleBurger = new FoodMenu("Burger", "더블버거", "./image/2.jpeg", 6000);
+        FoodMenu chickenBurger = new FoodMenu("Burger", "치킨버거", "./image/3.jpeg", 5500);
+        FoodMenu coke = new FoodMenu("drink", "콜라", "./image/4.jpeg", 2500);
+        FoodMenu potato = new FoodMenu("side", "감자튀김", "./image/5.jpeg", 1900);
+        FoodMenu cheeseStick = new FoodMenu("side", "치즈스틱", "./image/6.jpeg", 2200);
+        FoodMenu chocoIcecream = new FoodMenu("side", "초코 아이스크림", "./image/7.jpeg", 1500);
+        FoodMenu vanilaIcecream = new FoodMenu("side", "바닐라 아이스크림", "./image/8.jpeg", 1500);
+        FoodMenu menu[] = {cheeseBurger, doubleBurger, chickenBurger, coke, potato, cheeseStick, chocoIcecream, vanilaIcecream};
+
+        System.out.println(menu[3].getName() + "+" + menu[3].getImage());
+        UserPanel userPanel = new UserPanel();
+        userPanel.mainPage(menu, menu.length);
+    }
 }
