@@ -46,7 +46,7 @@ public class Hamberger {
         // 배열 설정 부분
         JButton pic[]=new JButton[menu.length];
 
-        Label l[] = new Label[menu.length];
+        Label labels[] = new Label[menu.length];
         Label menuLabel[] = new Label[menu.length];
         JButton orderButton[] = new JButton[menu.length];
 
@@ -79,16 +79,16 @@ public class Hamberger {
             suja[i].setVisible(false);
             suja[i].setBounds(pic[i].getX() + 30, pic[i].getY() + 130, 40, 20);
 
-// 가격튼
-            l[i] = new Label(price[i] + "원");
-            l[i].setBounds(pic[i].getX() + 20, suja[i].getY() - 25, 100, 20);
+            // 가격 버튼
+            labels[i] = new Label(price[i] + "원");
+            labels[i].setBounds(pic[i].getX() + 20, suja[i].getY() - 25, 100, 20);
             // 주문 버튼
             orderButton[i] = new JButton("주문");
             orderButton[i].setBounds(menuLabel[i].getX(), suja[i].getY() + 30, 100, 30);
             pNorth.add(menuLabel[i]);
             pNorth.add(pic[i]);
             pNorth.add(suja[i]);
-            pNorth.add(l[i]);
+            pNorth.add(labels[i]);
             pNorth.add(orderButton[i]);
         }
 
@@ -179,7 +179,6 @@ public class Hamberger {
 
         JButton barcodeBtn = new JButton("바코드 인식");
         HWContainer.add(new JPanel());
-        HWContainer.add(barcodeBtn);
         HWContainer.add(barcodeBtn);
         bottomContainer.add("South",HWContainer);
 
