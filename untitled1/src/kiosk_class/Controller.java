@@ -62,13 +62,13 @@ public class Controller {
     }
 
     public void ACKorNot(CartMenu cm){
-//        for (int i=0; i<cm.num;i++)
-//              System.out.println("카트: "+ cm.getMenuName()[i]);
-      new Order().setTotalPrice(cm);
+        for (int i=0; i<cm.num;i++)
+              System.out.println("카트: "+ cm.getMenuName()[i]);
+//      order.setTotalPrice(cm);
     }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
-        order.setTotalPrice(cm);
+       // order.setTotalPrice(cm);
     }
 
     public void ACKorNot(CardReader cr) {
