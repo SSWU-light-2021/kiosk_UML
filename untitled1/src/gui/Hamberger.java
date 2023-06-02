@@ -1,5 +1,6 @@
 package gui;
 
+import kiosk_class.Controller;
 import kiosk_class.FoodMenu;
 
 import javax.swing.*;
@@ -8,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 public class Hamberger {
     FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "./image/1.jpeg", 5000);
     FoodMenu doubleBurger = new FoodMenu("Burger", "더블버거", "./image/2.jpeg", 6000);
@@ -18,7 +18,7 @@ public class Hamberger {
     FoodMenu cheeseStick = new FoodMenu("side", "치즈스틱", "./image/6.jpeg", 2200);
     FoodMenu chocoIcecream = new FoodMenu("side", "초코 아이스크림", "./image/7.jpeg", 1500);
     FoodMenu vanilaIcecream = new FoodMenu("side", "바닐라 아이스크림", "./image/8.jpeg", 1500);
-
+    Controller controllerObject = new Controller();
     boolean selected[] = new boolean[8];
     String menu[] = { cheeseBurger.getName(), doubleBurger.getName(), chickenBurger.getName(), coke.getName(), potato.getName(), cheeseStick.getName(), chocoIcecream.getName(), vanilaIcecream.getName() };
     int price[] = { cheeseBurger.getPrice(), doubleBurger.getPrice(), chickenBurger.getPrice(), coke.getPrice(), potato.getPrice(), cheeseStick.getPrice(), chocoIcecream.getPrice(), vanilaIcecream.getPrice() };
@@ -85,7 +85,6 @@ public class Hamberger {
             // 주문 버튼
             orderButton[i] = new JButton("주문");
             orderButton[i].setBounds(menuLabel[i].getX(), suja[i].getY() + 30, 100, 30);
-
             pNorth.add(menuLabel[i]);
             pNorth.add(pic[i]);
             pNorth.add(suja[i]);
@@ -127,8 +126,8 @@ public class Hamberger {
         cartMenuContainer.setFont(font);
         cartMenuContainer.setBackground(new Color(255, 255, 215));
 
-        Button paymentBtn = new Button("결제");
-        Button couponBtn = new Button("쿠폰");
+        JButton paymentBtn = new JButton("결제");
+        JButton couponBtn = new JButton("쿠폰");
         cartMenuContainer.add(paymentBtn);
         cartMenuContainer.add(couponBtn);
 
@@ -137,6 +136,7 @@ public class Hamberger {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                getBtnPress(paymentBtn);
                 OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(menu, suja, price);
                 frame.setVisible(false); // 창 안보이게 하기
             }
@@ -199,9 +199,12 @@ public class Hamberger {
         // 이벤트단
         for (int i = 0; i < menu.length; i++) {
             int j = i;
+            final int index =i;
+
             orderButton[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    controllerObject.getCustomerInput(menu[index],price[index]);
                     int currentCount = Integer.parseInt(suja[j].getText());
                     currentCount++;
                     suja[j].setText(Integer.toString(currentCount));
@@ -228,7 +231,30 @@ public class Hamberger {
             }
         });
     }
+    public void getBtnPress(JButton button){
+        if (button.getText()=="결제"){
+            controllerObject.accept(button);
+        }
+        else if (button.getText()=="카드"){
 
+        }
+        else if (button.getText()=="기프티콘"){
+
+        }
+        else if (button.getText()=="예"){
+
+        }
+        else if (button.getText()=="아니오"){
+
+        }
+    }
+    public void scan(int barcode){
+
+    }
+    public void displayPrompt(String text){
+        if (text=="Over Limit" || text=="Expired" || text=="Card Not Read"|| text=="Take Card");
+        JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
+    }
     // 메인
     public static void main(String[] args) {
         new Hamberger();

@@ -23,9 +23,9 @@ public class Controller {
     public void accept (boolean card) {
         this.cr.inputCardInfo(card);
     }
-    public String[] ACKorNot(String name, int num){
-        String result[]={name, Integer.toString(num)};
-        return result;
+
+    public void ACKorNot(CartMenu cm){
+      new Order().setTotalPrice(cm);
     }
     //public void accept(JButton Btn) {
 //        switch () {
@@ -47,4 +47,5 @@ public void displayPrompt(String msg) {
     public void receiveReceipt(String[] receipt) {
 
     }
+
 }
