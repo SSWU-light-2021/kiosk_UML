@@ -76,7 +76,9 @@ public class Controller {
         int cardExpirationDate = cr.getCardExpirationDate();
         pay.getCardInfo(cardNumber, cardExpirationDate);
     }
+    public void ACKorNot(Payment pay) {
 
+    }
     //public void accept(JButton Btn) {
 //        switch () {
 //            case "value1":

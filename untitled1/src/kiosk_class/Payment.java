@@ -8,6 +8,7 @@ public class Payment {
     private boolean isValidated;
     private boolean isProcessed;
     private boolean isCancelled;
+    private int validNum;
 
     public Payment() {
     }
@@ -20,12 +21,17 @@ public class Payment {
         this.isValidated = false;
         this.isProcessed = false;
         this.isCancelled = false;
+
+    }
+
+    public Payment(int validNum) {
+        this.validNum = validNum;
     }
 
     public String getPaymentType() {
         return paymentType;
     }
-
+    Order o = new Order();
     public String getDate() {
         return date;
     }
@@ -64,7 +70,7 @@ public class Payment {
     }
 
     public void printReceipt() {
-        Order o = new Order();
+
         if (isProcessed) {
             // 영수증 출력 로직
             System.out.println("영수증을 출력합니다.");
@@ -74,22 +80,50 @@ public class Payment {
         }
     }
 
-    public void validatePayment(String validationCase) {
-        switch (validationCase) {
-            case "overLimit":
-                displayPrompt("Over Limit");
-                break;
-            case "expired":
-                displayPrompt("Expired");
-                break;
-            case "notReadCard":
-                displayPrompt("Card Not Read");
-                break;
-            default:
-                System.out.println("성공");
+    public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice) {
+        boolean isOverLimit = checkLimit(cardNumber, totalPrice);
+        boolean isExpired = checkExpiration(cardExpirationDate);
+
+        if (isOverLimit) {
+            System.out.println("Payment declined: overLimit");
+            return validNum = 0;
+            // 추가적인 처리 (예: 거절 메시지 출력)
+        } else if (isExpired) {
+            System.out.println("Payment declined: expired");
+            return validNum = 1;
+            // 추가적인 처리 (예: 거절 메시지 출력)
+        } else {
+            System.out.println("Payment accepted");
+            return validNum = 2;
+            // 추가적인 처리 (예: 승인 메시지 출력)
         }
     }
-public checkForValid(long cardNumber, int cardExpirationDate, )
+
+    private boolean checkLimit(long cardNumber, int totalPrice) {
+        // 카드 한도 확인 로직
+        // 예시로 임의로 한도 체크
+        long cardLimit = 10000L;
+        return totalPrice > cardLimit;
+    }
+
+    private boolean checkExpiration(int cardExpirationDate) {
+        // 유효 기간 확인 로직
+        // 예시로 임의로 현재 날짜와 비교하여 만료 여부 체크
+        int currentYear = 2023; // 현재 연도
+        int currentMonth = 6; // 현재 월
+        int expirationYear = cardExpirationDate / 100;
+        int expirationMonth = cardExpirationDate % 100;
+
+        if (expirationYear < currentYear) {
+            return true; // 유효 기간 만료
+        } else if (expirationYear == currentYear && expirationMonth < currentMonth) {
+            return true; // 유효 기간 만료
+        } else {
+            return false; // 유효 기간 유지
+        }
+    }
+
+
     public void displayPrompt(String message) {
         System.out.println(message);
     }
