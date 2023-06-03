@@ -20,10 +20,12 @@ public class CardReader {
     public int handleError(){
         return 0;
     }
-    public String inputCardInfo(boolean isCardInsertion) {
+    public String inputCardInfo(boolean isCardInsertion, Controller c, Payment pay, Order order) {
         if (this.isCardInsertion = isCardInsertion) {
             this.cardNumber = 1234567891021098l;
             this.cardExpirationDate = 0426;
+
+            c.ACKorNot(cardNumber, cardExpirationDate, pay, order, c);
             return successStatus;
         }
         else {
