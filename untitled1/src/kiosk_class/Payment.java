@@ -96,17 +96,17 @@ public class Payment {
 
         if (isOverLimit) {
             System.out.println("Payment declined: overLimit");
-            c.ACKorNot(validNum, up, c, cart, order);
+            c.ACKorNot(0, up, c, cart, order);
             return validNum = 0;
             // 추가적인 처리 (예: 거절 메시지 출력)
         } else if (isExpired) {
             System.out.println("Payment declined: expired");
-            c.ACKorNot(validNum, up, c, cart, order);
+            c.ACKorNot(1, up, c, cart, order);
             return validNum = 1;
             // 추가적인 처리 (예: 거절 메시지 출력)
         } else {
 //            System.out.println("Payment accepted");
-            c.ACKorNot(validNum, up, c, cart, order);
+            c.ACKorNot(2, up, c, cart, order);
             return validNum = 2;
             // 추가적인 처리 (예: 승인 메시지 출력)
         }

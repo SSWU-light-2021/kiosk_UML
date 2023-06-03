@@ -339,7 +339,7 @@ public class UserPanel {
         orderAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()));
 //        System.out.println(order.getTotalPrice());
         discountAmountLabel=new JLabel(Integer.toString(0));
-        totalPaymentAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()-1));
+        totalPaymentAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()));
         orderConfirmationContainer.add(orderAmountTitleLabel);
         orderConfirmationContainer.add(orderAmountLabel);
         orderConfirmationContainer.add(discountAmountTitleLabel);
