@@ -122,7 +122,7 @@ public class UserPanel {
         userPanelFrame.setBounds(0, 0, 625, 1000);
 
         // North
-        foodMenuContainer.setBackground(new Color(255, 255, 215));
+        foodMenuContainer.setBackground(new Color(180,216,231));
         foodMenuContainer.setLayout(null);
         foodMenuContainer.setPreferredSize(new Dimension(600, 500));
         foodMenuContainer.setFont(font_sans);
@@ -187,7 +187,7 @@ public class UserPanel {
 
         // paymentContainer
         paymentContainer.setFont(font_sans);
-        paymentContainer.setBackground(new Color(255, 255, 215));
+        paymentContainer.setBackground(new Color(180,216,231));
         paymentContainer.add(paymentBtn);
         paymentContainer.add(couponBtn);
 
@@ -253,10 +253,6 @@ public class UserPanel {
 
             });
         }
-        /*
-       
-        같은 getMenuName을 가진 버튼이 눌리면 원래 append되어 있던 text를 지우고 새로 작성해줘.
-         */
 
         // 카드 버튼
         insertCardBtn.addActionListener(new ActionListener() {
@@ -281,7 +277,7 @@ public class UserPanel {
         // Center
         // 주문 목록
         orderListContainer.setPreferredSize(new Dimension(400, 300));
-        orderListContainer.setBackground(new Color(255, 255, 215));
+        orderListContainer.setBackground(new Color(180,216,231));
 
         orderListContainer.add(orderProductTitleLabel);
         orderListContainer.add(orderProductQuantityTitleLabel);
