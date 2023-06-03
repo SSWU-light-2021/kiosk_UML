@@ -52,7 +52,7 @@ public class CartMenu {
 
     }
 
-    public void getMenu(String menuName, int price, Order order, Controller c) { //controller->CartMenu 메뉴받아오기
+    public void addCartMenu(String menuName, int price, Order order, Controller c) { //controller->CartMenu 메뉴받아오기
         this.menuName[num]=menuName;
         this.price[num++]=price;
        System.out.println("cartmenu "+ this.menuName[num-1]);
@@ -60,6 +60,7 @@ public class CartMenu {
     }
 
     public int[] getTotalPricePerMenu() {
+        this.setTotalPricePerMenu();
         return totalPricePerMenu;
     }
 

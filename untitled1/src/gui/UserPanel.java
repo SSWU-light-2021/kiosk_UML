@@ -281,15 +281,14 @@ public class UserPanel {
         orderListContainer.add(orderProductAmountTitleLabel);
 
         // 장바구니 값 가져오기
-        int totalPrice=0;
         for (int i = 0; i < cart.getNum(); i++) {
             orderProductLabel = new JLabel(cart.getMenuName()[i]); // 주문 제품
             orderProductQuantityLabel = new JLabel(Integer.toString(cart.getMenuQuantity()[i])); // 수량
             orderProductAmountLabel = new JLabel(Integer.toString(cart.getPrice()[i] * cart.getMenuQuantity()[i]));
-            totalPrice+=cart.getPrice()[i] * cart.getMenuQuantity()[i];// 금액
             orderListContainer.add(orderProductLabel);
             orderListContainer.add(orderProductQuantityLabel);
             orderListContainer.add(orderProductAmountLabel);
+
         }
 
         // 주문 금액

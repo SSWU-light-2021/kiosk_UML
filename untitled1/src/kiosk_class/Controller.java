@@ -9,7 +9,7 @@ public class Controller {
     BarcodeReader br = new BarcodeReader();
     Payment pay = new Payment();
     public  void getCustomerInput(String menuName, int menuPrice, CartMenu cart, Order order, Controller c) {
-        cart.getMenu(menuName, menuPrice, order, c);
+        cart.addCartMenu(menuName, menuPrice, order, c);
         System.out.println(menuName+ menuPrice);
     }
     public void accept (JButton Btn, CartMenu cart, Order order, UserPanel up){
@@ -33,12 +33,11 @@ public class Controller {
                 }
                 if(isin==0){
                     TmenuName[p]=cart.getMenuName()[i];
-                    System.out.println("!!!!!!!!!"+cart.getMenuName()[i]);
                     TmenuPrice[p]=cart.getPrice()[i];
                     TmenuQuantity[p]+=1;
                     p++;
-                    System.out.println("--메뉴추가--");
-                    System.out.println("p: "+p+ " 메뉴명: "+TmenuName[p-1]+ " 가격: "+TmenuPrice[p-1]);
+//                    System.out.println("--메뉴추가--");
+//                    System.out.println("p: "+p+ " 메뉴명: "+TmenuName[p-1]+ " 가격: "+TmenuPrice[p-1]);
                 }
                 isin=0;
             }
@@ -74,7 +73,7 @@ public class Controller {
     }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
-       // order.setTotalPrice(cm);
+     //   order.setTotalPrice(cm);
     }
 
     public void ACKorNot(CardReader cr) {

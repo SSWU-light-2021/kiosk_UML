@@ -16,14 +16,13 @@ public class Order {
     }
 
     public int getTotalPrice() {
+
         return totalPrice;
     }
 
     public void setTotalPrice(CartMenu cm, Controller c) {
-        for (int i=0; i < cm.getTotalPricePerMenu().length; i++) {
-            totalPrice += cm.getTotalPricePerMenu()[i];
-        }
-        System.out.println("Order: " + totalPrice);
+        for (int i=0; i < cm.getNum(); i++)
+            this.totalPrice += cm.getTotalPricePerMenu()[i];
         c.ACKorNot(cm,totalPrice);
     }
 
