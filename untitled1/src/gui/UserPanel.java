@@ -3,6 +3,7 @@ package gui;
 import kiosk_class.CartMenu;
 import kiosk_class.Controller;
 import kiosk_class.FoodMenu;
+import kiosk_class.Order;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,12 +34,13 @@ public class UserPanel {
     public JLabel totalPriceLabel = new JLabel(); // 숫자
     public JButton allOrderCancelBtn = new JButton("전체 취소");
 
+
     // 장바구니
     public TextArea cartMenuContainer = new TextArea("", 0, 0, TextArea.SCROLLBARS_VERTICAL_ONLY);;
 
     // 결제
     public JPanel paymentContainer = new JPanel();
-    public JButton paymentBtn = new JButton("결제");
+    public JButton paymentBtn = new JButton("카드결제");
     public JButton couponBtn = new JButton("쿠폰");
 
     // Order Confirmation Frame -----------------------------------------------------------
@@ -64,7 +66,6 @@ public class UserPanel {
     public JLabel orderAmountLabel;
     public JLabel discountAmountLabel;
     public JLabel totalPaymentAmountLabel;
-
     public JPanel orderConfirmationBtnContainer = new JPanel();
     public JButton orderCancelBtn = new JButton("취소");
     public JButton finalpaymentBtn = new JButton("결제");
@@ -113,7 +114,7 @@ public class UserPanel {
 
     // Frame
     // Main Page
-    public void mainPage(FoodMenu[] menu, int menu_length) {
+    public void mainPage(FoodMenu[] menu, int menu_length, CartMenu cart, Controller c, Order order, UserPanel up) {
         // 프레임 설정
         userPanelFrame.setBounds(0, 0, 625, 1000);
 
@@ -213,7 +214,7 @@ public class UserPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                getBtnPress(paymentBtn);
+                getBtnPress(paymentBtn, cart, c,order, up);
 //                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
@@ -228,8 +229,8 @@ public class UserPanel {
             pickBtn[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    Controller controllerObject = new Controller();
-                    controllerObject.getCustomerInput(menu[index].getName(),menu[index].getPrice());
+
+                    c.getCustomerInput(menu[index].getName(),menu[index].getPrice(), cart, order, c);
 //                    int currentCount = Integer.parseInt(suja[j].getText());
 //                    currentCount++;
 //                    suja[j].setText(Integer.toString(currentCount));
@@ -251,7 +252,7 @@ public class UserPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                getBtnPress(insertCardBtn);
+                getBtnPress(insertCardBtn, cart, c,order, up);
 //                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
@@ -260,7 +261,7 @@ public class UserPanel {
 
     }
     // Order Confirmation Page
-    public void orderConfirmationPage(CartMenu cm) {
+    public void orderConfirmationPage(Controller c, CartMenu cart, Order order) {
         // 프레임 설정
         orderConfirmationFrame.setBounds(0, 0, 625, 1000);
 
@@ -277,20 +278,29 @@ public class UserPanel {
 
         // 장바구니 값 가져오기
         int totalPrice=0;
-        for (int i = 0; i < cm.getNum(); i++) {
-            orderProductLabel = new JLabel(cm.getMenuName()[i]); // 주문 제품
-            orderProductQuantityLabel = new JLabel(Integer.toString(cm.getMenuQuantity()[i])); // 수량
-            orderProductAmountLabel = new JLabel(Integer.toString(cm.getPrice()[i] * cm.getMenuQuantity()[i]));
-            totalPrice+=cm.getPrice()[i] * cm.getMenuQuantity()[i];// 금액
+        for (int i = 0; i < cart.getNum(); i++) {
+            orderProductLabel = new JLabel(cart.getMenuName()[i]); // 주문 제품
+            orderProductQuantityLabel = new JLabel(Integer.toString(cart.getMenuQuantity()[i])); // 수량
+            orderProductAmountLabel = new JLabel(Integer.toString(cart.getPrice()[i] * cart.getMenuQuantity()[i]));
+            totalPrice+=cart.getPrice()[i] * cart.getMenuQuantity()[i];// 금액
             orderListContainer.add(orderProductLabel);
             orderListContainer.add(orderProductQuantityLabel);
             orderListContainer.add(orderProductAmountLabel);
         }
 
         // 주문 금액
+        orderAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()));
+
+        System.out.println(order.getTotalPrice());
+        discountAmountLabel=new JLabel(Integer.toString(0));
+        totalPaymentAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()-1));
         orderConfirmationContainer.add(orderAmountTitleLabel);
+        orderConfirmationContainer.add(orderAmountLabel);
         orderConfirmationContainer.add(discountAmountTitleLabel);
+        orderConfirmationContainer.add(discountAmountLabel);
         orderConfirmationContainer.add(totalPaymentAmountTitleLabel);
+        orderConfirmationContainer.add(totalPaymentAmountLabel);
+
 
         // 버튼(결제, 취소)
         orderConfirmationBtnContainer.add(orderCancelBtn);
@@ -311,15 +321,17 @@ public class UserPanel {
         orderConfirmationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
 
-    // operation
-    public void getBtnPress(JButton button){
-        if (button.getText()=="결제"){
-            Controller controllerObject = new Controller();
-            controllerObject.accept(button);
+    public void getBtnPress(JButton button, CartMenu cart, Controller c,Order order, UserPanel up){
+        if (button.getText()=="카드결제"){
+
+            c.accept(button, cart,order,up);
+            userPanelFrame.setVisible(false);
+
         }
+
+
         else if (button.getText()=="카드"){
-            Controller controllerObject = new Controller();
-            controllerObject.accept(true);
+           c.accept(true,up);
         }
         else if (button.getText()=="기프티콘"){
 
@@ -351,8 +363,14 @@ public class UserPanel {
         FoodMenu chocoIcecream = new FoodMenu("side", "초코 아이스크림", "./image/7.jpeg", 1500);
         FoodMenu vanilaIcecream = new FoodMenu("side", "바닐라 아이스크림", "./image/8.jpeg", 1500);
         FoodMenu menu[] = {cheeseBurger, doubleBurger, chickenBurger, coke, potato, cheeseStick, chocoIcecream, vanilaIcecream};
-
+        CartMenu cart=new CartMenu();
+        Controller c = new Controller();
+        Order order=new Order();
         UserPanel userPanel = new UserPanel();
-        userPanel.mainPage(menu, menu.length);
+        userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
+        cart.setTotalPrice(2000);
+        order.setTotalPrice(cart,c);
+
+        System.out.println("ddddddd: "+order.getTotalPrice());
     }
 }

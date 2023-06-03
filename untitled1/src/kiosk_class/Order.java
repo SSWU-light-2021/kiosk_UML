@@ -5,7 +5,7 @@ public class Order {
     private int orderId;
     private int totalPrice;
     private int totalQuantities;
-Controller controller;
+    Controller controller;
     public Order() {
         orderId = ++orderIdCounter;
     }
@@ -18,12 +18,12 @@ Controller controller;
         return totalPrice;
     }
 
-    public void setTotalPrice(CartMenu cm) {
+    public void setTotalPrice(CartMenu cm, Controller c) {
         for (int i=0;i<cm.getMenuName().length;i++) {
             totalPrice+=cm.getMenuQuantity()[i]* cm.getPrice()[i];
         }
         cm.setTotalPrice(totalPrice);
-        controller.ACKorNot(cm,totalPrice);
+        c.ACKorNot(cm,totalPrice);
     }
 
     public int getTotalQuantities() {

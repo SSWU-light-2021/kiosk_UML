@@ -203,7 +203,7 @@ public class Hamberger {
             orderButton[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    controllerObject.getCustomerInput(menu[index],price[index]);
+//                    controllerObject.getCustomerInput(menu[index],price[index]);
                     int currentCount = Integer.parseInt(suja[j].getText());
                     currentCount++;
                     suja[j].setText(Integer.toString(currentCount));
@@ -232,7 +232,7 @@ public class Hamberger {
     }
     public void getBtnPress(JButton button){
         if (button.getText()=="결제"){
-            controllerObject.accept(button);
+//            controllerObject.accept(button, cart);
         }
         else if (button.getText()=="카드"){
 
