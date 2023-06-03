@@ -55,9 +55,11 @@ public class Controller {
             //this.pay.getPaymentInfo(cartItems, totalPrice); 수정 요망
         }
         else if(btnText.equals("아니요")) {
-        up.displayPrompt("주문완료");
+            up.displayPrompt("주문완료");
         }
-
+        else if(btnText.equals("기프티콘")) {
+            up.displayPrompt("바코드 인식 부탁드립니다");
+        }
     }
 
     public void accept (boolean card) {
