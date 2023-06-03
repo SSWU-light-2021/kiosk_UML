@@ -4,7 +4,7 @@ import gui.OrderConfirmationFrame;
 
 import javax.swing.*;
 public class Controller {
-//    UserPanel up = new UserPanel();
+    UserPanel up = new UserPanel();
     CartMenu cm = new CartMenu();
     Order order = new Order();
 
@@ -77,7 +77,12 @@ public class Controller {
         pay.getCardInfo(cardNumber, cardExpirationDate);
     }
     public void ACKorNot(Payment pay) {
-
+        long cardNumber = cr.getCardNumber();
+        int cardExpirationDate = cr.getCardExpirationDate();
+        int totalPrice = order.getTotalPrice();
+        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice);
+        if(validNum == 0 || validNum == 1 ) up.displayPrompt("결제 취소되었습니다.");
+        else displayPrompt("영수증을 출력하시겠습니까?");
     }
     //public void accept(JButton Btn) {
 //        switch () {

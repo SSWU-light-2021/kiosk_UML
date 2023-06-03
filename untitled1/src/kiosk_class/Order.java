@@ -14,7 +14,7 @@ public class Order {
         return orderId;
     }
 
-    public int getTotalPrice(CartMenu[] cartItems) {
+    public int getTotalPrice() {
         return totalPrice;
     }
 
