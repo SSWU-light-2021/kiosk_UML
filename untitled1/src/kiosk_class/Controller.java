@@ -59,7 +59,7 @@ public class Controller {
 
     public void accept (boolean card) {
         this.cr.inputCardInfo(card);
-        displayPrompt("Insert Card");
+        up.displayPrompt("Insert Card");
     }
 
     public void ACKorNot(CartMenu cm){
@@ -83,7 +83,7 @@ public class Controller {
         int totalPrice = order.getTotalPrice();
         int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice);
         if(validNum == 0 || validNum == 1 ) up.displayPrompt("결제 취소되었습니다.");
-        else displayPrompt("영수증을 출력하시겠습니까?");
+        else up.displayPrompt("영수증을 출력하시겠습니까?");
     }
     //public void accept(JButton Btn) {
 //        switch () {
