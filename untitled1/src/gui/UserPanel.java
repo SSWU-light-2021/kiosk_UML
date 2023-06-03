@@ -153,7 +153,7 @@ public class UserPanel {
             } else {
                 pic[i].setBounds(25 + (i - 4) * 150, 250+30, 100, 100);
             }
-            imageicon = new ImageIcon(Hamberger.class.getResource(menu[i].getImage()));
+            imageicon = new ImageIcon(UserPanel.class.getResource(menu[i].getImage()));
             image = imageicon.getImage().getScaledInstance(100,-1, Image.SCALE_SMOOTH);
             pic[i].setIcon(new ImageIcon(image));
 
@@ -323,7 +323,7 @@ public class UserPanel {
     }
 
     // Order Complete Page
-    public void orderCompletPage() {
+    public void orderCompletePage() {
         orderCompleteFrame.setBounds(0, 0, 625, 1000);
 
         // Panel
@@ -349,8 +349,8 @@ public class UserPanel {
         insertCardContainer.add(finalOrderAmountContainer);
 
         insertCardFrame.add(insertCardContainer);
-        orderCompleteFrame.setVisible(true);
-        orderCompleteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+        insertCardFrame.setVisible(true);
+        insertCardFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
 
     // Is Receipt print Page
@@ -363,8 +363,8 @@ public class UserPanel {
         isReceiptPrintFrame.add("Center", printReceiptTitleLabel);
         isReceiptPrintFrame.add("South", printReceiptContainer);
 
-        orderCompleteFrame.setVisible(true);
-        orderCompleteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+        isReceiptPrintFrame.setVisible(true);
+        isReceiptPrintFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
 
     // operation
@@ -430,11 +430,10 @@ public class UserPanel {
         Order order=new Order();
         UserPanel userPanel = new UserPanel();
 
-//        userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
+        userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
 
-//        order.setTotalPrice(cart, c);
-//        userPanel.orderCompletPage();
+        userPanel.orderCompletePage();
         userPanel.insertCardPage();
-//        userPanel.isReceiptPrintPage();
+        userPanel.isReceiptPrintPage();
     }
 }
