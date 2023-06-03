@@ -242,7 +242,7 @@ public class UserPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     int cartNum = c.getCustomerInput(menu[index].getName(),menu[index].getPrice(), cart, order, c);
-                    System.out.println(cart.getMenuName()[cartNum]);
+                   // System.out.println(cart.getMenuName()[cartNum]);
                     cartMenuContainer.append("   " + cart.getMenuName()[cartNum] + "       " + cart.getPrice()[cartNum] + "        "
                             + cart.getMenuQuantity()[cartNum] + "         " + cart.getTotalPricePerMenu()[cartNum] + "원" + "\n");
                 }
@@ -354,7 +354,7 @@ public class UserPanel {
     }
 
     // Is Receipt print Page
-    public void isReceiptPrintPage() {
+    public void isReceiptPrintPage(Controller c, CartMenu cart, Order order,UserPanel up) {
         isReceiptPrintFrame.setBounds(0, 0, 625, 1000);
 
 //        printReceiptContainer.setBorder(new EmptyBorder(300, 0, 0, 0)); // Add top margin
@@ -365,6 +365,26 @@ public class UserPanel {
 
         isReceiptPrintFrame.setVisible(true);
         isReceiptPrintFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+
+        receiptYesBtn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress(receiptYesBtn, cart, c,order, up);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
+        receiptNoBtn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress(receiptNoBtn, cart, c,order, up);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
+
     }
 
     // operation
@@ -387,10 +407,10 @@ public class UserPanel {
 
         }
         else if (button.getText()=="예"){
-
+            c.accept(button, cart, order, up);
         }
         else if (button.getText()=="아니오"){
-
+            c.accept(button, cart, order, up);
         }
         else if (button.getText()=="카드 리더기"){
             if (cart.getNum()==0){// 카트에 물건 없음
@@ -405,15 +425,20 @@ public class UserPanel {
     public void scan(int barcode){
 
     }
-    public void displayPrompt(String text){
+    public void displayPrompt(String text, UserPanel up){
         if (text=="overLimit" || text=="expired" || text=="Card Not Read"|| text=="Take Card")
            // JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
             ;
-        else if (text=="영수증받말"){
-            //영수증 받/말 선택화면
+        else if (text=="Order Complete"){
+            up.orderCompletePage();
+        }
+
+    }
+    public void displayPrompt(String text, UserPanel up, Controller c, CartMenu cart, Order order){
+        if (text=="영수증받말"){
+            up.isReceiptPrintPage(c, cart, order,up);
         }
     }
-
     public static void main(String[] args) { // 메인 함수
         FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "./image/1.jpeg", 5000);
         FoodMenu doubleBurger = new FoodMenu("Burger", "더블버거", "./image/2.jpeg", 6000);
@@ -431,9 +456,9 @@ public class UserPanel {
         UserPanel userPanel = new UserPanel();
 
         userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
-
-        userPanel.orderCompletePage();
-        userPanel.insertCardPage();
-        userPanel.isReceiptPrintPage();
+//
+//        userPanel.orderCompletePage();
+//        userPanel.insertCardPage();
+//        userPanel.isReceiptPrintPage();
     }
 }

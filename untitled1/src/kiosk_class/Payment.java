@@ -85,23 +85,23 @@ public class Payment {
         }
     }
 
-    public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c, UserPanel up) {
+    public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c, UserPanel up, CartMenu cart, Order order) {
         boolean isOverLimit = checkLimit(cardNumber, totalPrice);
         boolean isExpired = checkExpiration(cardExpirationDate);
 
         if (isOverLimit) {
             System.out.println("Payment declined: overLimit");
-            c.ACKorNot(validNum, up);
+            c.ACKorNot(validNum, up, c, cart, order);
             return validNum = 0;
             // 추가적인 처리 (예: 거절 메시지 출력)
         } else if (isExpired) {
             System.out.println("Payment declined: expired");
-            c.ACKorNot(validNum, up);
+            c.ACKorNot(validNum, up, c, cart, order);
             return validNum = 1;
             // 추가적인 처리 (예: 거절 메시지 출력)
         } else {
-            System.out.println("Payment accepted");
-            c.ACKorNot(validNum, up);
+//            System.out.println("Payment accepted");
+            c.ACKorNot(validNum, up, c, cart, order);
             return validNum = 2;
             // 추가적인 처리 (예: 승인 메시지 출력)
         }
@@ -110,7 +110,7 @@ public class Payment {
     private boolean checkLimit(long cardNumber, int totalPrice) {
         // 카드 한도 확인 로직
         // 예시로 임의로 한도 체크
-        long cardLimit = 10000L;
+        long cardLimit = 50000L;
         return totalPrice > cardLimit;
     }
 
@@ -153,8 +153,8 @@ public class Payment {
 
     CardReader cr = new CardReader();
 
-    public String getCardInfo(long cardNumber, int cardExpirationDate, Order order, Controller c, UserPanel up) {
-        checkForValid(cardNumber,cardExpirationDate,order.getTotalPrice(),c, up);
+    public String getCardInfo(long cardNumber, int cardExpirationDate, Order order, Controller c, UserPanel up, CartMenu cart) {
+        checkForValid(cardNumber,cardExpirationDate,order.getTotalPrice(),c, up, cart, order);
         return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
 

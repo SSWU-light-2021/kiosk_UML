@@ -1,9 +1,11 @@
 package kiosk_class;
+import gui.UserPanel;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 public class ReceiptPrinter {
 
-    public void printReceipt(CartMenu cm, Order totalPrice, Controller c) {
+    public void printReceipt(CartMenu cm, Order totalPrice, Controller c, UserPanel up) {
         // 현재 시간 가져오기
         LocalDateTime currentTime = LocalDateTime.now();
 
@@ -15,6 +17,6 @@ public class ReceiptPrinter {
 
         // 시간 출력
         //System.out.println("현재 시간: " + formattedTime);
-        c.receiveReceipt(cm,totalPrice, formattedTime);
+        c.receiveReceipt(cm,totalPrice, formattedTime, up);
     }
 }

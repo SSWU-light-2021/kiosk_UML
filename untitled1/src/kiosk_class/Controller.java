@@ -19,6 +19,8 @@ public class Controller {
         if (btnText.equals("카드결제")) {
 //            System.out.println("카드넣어");
 //            displayPrompt("Input Card");
+            up.userPanelFrame.setVisible(false);
+            JOptionPane.showMessageDialog(null, "카드리더기 버튼을 클릭해 카드를 넣어주세요", "알림", JOptionPane.INFORMATION_MESSAGE);
 
             //cartmenu {치즈버거,치즈버거,김치버거} -> 치즈2, 김치1 변경
             int p=0; //임시배열인덱스
@@ -51,68 +53,79 @@ public class Controller {
           //  OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
         }
         else if(btnText.equals("예")) {
-            int totalPrice = order.getTotalPrice();
             ReceiptPrinter rp = new ReceiptPrinter(); //수정요망
-            rp.printReceipt(cart, order, this);
+            up.isReceiptPrintFrame.setVisible(false);
+            rp.printReceipt(cart, order, this, up);
         }
-        else if(btnText.equals("아니요")) {
-            up.displayPrompt("주문완료");
+        else if(btnText.equals("아니오")) {
+            up.isReceiptPrintFrame.setVisible(false);
+            up.displayPrompt("Order Complete", up);
         }
         else if(btnText.equals("기프티콘")) {
-            up.displayPrompt("바코드 인식 부탁드립니다");
+            up.displayPrompt("바코드 인식 부탁드립니다", up);
         }
 //        else if (btnText.equals("결제")){
 //            cr.inputCardInfo(true, this);
 //        }
         else if (btnText.equals("카드 리더기")){
-            cr.inputCardInfo(true,this,pay, order, up);
+            up.orderConfirmationFrame.setVisible(false);
+            cr.inputCardInfo(true,this,pay, order, up, cart);
         }
 
     }
-    public void receiveReceipt(CartMenu cm, Order totalPrice, String time) {
-        for(int i = 0; i<cm.getNum(); i++) {
-            System.out.println(cm.getMenuName()[i]);
-            System.out.println(cm.getPrice()[i] * cm.getMenuQuantity()[i]);
+    public void receiveReceipt(CartMenu cm, Order totalPrice, String time, UserPanel up) {
+        System.out.println("================== 영수증 ==================");
+
+        for (int i = 0; i < cm.getNum(); i++) {
+            System.out.println(cm.getMenuName()[i] + "\t\t" + cm.getPrice()[i] + "원" + "\t\t수량: " + cm.getMenuQuantity()[i] + "개");
+            System.out.println("\t\t\t\t\t\t합계: " + cm.getPrice()[i] * cm.getMenuQuantity()[i] + "원");
         }
-        System.out.println(totalPrice.getTotalPrice());
-        System.out.println("현재 시간: " + time);
+
+        System.out.println("----------------------------------------------");
+        System.out.println("총 가격:\t\t\t\t" + totalPrice.getTotalPrice() + "원");
+        System.out.println("현재 시간:\t\t\t\t" + time);
+
+        System.out.println("================== 영수증 끝 ==================");
+
+        up.displayPrompt("Order Complete", up);
     }
     public void accept (boolean card, UserPanel up) {
 
 //        this.cr.inputCardInfo(card);
-        up.displayPrompt("Insert Card");
+        up.displayPrompt("Insert Card", up);
     }
 
     public void ACKorNot(CartMenu cart, Order order){
       order.setTotalPrice(cart,this);
     }
-    public void ACKorNot(long cardN,int Ex, Payment pay, Order order, Controller c, UserPanel up){
-        pay.getCardInfo(cardN,Ex, order,c, up);
+    public void ACKorNot(long cardN,int Ex, Payment pay, Order order, Controller c, UserPanel up, CartMenu cart){
+        pay.getCardInfo(cardN,Ex, order,c, up, cart);
     }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
      //   order.setTotalPrice(cm);
     }
 
-    public void ACKorNot(Payment pay, Order order, UserPanel up, Controller c) {
+    public void ACKorNot(Payment pay, Order order, UserPanel up, Controller c, CartMenu cart) {
         long cardNumber = cr.getCardNumber();
         int cardExpirationDate = cr.getCardExpirationDate();
         int totalPrice = order.getTotalPrice();
-        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice, c, up);
+        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice, c, up, cart, order);
 
-        if(validNum == 0 ) up.displayPrompt("한도초과 되었습니다");
-        else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.");
-        else up.displayPrompt("영수증을 출력하시겠습니까?");
+        if(validNum == 0 ) up.displayPrompt("한도초과 되었습니다", up);
+        else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.", up);
+        else up.displayPrompt("영수증을 출력하시겠습니까?", up);
     }
-    public void ACKorNot(int validNum, UserPanel up){ //ack6
+    public void ACKorNot(int validNum, UserPanel up, Controller c, CartMenu cart, Order order){ //ack6
         if (validNum==2){
-            up.displayPrompt("영수증받말");
+            up.displayPrompt("영수증받말", up, c,  cart, order);
+
         }
         else if (validNum==0){
-            up.displayPrompt("overLimit");
+            up.displayPrompt("overLimit", up);
         }
         else if (validNum==1){
-            up.displayPrompt("expired");
+            up.displayPrompt("expired", up);
         }
     }
     //public void accept(JButton Btn) {

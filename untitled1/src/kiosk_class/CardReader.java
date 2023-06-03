@@ -22,12 +22,12 @@ public class CardReader {
     public int handleError(){
         return 0;
     }
-    public String inputCardInfo(boolean isCardInsertion, Controller c, Payment pay, Order order, UserPanel up) {
+    public String inputCardInfo(boolean isCardInsertion, Controller c, Payment pay, Order order, UserPanel up, CartMenu cart) {
         if (this.isCardInsertion = isCardInsertion) {
             this.cardNumber = 1234567891021098l;
             this.cardExpirationDate = 0426;
 
-            c.ACKorNot(cardNumber, cardExpirationDate, pay, order, c, up);
+            c.ACKorNot(cardNumber, cardExpirationDate, pay, order, c, up, cart);
             return successStatus;
         }
         else {
