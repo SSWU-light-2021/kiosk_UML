@@ -68,8 +68,8 @@ public class UserPanel {
     public JLabel discountAmountLabel;
     public JLabel totalPaymentAmountLabel;
     public JPanel orderConfirmationBtnContainer = new JPanel();
-    public JButton orderCancelBtn = new JButton("취소");
-    public JButton finalpaymentBtn = new JButton("결제");
+    public JButton orderCancelBtn = new JButton("취소"); //주문확인p
+    public JButton finalpaymentBtn = new JButton("결제"); //주문확인p
 
     // Order Complete Page ------------------------------------------------
     public JFrame orderCompleteFrame = new JFrame("Hamburger Kiosk <주문 완료>");
@@ -223,7 +223,15 @@ public class UserPanel {
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
         });
+        insertCardBtn.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress(insertCardBtn, cart, c,order, up);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
         //담기버튼
         // 이벤트단
         for (int i = 0; i < menu.length; i++) {
@@ -281,21 +289,20 @@ public class UserPanel {
         orderListContainer.add(orderProductAmountTitleLabel);
 
         // 장바구니 값 가져오기
-        int totalPrice=0;
         for (int i = 0; i < cart.getNum(); i++) {
             orderProductLabel = new JLabel(cart.getMenuName()[i]); // 주문 제품
             orderProductQuantityLabel = new JLabel(Integer.toString(cart.getMenuQuantity()[i])); // 수량
             orderProductAmountLabel = new JLabel(Integer.toString(cart.getPrice()[i] * cart.getMenuQuantity()[i]));
-            totalPrice+=cart.getPrice()[i] * cart.getMenuQuantity()[i];// 금액
             orderListContainer.add(orderProductLabel);
             orderListContainer.add(orderProductQuantityLabel);
             orderListContainer.add(orderProductAmountLabel);
+
         }
 
         // 주문 금액
         c.ACKorNot(cart, order);
         orderAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()));
-        System.out.println(order.getTotalPrice());
+//        System.out.println(order.getTotalPrice());
         discountAmountLabel=new JLabel(Integer.toString(0));
         totalPaymentAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()-1));
         orderConfirmationContainer.add(orderAmountTitleLabel);
@@ -381,6 +388,9 @@ public class UserPanel {
         else if (button.getText()=="아니오"){
 
         }
+        else if (button.getText()=="카드 리더기"){
+            c.accept(insertCardBtn, cart,order, up);
+        }
         else
             System.out.println("");
     }
@@ -410,8 +420,6 @@ public class UserPanel {
 
         userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
 //        order.setTotalPrice(cart, c);
-
-        System.out.println("ddddddd: "+order.getTotalPrice());
 
 //        userPanel.orderCompletPage();
 //        userPanel.insertCardFrame();

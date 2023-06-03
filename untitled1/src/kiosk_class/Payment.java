@@ -83,7 +83,7 @@ public class Payment {
         }
     }
 
-    public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice) {
+    public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c) {
         boolean isOverLimit = checkLimit(cardNumber, totalPrice);
         boolean isExpired = checkExpiration(cardExpirationDate);
 
@@ -97,6 +97,7 @@ public class Payment {
             // 추가적인 처리 (예: 거절 메시지 출력)
         } else {
             System.out.println("Payment accepted");
+            c.ACKorNot(validNum);
             return validNum = 2;
             // 추가적인 처리 (예: 승인 메시지 출력)
         }
@@ -116,7 +117,6 @@ public class Payment {
         int currentMonth = 6; // 현재 월
         int expirationYear = cardExpirationDate / 100;
         int expirationMonth = cardExpirationDate % 100;
-
         if (expirationYear < currentYear) {
             return true; // 유효 기간 만료
         } else if (expirationYear == currentYear && expirationMonth < currentMonth) {
@@ -147,9 +147,10 @@ public class Payment {
         else return totalPrice - barcodePrice;
     }
 
-    CardReader c = new CardReader();
+    CardReader cr = new CardReader();
 
-    public String getCardInfo(long cardNumber, int cardExpirationDate) {
+    public String getCardInfo(long cardNumber, int cardExpirationDate, Order order, Controller c) {
+        checkForValid(cardNumber,cardExpirationDate,order.getTotalPrice(),c);
         return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
 

@@ -9,7 +9,7 @@ public class Controller {
     BarcodeReader br = new BarcodeReader();
     Payment pay = new Payment();
     public  void getCustomerInput(String menuName, int menuPrice, CartMenu cart, Order order, Controller c) {
-        cart.getMenu(menuName, menuPrice, order, c);
+        cart.addCartMenu(menuName, menuPrice, order, c);
         System.out.println(menuName+ menuPrice);
     }
     public void accept (JButton Btn, CartMenu cart, Order order, UserPanel up){
@@ -33,12 +33,11 @@ public class Controller {
                 }
                 if(isin==0){
                     TmenuName[p]=cart.getMenuName()[i];
-                    System.out.println("!!!!!!!!!"+cart.getMenuName()[i]);
                     TmenuPrice[p]=cart.getPrice()[i];
                     TmenuQuantity[p]+=1;
                     p++;
-                    System.out.println("--메뉴추가--");
-                    System.out.println("p: "+p+ " 메뉴명: "+TmenuName[p-1]+ " 가격: "+TmenuPrice[p-1]);
+//                    System.out.println("--메뉴추가--");
+//                    System.out.println("p: "+p+ " 메뉴명: "+TmenuName[p-1]+ " 가격: "+TmenuPrice[p-1]);
                 }
                 isin=0;
             }
@@ -48,9 +47,6 @@ public class Controller {
             cart.setNum(p);
             up.orderConfirmationPage(this,cart, order);
           //  OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
-        for (int i=0; i<cart.num;i++){
-              System.out.println(cart.getMenuName()[i]);
-              System.out.println("수량: "+cart.getMenuQuantity()[i]);}
         }
         else if(btnText.equals("예")) {
             int totalPrice = order.getTotalPrice();
@@ -62,6 +58,12 @@ public class Controller {
         }
         else if(btnText.equals("기프티콘")) {
             up.displayPrompt("바코드 인식 부탁드립니다");
+        }
+//        else if (btnText.equals("결제")){
+//            cr.inputCardInfo(true, this);
+//        }
+        else if (btnText.equals("카드 리더기")){
+            cr.inputCardInfo(true,this,pay, order);
         }
 
     }
@@ -75,32 +77,40 @@ public class Controller {
     }
     public void accept (boolean card, UserPanel up) {
 
-        this.cr.inputCardInfo(card);
+//        this.cr.inputCardInfo(card);
         up.displayPrompt("Insert Card");
     }
 
     public void ACKorNot(CartMenu cart, Order order){
       order.setTotalPrice(cart,this);
     }
+    public void ACKorNot(long cardN,int Ex, Payment pay, Order order, Controller c){
+        pay.getCardInfo(cardN,Ex, order,c);
+    }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
-       // order.setTotalPrice(cm);
+     //   order.setTotalPrice(cm);
     }
 
-    public void ACKorNot(CardReader cr) {
+    public void ACKorNot(CardReader cr, Order order, Controller c) {
         long cardNumber = cr.getCardNumber();
         int cardExpirationDate = cr.getCardExpirationDate();
-        pay.getCardInfo(cardNumber, cardExpirationDate);
+        pay.getCardInfo(cardNumber, cardExpirationDate, order,c);
     }
-    public void ACKorNot(Payment pay, Order order, UserPanel up) {
+    public void ACKorNot(Payment pay, Order order, UserPanel up, Controller c) {
         long cardNumber = cr.getCardNumber();
         int cardExpirationDate = cr.getCardExpirationDate();
         int totalPrice = order.getTotalPrice();
-        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice);
+        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice, c);
 
         if(validNum == 0 ) up.displayPrompt("한도초과 되었습니다");
         else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.");
         else up.displayPrompt("영수증을 출력하시겠습니까?");
+    }
+    public void ACKorNot(int validNum){
+        if (validNum==2){
+            System.out.println("영수증받을래?");
+        }
     }
     //public void accept(JButton Btn) {
 //        switch () {
