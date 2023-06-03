@@ -107,7 +107,7 @@ public class Controller {
         pay.getOrderInfo(cm,price);
      //   order.setTotalPrice(cm);
     }
-
+    
 //    public void ACKorNot(Payment pay, Order order, UserPanel up, Controller c, CartMenu cart) {
 //        long cardNumber = cr.getCardNumber();
 //        int cardExpirationDate = cr.getCardExpirationDate();
@@ -118,6 +118,7 @@ public class Controller {
 //        else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.", up);
 //        else up.displayPrompt("영수증을 출력하시겠습니까?", up);
 //    }
+
     public void ACKorNot(int validNum, UserPanel up, Controller c, CartMenu cart, Order order){ //ack6
 
         if (validNum==2){
@@ -129,6 +130,7 @@ public class Controller {
         else if (validNum==1){
             up.displayPrompt("expired", up);
         }
+
     }
     //public void accept(JButton Btn) {
 //        switch () {
