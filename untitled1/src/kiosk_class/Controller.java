@@ -71,7 +71,9 @@ public class Controller {
             up.orderConfirmationFrame.setVisible(false);
             cr.inputCardInfo(true,this,pay, order, up, cart);
         }
-
+        else if(btnText.equals("바코드")) {
+            br.inputBarcodeInfo(true,this,pay, order);
+        }
     }
     public void receiveReceipt(CartMenu cm, Order totalPrice, String time, UserPanel up) {
         System.out.println("================== 영수증 ==================");
@@ -100,6 +102,9 @@ public class Controller {
     }
     public void ACKorNot(long cardN,int Ex, Payment pay, Order order, Controller c, UserPanel up, CartMenu cart){
         pay.getCardInfo(cardN,Ex, order,c, up, cart);
+    }
+    public void ACKorNot(int barcodeNum, int barcodeExpirationDate, int barcodePrice, Order order, Controller c) {
+        pay.getBarcodeInfo(barcodeNum, barcodeExpirationDate, barcodePrice, order, c);
     }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
