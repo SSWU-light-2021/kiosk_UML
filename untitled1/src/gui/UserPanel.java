@@ -1,5 +1,6 @@
 package gui;
 
+import kiosk_class.CartMenu;
 import kiosk_class.Controller;
 import kiosk_class.FoodMenu;
 
@@ -9,9 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserPanel {
-
-
-    Controller controllerObject = new Controller();
 
     public JFrame userPanelFrame = new JFrame("Hamburger Kiosk");
 
@@ -111,10 +109,9 @@ public class UserPanel {
         physicalPartsContainer.add(insertCardBtn);
         physicalPartsContainer.add(new JPanel());
         physicalPartsContainer.add(showBarcodeBtn);
-
-//        physicalPartsContainer.setPreferredSize(new Dimension(600, 50));
     }
 
+    // Frame
     // Main Page
     public void mainPage(FoodMenu[] menu, int menu_length) {
         // 프레임 설정
@@ -231,6 +228,7 @@ public class UserPanel {
             pickBtn[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    Controller controllerObject = new Controller();
                     controllerObject.getCustomerInput(menu[index].getName(),menu[index].getPrice());
 //                    int currentCount = Integer.parseInt(suja[j].getText());
 //                    currentCount++;
@@ -261,35 +259,8 @@ public class UserPanel {
 
 
     }
-    public void getBtnPress(JButton button){
-        if (button.getText()=="결제"){
-            controllerObject.accept(button);
-        }
-        else if (button.getText()=="카드"){
-            controllerObject.accept(true);
-        }
-        else if (button.getText()=="기프티콘"){
-
-        }
-        else if (button.getText()=="예"){
-
-        }
-        else if (button.getText()=="아니오"){
-
-        }
-        else
-            System.out.println("ㄴㄴㄴㄴ");
-    }
-    public void scan(int barcode){
-
-    }
-    public void displayPrompt(String text){
-        if (text=="Over Limit" || text=="Expired" || text=="Card Not Read"|| text=="Take Card");
-        JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     // Order Confirmation Page
-    public void orderConfirmationPage() {
+    public void orderConfirmationPage(CartMenu cm) {
         // 프레임 설정
         orderConfirmationFrame.setBounds(0, 0, 625, 1000);
 
@@ -303,6 +274,18 @@ public class UserPanel {
         orderListContainer.add(orderProductTitleLabel);
         orderListContainer.add(orderProductQuantityTitleLabel);
         orderListContainer.add(orderProductAmountTitleLabel);
+
+        // 장바구니 값 가져오기
+        int totalPrice=0;
+        for (int i = 0; i < cm.getNum(); i++) {
+            orderProductLabel = new JLabel(cm.getMenuName()[i]); // 주문 제품
+            orderProductQuantityLabel = new JLabel(Integer.toString(cm.getMenuQuantity()[i])); // 수량
+            orderProductAmountLabel = new JLabel(Integer.toString(cm.getPrice()[i] * cm.getMenuQuantity()[i]));
+            totalPrice+=cm.getPrice()[i] * cm.getMenuQuantity()[i];// 금액
+            orderListContainer.add(orderProductLabel);
+            orderListContainer.add(orderProductQuantityLabel);
+            orderListContainer.add(orderProductAmountLabel);
+        }
 
         // 주문 금액
         orderConfirmationContainer.add(orderAmountTitleLabel);
@@ -328,8 +311,37 @@ public class UserPanel {
         orderConfirmationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
 
+    // operation
+    public void getBtnPress(JButton button){
+        if (button.getText()=="결제"){
+            Controller controllerObject = new Controller();
+            controllerObject.accept(button);
+        }
+        else if (button.getText()=="카드"){
+            Controller controllerObject = new Controller();
+            controllerObject.accept(true);
+        }
+        else if (button.getText()=="기프티콘"){
 
-    public static void main(String[] args) {
+        }
+        else if (button.getText()=="예"){
+
+        }
+        else if (button.getText()=="아니오"){
+
+        }
+        else
+            System.out.println("");
+    }
+    public void scan(int barcode){
+
+    }
+    public void displayPrompt(String text){
+        if (text=="Over Limit" || text=="Expired" || text=="Card Not Read"|| text=="Take Card");
+        JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public static void main(String[] args) { // 메인 함수
         FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "./image/1.jpeg", 5000);
         FoodMenu doubleBurger = new FoodMenu("Burger", "더블버거", "./image/2.jpeg", 6000);
         FoodMenu chickenBurger = new FoodMenu("Burger", "치킨버거", "./image/3.jpeg", 5500);
@@ -342,8 +354,5 @@ public class UserPanel {
 
         UserPanel userPanel = new UserPanel();
         userPanel.mainPage(menu, menu.length);
-
-
-
     }
 }

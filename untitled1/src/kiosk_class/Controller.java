@@ -1,6 +1,6 @@
 package kiosk_class;
 
-import gui.OrderConfirmationFrame;
+import gui.UserPanel;
 
 import javax.swing.*;
 public class Controller {
@@ -45,7 +45,8 @@ public class Controller {
             cm.setMenuQuantity(TmenuQuantity);
             cm.setPrice(TmenuPrice);
 
-            OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
+            up.orderConfirmationPage(cm);
+//            OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
 
         }
 
@@ -62,13 +63,13 @@ public class Controller {
     }
 
     public void ACKorNot(CartMenu cm){
-//        for (int i=0; i<cm.num;i++)
-//              System.out.println("카트: "+ cm.getMenuName()[i]);
-      new Order().setTotalPrice(cm);
+        for (int i=0; i<cm.num;i++)
+              System.out.println("카트: "+ cm.getMenuName()[i]);
+//      order.setTotalPrice(cm);
     }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
-        order.setTotalPrice(cm);
+       // order.setTotalPrice(cm);
     }
 
     public void ACKorNot(CardReader cr) {
