@@ -74,6 +74,21 @@ public class Payment {
         }
     }
 
+    public boolean checkBarcode(long barcodeNumber){
+        if (barcodeNumber>0){
+            return true;
+        }
+        return false;
+    }
+    public int checkForValid(long barcodeNumber){
+            boolean isValid=checkBarcode(barcodeNumber);
+            if (isValid){
+                System.out.println("Barcode: valid");
+                return 2;
+            }
+            else
+                return 1;
+    }
 
     public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c, UserPanel up, CartMenu cart, Order order) {
         boolean isOverLimit = checkLimit(cardNumber, totalPrice);
@@ -92,6 +107,28 @@ public class Payment {
         } else {
 //            System.out.println("Payment accepted");
             c.ACKorNot(validNum, up, c, cart, order);
+            return validNum = 2;
+            // 추가적인 처리 (예: 승인 메시지 출력)
+        }
+    }
+
+    public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c, UserPanel up, CartMenu cart, Order order,int barcodePrice) {
+        boolean isOverLimit = checkLimit(cardNumber, totalPrice);
+        boolean isExpired = checkExpiration(cardExpirationDate);
+
+        if (isOverLimit) {
+            System.out.println("Payment declined: overLimit");
+            c.ACKorNot_barcode(validNum, up, c, cart, order,barcodePrice);
+            return validNum = 0;
+            // 추가적인 처리 (예: 거절 메시지 출력)
+        } else if (isExpired) {
+            System.out.println("Payment declined: expired");
+            c.ACKorNot_barcode(validNum, up, c, cart, order,barcodePrice);
+            return validNum = 1;
+            // 추가적인 처리 (예: 거절 메시지 출력)
+        } else {
+//            System.out.println("Payment accepted");
+            c.ACKorNot_barcode(validNum, up, c, cart, order,barcodePrice);
             return validNum = 2;
             // 추가적인 처리 (예: 승인 메시지 출력)
         }
@@ -147,9 +184,17 @@ public class Payment {
         checkForValid(cardNumber,cardExpirationDate,order.getTotalPrice(),c, up, cart, order);
         return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
-
-    public String getBarcodeInfo(int barcodeNum, int barcodeExpirationDate, int barcodePrice, Order order, Controller c) {
-        //checkForValid(barcodeNum,barcodeExpirationDate,order.getTotalPrice(),c);
+    public String getCardInfo(long cardNumber, int cardExpirationDate, Order order, Controller c, UserPanel up, CartMenu cart,int barcodePrice) {
+        checkForValid(cardNumber,cardExpirationDate,order.getTotalPrice(),c, up, cart, order,barcodePrice);
+        return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
+    }
+    public String getBarcodeInfo(long barcodeNum, int barcodeExpirationDate, int barcodePrice, Order order, Controller c,UserPanel up, CartMenu cart) {
+        int n=checkForValid(barcodeNum);
+        if (n==2){
+            System.out.println(2);
+            c.ACKorNot_barcode(2, up, c, cart, order, barcodePrice);}
+        else
+            c.ACKorNot(1, up, c, cart, order);
         return "Barcode Number: " + barcodeNum + " BarcodeExpiration Date: " + barcodeExpirationDate + "BarcodePrice" + barcodePrice;
     }
 }

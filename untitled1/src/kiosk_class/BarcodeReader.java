@@ -1,5 +1,7 @@
 package kiosk_class;
 
+import gui.UserPanel;
+
 public class BarcodeReader {
     private int barcodeNum;
     private boolean isBarcodeScanned;
@@ -26,15 +28,16 @@ public class BarcodeReader {
         return barcodeNum;
     }
     public int handleError;
-    public String inputBarcodeInfo(boolean isBarcodeScanned, Controller c, Payment pay, Order order) {
-        if(this.isBarcodeScanned == isBarcodeScanned) {
+    public String inputBarcodeInfo(boolean isBarcodeScanned, Controller c, Payment pay, Order order, UserPanel up, CartMenu cart) {
+
+            System.out.println("ddd");
             this.barcodeNum = 12345678;
             this.barcodePrice = 5000;
             this.barcodeExpirationDate = 240608;
-            //c.ACKorNot(barcodeNum, barcodeExpirationDate, pay, order, c);
+            System.out.println("ddd");
+            c.ACKorNot_barcode(barcodeNum, barcodeExpirationDate, pay, order, c,up,cart, barcodePrice);
             return successStatus;
-        }
-        return errorStatus;
+
     }
 
 }

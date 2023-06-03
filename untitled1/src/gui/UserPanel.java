@@ -30,9 +30,9 @@ public class UserPanel {
     public JPanel orderContainer = new JPanel();
     public JLabel orderTitleLabel = new JLabel("주문 내역"); // 주문 내역
     public JLabel quantityTitleLabel = new JLabel("수량(개)"); // 수량(개)
-    public JLabel quantityLabel = new JLabel(); // 숫자
+    public JLabel quantityLabel; // 숫자
     public JLabel totalPriceTitleLabel = new JLabel("금액(원)"); // 금액(원)
-    public JLabel totalPriceLabel = new JLabel(); // 숫자
+    public JLabel totalPriceLabel ; // 숫자
     public JButton allOrderCancelBtn = new JButton("전체 취소");
 
 
@@ -87,7 +87,8 @@ public class UserPanel {
     public JLabel printReceiptTitleLabel = new JLabel("<html><body>카드 승인 완료<br />영수증을 출력하시겠습니까?</body></html>\"");
     public JButton receiptYesBtn = new JButton("예");
     public JButton receiptNoBtn = new JButton("아니오");
-
+    public JButton receiptYesBtn2 = new JButton("예");
+    public JButton receiptNoBtn2 = new JButton("아니오");
     // Approval Error Page ------------------------------------------------------------
     public JFrame approvalErrorFrame = new JFrame("Hamburger Kiosk <승인 오류>");
     public JPanel cardApprovalContainer = new JPanel();
@@ -172,6 +173,11 @@ public class UserPanel {
         // Center
         // orderContainer
         // * quantityLabel, totalPriceLabel 설정해야 함
+        int num=0;
+        int price=0;
+
+        quantityLabel=new JLabel(Integer.toString(num));
+        totalPriceLabel=new JLabel(Integer.toString(price));
         orderContainer.add(orderTitleLabel);
         orderContainer.add(quantityTitleLabel);
         orderContainer.add(quantityLabel);
@@ -222,6 +228,15 @@ public class UserPanel {
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
         });
+        couponBtn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress(couponBtn, cart, c,order, UserPanel.this);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
         insertCardBtn.addActionListener(new ActionListener() {
 
             @Override
@@ -231,7 +246,15 @@ public class UserPanel {
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
         });
+        showBarcodeBtn.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress(showBarcodeBtn, cart, c,order, UserPanel.this);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
         //담기버튼
         // 이벤트단
         for (int i = 0; i < menu.length; i++) {
@@ -240,18 +263,31 @@ public class UserPanel {
             pickBtn[index].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int cartNum = c.getCustomerInput(menu[index].getName(),menu[index].getPrice(), index, cart, order, c);
+                    int cartNum = c.getCustomerInput(menu[index].getName(), menu[index].getPrice(), index, cart, order, c);
+                    int num = 0;
+                    int price = 0;
+                    for (int i = 0; i < 10; i++) {
+                        num += cart.getMenuQuantity()[i];
+                        price += cart.getTotalPricePerMenu()[i];
+                    }
+
+                    quantityLabel.setText(Integer.toString(num)); // 수량 라벨의 값을 갱신
+                    totalPriceLabel.setText(Integer.toString(price)); // 총 가격 라벨의 값을 갱신
                     cartMenuContainer.setText("   상품명        단가        수량        합계\n\n");
 
                     for (int i = 0; i < cart.getMenuName().length; i++) {
                         if (cart.getMenuName()[i] != null) {
-
                             cartMenuContainer.append("   " + cart.getMenuName()[i] + "       " + cart.getPrice()[i] + "        "
                                     + cart.getMenuQuantity()[i] + "         " + cart.getTotalPricePerMenu()[i] + "원" + "\n");
                         }
                     }
 
+                    // 컨테이너를 갱신하여 변경된 라벨과 내용을 반영합니다.
+                    userPanelFrame.revalidate();
+                    userPanelFrame.repaint();
                 }
+
+
 
             });
         }
@@ -330,7 +366,88 @@ public class UserPanel {
         orderConfirmationFrame.setVisible(true);
         orderConfirmationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
+    public void orderConfirmationPage(Controller c, CartMenu cart, Order order, int barcodePrice) {
+        // 프레임 설정
 
+        //
+        orderConfirmationFrame.setBounds(0, 0, 625, 1000);
+        // North
+
+        // Center
+        // 주문 목록
+        orderListContainer.setPreferredSize(new Dimension(400, 300));
+        orderListContainer.setBackground(new Color(245,218,223));
+
+        orderListContainer.add(orderProductTitleLabel);
+        orderListContainer.add(orderProductQuantityTitleLabel);
+        orderListContainer.add(orderProductAmountTitleLabel);
+
+        // 장바구니 값 가져오기
+        for (int i = 0; i < 10; i++) {
+            if (cart.getMenuQuantity()[i]!=0){
+                orderProductLabel = new JLabel(cart.getMenuName()[i]); // 주문 제품
+                orderProductQuantityLabel = new JLabel(Integer.toString(cart.getMenuQuantity()[i])); // 수량
+                orderProductAmountLabel = new JLabel(Integer.toString(cart.getPrice()[i] * cart.getMenuQuantity()[i]));
+
+                orderListContainer.add(orderProductLabel);
+                orderListContainer.add(orderProductQuantityLabel);
+                orderListContainer.add(orderProductAmountLabel);
+            }
+        }
+
+        // 주문 금액
+        c.ACKorNot(cart, order);
+        orderAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()));
+//        System.out.println(order.getTotalPrice());
+        discountAmountLabel=new JLabel(Integer.toString(barcodePrice));
+        totalPaymentAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()-barcodePrice));
+        orderConfirmationContainer.add(orderAmountTitleLabel);
+        orderConfirmationContainer.add(orderAmountLabel);
+        orderConfirmationContainer.add(discountAmountTitleLabel);
+        orderConfirmationContainer.add(discountAmountLabel);
+        orderConfirmationContainer.add(totalPaymentAmountTitleLabel);
+        orderConfirmationContainer.add(totalPaymentAmountLabel);
+
+
+        // 버튼(결제, 취소)
+        orderConfirmationBtnContainer.add(orderCancelBtn);
+        orderConfirmationBtnContainer.add(finalpaymentBtn);
+
+        orderConfirmationCenterContainer.add("North", orderListContainer);
+        orderConfirmationCenterContainer.add("Center", orderConfirmationContainer);
+        orderConfirmationCenterContainer.add("South", orderConfirmationBtnContainer);
+
+        // South
+
+        // 컴포넌트
+        orderConfirmationFrame.add("North",orderConfirmationTitleLabel);
+        orderConfirmationFrame.add("Center",orderConfirmationCenterContainer);
+        orderConfirmationFrame.add("South",physicalPartsContainer);
+
+        orderConfirmationFrame.setVisible(true);
+        orderConfirmationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+
+//        insertCardBtn.addActionListener(new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) { //여기진짜이상함..어떻게해야할지모르겟음..
+//                getBtnPress_barcode(insertCardBtn, cart, c,order, UserPanel.this,5000);
+////                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+////                userPanelFrame.setVisible(false); // 창 안보이게 하기
+//            }
+//        });
+        insertCardBtn.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) { //여기진짜이상함..어떻게해야할지모르겟음..
+                getBtnPress_barcode(insertCardBtn, cart, c,order, UserPanel.this,barcodePrice);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
+
+
+    }
     // Order Complete Page
     public void orderCompletePage() {
         orderCompleteFrame.setBounds(0, 0, 625, 1000);
@@ -395,7 +512,43 @@ public class UserPanel {
         });
 
     }
+    public void isReceiptPrintPage_barcode(Controller c, CartMenu cart, Order order,UserPanel up, int barcodePrice) {
+        isReceiptPrintFrame.setBounds(0, 0, 625, 1000);
 
+        printReceiptContainer.setBorder(new EmptyBorder(350, 100, 500, 100)); // Add top margin
+        JLabel printReceiptTitleLabel2 = new JLabel("<html><body>바코드 승인 완료<br />영수증을 출력하시겠습니까?</body></html>\"");
+
+        printReceiptContainer.add(printReceiptTitleLabel2);
+        printReceiptContainer.add(new JPanel());
+        printReceiptContainer.add(receiptYesBtn2);
+        printReceiptContainer.add(receiptNoBtn2);
+//        isReceiptPrintFrame.add("North", printReceiptTitleLabel);
+        isReceiptPrintFrame.add("Center", printReceiptContainer);
+        isReceiptPrintFrame.add("South", physicalPartsContainer);
+
+        isReceiptPrintFrame.setVisible(true);
+        isReceiptPrintFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+
+        receiptYesBtn2.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress_barcode(receiptYesBtn2, cart, c,order, up, barcodePrice);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
+        receiptNoBtn2.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getBtnPress(receiptNoBtn2, cart, c,order, up);
+//                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
+//                userPanelFrame.setVisible(false); // 창 안보이게 하기
+            }
+        });
+
+    }
     // Approval Error Page
     public void approvalErrorPage(String text) {
         approvalErrorFrame.setBounds(0, 0, 625, 1000);
@@ -412,6 +565,20 @@ public class UserPanel {
         approvalErrorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
 
+    public void getBtnPress_barcode(JButton button, CartMenu cart, Controller c,Order order, UserPanel up, int barcodePrice){
+
+        if (button.getText()=="예"){
+            c.accept_barcode(button, cart, order, up,barcodePrice);
+        }
+        else if (button.getText()=="아니오"){
+            c.accept_barcode(button, cart, order, up,barcodePrice);
+        }
+        else if (button.getText()=="카드 리더기"){
+            c.accept_barcode(button, cart, order, up,barcodePrice);
+        }
+        else
+            c.accept_barcode(button, cart, order, up,barcodePrice);
+    }
     // operation
     public void getBtnPress(JButton button, CartMenu cart, Controller c,Order order, UserPanel up){
         if (button.getText()=="카드결제") {
@@ -419,19 +586,15 @@ public class UserPanel {
             c.accept(button, cart, order, up);
             userPanelFrame.setVisible(false);
         }
-//            public void getBtnPress(JButton button){
-//        if (button.getText()=="결제"){
-//            Controller controllerObject = new Controller();
-//            controllerObject.accept(button);
-//        }
-
         else if (button.getText()=="카드"){
            c.accept(true,up);
         }
-        else if (button.getText()=="기프티콘"){
-
+        else if (button.getText()=="쿠폰"){
+            c.accept(button, cart, order, up);
+            userPanelFrame.setVisible(false);
         }
         else if (button.getText()=="예"){
+
             c.accept(button, cart, order, up);
         }
         else if (button.getText()=="아니오"){
@@ -444,10 +607,18 @@ public class UserPanel {
             else
                 c.accept(insertCardBtn, cart,order, up);
         }
+        else if (button.getText()=="바코드 인식"){
+            if (cart.getNum()==0){// 카트에 물건 없음
+                //
+            }
+            else
+                c.accept(showBarcodeBtn, cart,order, up);
+        }
         else
             System.out.println("");
     }
-    public void scan(int barcode){
+    public void scan(JButton button, CartMenu cart, Controller c,Order order, UserPanel up){
+        c.accept(button, cart, order, up);
 
     }
     public void displayPrompt(String text, UserPanel up){
@@ -458,12 +629,30 @@ public class UserPanel {
 
 
 
+
     }
     public void displayPrompt(String text, UserPanel up, Controller c, CartMenu cart, Order order){
-        if (text=="영수증받말"){
+        if (text=="영수증받말"  ){
             up.isReceiptPrintPage(c, cart, order,up);
         }
+
+
     }
+
+    public void displayPrompt(String text, UserPanel up, Controller c, CartMenu cart, Order order, int barcodePrice){
+        if (text=="남은 잔액 결제(카드) -카드리더기 클릭해주세요"){
+             up.orderConfirmationPage(c, cart, order, barcodePrice);}
+        else if (text=="Barcode Enabled")
+            up.isReceiptPrintPage_barcode(c, cart, order,up,barcodePrice);
+        else if (text=="영수증받말"  ){
+            up.isReceiptPrintPage_barcode(c, cart, order,up,barcodePrice);
+        }
+
+
+    }
+
+
+
     public static void main(String[] args) { // 메인 함수
         FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "./image/1.jpeg", 5000);
         FoodMenu doubleBurger = new FoodMenu("Burger", "더블버거", "./image/2.jpeg", 6000);
