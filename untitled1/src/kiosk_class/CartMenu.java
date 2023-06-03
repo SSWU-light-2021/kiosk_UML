@@ -12,7 +12,7 @@ public class CartMenu {
         return menuQuantity;
     }
 
-    public void setMenuQuantity (int menuQuantity) {
+    public void setMenuQuantity (int[] menuQuantity) {
         for (int i = 0; i < 10; i++) {
             this.menuQuantity[i] = menuQuantity[i];
         }
