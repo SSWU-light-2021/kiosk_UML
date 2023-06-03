@@ -9,9 +9,8 @@ public class Controller {
     BarcodeReader br = new BarcodeReader();
     Payment pay = new Payment();
 
-    public int getCustomerInput(String menuName, int menuPrice, CartMenu cart, Order order, Controller c) {
-        int cartNum = cart.addCartMenu(menuName, menuPrice, order, c);
-//        System.out.println(menuName+ menuPrice);
+    public int getCustomerInput(String menuName, int menuPrice, int index, CartMenu cart, Order order, Controller c) {
+        int cartNum = cart.addCartMenu(menuName, menuPrice, index, order, c);
         return cartNum;
     }
     public void accept (JButton Btn, CartMenu cart, Order order, UserPanel up){

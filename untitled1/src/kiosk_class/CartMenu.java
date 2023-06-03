@@ -58,46 +58,45 @@ public class CartMenu {
 
     }
 
-    public int addCartMenu(String menuName, int price, Order order, Controller c) { //controller->CartMenu 메뉴받아오기
-        this.menuName[num]=menuName;
-        this.price[num]=price;
-        // 수량 저장
-        int p=0; //임시배열인덱스
-        int TmenuQuantity[]={0,0,0,0,0,0,0,0,0,0};
-        String TmenuName[]=new String[10];
-        int TmenuPrice[]=new int[10];
-        int isin=0;
-        for (int i=0;i<num;i++){
-            for (int z=0; z<p;z++){
-                if (this.menuName[z] != null && TmenuName[z].equals(this.menuName[i])) { // 중복될 때
-                    TmenuQuantity[z]++; // 중복된 메뉴의 수량을 증가
-                    isin = 1;
-                    break;}
-            }
-            if(isin==0){ // 중복 안 될 때
-                TmenuName[p]=this.menuName[i];
-             //   System.out.println("!!!!!!!!!"+this.menuName[i]);
-                TmenuPrice[p]=this.price[i];
-                TmenuQuantity[p] += 1;
-                p++;
-               // System.out.println("--메뉴추가--");
-                //System.out.println("p: "+p+ " 메뉴명: "+TmenuName[p-1]+ " 가격: "+TmenuPrice[p-1]);
-            }
-            isin=0;
+    public int addCartMenu(String menuName, int price, int index, Order order, Controller c) { //controller->CartMenu 메뉴받아오기
+        // 중복 체크
+        if (this.menuName[index] != null && this.menuName[index].equals(menuName)) {
+            menuQuantity[index]++;
+            setTotalPricePerMenu(index);
+            c.ACKorNot(this, order);
+            return index;
         }
-//        System.out.println("cartmenu "+ this.menuName[num]);
+
+        // 중복되지 않은 메뉴일 경우
+        this.menuName[index] = menuName;
+        this.price[index] = price;
+        menuQuantity[index] = 1;
+        setTotalPricePerMenu(index);
+
         c.ACKorNot(this, order);
-        return num++;
+        return index;
     }
 
     public int[] getTotalPricePerMenu() {
-        this.setTotalPricePerMenu();
         return totalPricePerMenu;
     }
 
-    public void setTotalPricePerMenu() {
-        for (int i = 0; i < 10; i++) {
-            totalPricePerMenu[i] = price[i] * menuQuantity[i];
-        }
+    public void setTotalPricePerMenu(int num) {
+        totalPricePerMenu[num] = price[num] * menuQuantity[num];
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

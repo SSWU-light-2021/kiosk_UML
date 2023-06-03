@@ -115,7 +115,7 @@ public class UserPanel {
         physicalPartsContainer.add(showBarcodeBtn);
     }
 
-    // Frame
+    // Page
     // Main Page
     public void mainPage(FoodMenu[] menu, int menu_length, CartMenu cart, Controller c, Order order, UserPanel up) {
         // 프레임 설정
@@ -231,6 +231,7 @@ public class UserPanel {
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
         });
+
         //담기버튼
         // 이벤트단
         for (int i = 0; i < menu.length; i++) {
@@ -239,14 +240,24 @@ public class UserPanel {
             pickBtn[index].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    int cartNum = c.getCustomerInput(menu[index].getName(),menu[index].getPrice(), cart, order, c);
-                   // System.out.println(cart.getMenuName()[cartNum]);
-                    cartMenuContainer.append("   " + cart.getMenuName()[cartNum] + "       " + cart.getPrice()[cartNum] + "        "
-                            + cart.getMenuQuantity()[cartNum] + "         " + cart.getTotalPricePerMenu()[cartNum] + "원" + "\n");
+                    int cartNum = c.getCustomerInput(menu[index].getName(),menu[index].getPrice(), index, cart, order, c);
+                    cartMenuContainer.setText("   상품명        단가        수량        합계\n\n");
+
+                    for (int i = 0; i < cart.getMenuName().length; i++) {
+                        if (cart.getMenuName()[i] != null) {
+                            cartMenuContainer.append("   " + cart.getMenuName()[i] + "       " + cart.getPrice()[i] + "        "
+                                    + cart.getMenuQuantity()[i] + "         " + cart.getTotalPricePerMenu()[i] + "원" + "\n");
+                        }
+                    }
                 }
 
             });
         }
+        /*
+       
+        같은 getMenuName을 가진 버튼이 눌리면 원래 append되어 있던 text를 지우고 새로 작성해줘.
+         */
+
         // 카드 버튼
         insertCardBtn.addActionListener(new ActionListener() {
 
@@ -479,7 +490,6 @@ public class UserPanel {
 //        userPanel.orderCompletePage();
 //        userPanel.insertCardPage();
 //        userPanel.isReceiptPrintPRage();
-    //    userPanel.approvalErrorPage();
-
+//        userPanel.approvalErrorPage();
     }
 }
