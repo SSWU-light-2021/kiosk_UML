@@ -35,13 +35,11 @@ public int getNum(){
     }
 
     public int getTotalPrice() {
-        totalPrice=0;
-        for (int i=0; i<num;i++){
-            totalPrice+=menuQuantity[i]*price[i];
-        }
         return totalPrice;
     }
-
+    public void setTotalPrice(int num){
+        this.totalPrice=num;
+    }
 
     public void addCartMenu() {
 
