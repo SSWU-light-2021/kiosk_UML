@@ -49,13 +49,16 @@ public class Controller {
 //            OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
 
         }
+        else if(btnText.equals("예")) {
+            long cardNumber = cr.getCardNumber();
+            int totalPrice = order.getTotalPrice();
+            //this.pay.getPaymentInfo(cartItems, totalPrice); 수정 요망
+        }
+        else if(btnText.equals("아니요")) {
+        up.displayPrompt("주문완료");
+        }
 
     }
-
-
-
-
-
 
     public void accept (boolean card) {
         this.cr.inputCardInfo(card);
@@ -82,7 +85,9 @@ public class Controller {
         int cardExpirationDate = cr.getCardExpirationDate();
         int totalPrice = order.getTotalPrice();
         int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice);
-        if(validNum == 0 || validNum == 1 ) up.displayPrompt("결제 취소되었습니다.");
+
+        if(validNum == 0 ) up.displayPrompt("한도초과 되었습니다");
+        else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.");
         else up.displayPrompt("영수증을 출력하시겠습니까?");
     }
     //public void accept(JButton Btn) {
@@ -100,9 +105,7 @@ public class Controller {
 
     //}
     //order.setTotalPrice(cm);
-public void displayPrompt(String msg) {
-    System.out.println(msg);
-}
+
     public void receiveReceipt(String[]receipt) {
 
     }

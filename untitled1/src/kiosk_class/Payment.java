@@ -145,4 +145,8 @@ public class Payment {
     public String getCardInfo(long cardNumber, int cardExpirationDate) {
         return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
+    public String getPaymentInfo(CartMenu cartItems, int totalPrice) {
+        return  "aaa";
+    }
+
 }
