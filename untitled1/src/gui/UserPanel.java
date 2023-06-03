@@ -5,12 +5,13 @@ import kiosk_class.Controller;
 import kiosk_class.FoodMenu;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UserPanel {
-
+    // Main Page --------------------------------------------------------------------
     public JFrame userPanelFrame = new JFrame("Hamburger Kiosk");
 
     public JPanel userPanelCenterContainer = new JPanel(new BorderLayout());
@@ -41,7 +42,7 @@ public class UserPanel {
     public JButton paymentBtn = new JButton("결제");
     public JButton couponBtn = new JButton("쿠폰");
 
-    // Order Confirmation Frame -----------------------------------------------------------
+    // Order Confirmation Page -----------------------------------------------------------
     public JFrame orderConfirmationFrame = new JFrame("Hamburger Kiosk <주문 확인>");
     public JLabel orderConfirmationTitleLabel = new JLabel("<주문 확인>");
 
@@ -69,20 +70,23 @@ public class UserPanel {
     public JButton orderCancelBtn = new JButton("취소");
     public JButton finalpaymentBtn = new JButton("결제");
 
-    // 결제 완료 Page
-    public JPanel orderCompleteContainer;
-    public JLabel orderCompleteTitleLabel;
+    // Order Complete Page ------------------------------------------------
+    public JFrame orderCompleteFrame = new JFrame("Hamburger Kiosk <주문 완료>");
+    public JPanel orderCompleteContainer = new JPanel();
+    public JLabel orderCompleteTitleLabel = new JLabel("주문 완료");
+
+    // 카드삽입 Page ------------------------------------------------------------
+    public JFrame insertCardFrame = new JFrame("Hamburger Kiosk <카드 삽입>");
+    public JPanel insertCardContainer = new JPanel(new GridLayout(2,1));
+    public JLabel insertCardTitleLabel = new JLabel("카드를 삽입해주세요.");
+    public JPanel finalOrderAmountContainer = new JPanel();
+    public JLabel finalOrderAmountTitleLabel = new JLabel("결제금액");
+    public JLabel finalOrderAmountLabel;
 
     //쿠폰 스캔
     public JPanel scanCouponContainer;
     public JLabel scanCouponLabel;
     public JButton scanCouponOrderCancelBtn;
-
-    // 카드삽입
-    public JPanel insertCardContainer;
-    public JLabel insertCardTitleLabel;
-    public JLabel finalOrderAmountTitleLabel;
-    public JLabel finalOrderAmountLabel;
 
     //승인여부
     public JPanel cardApprovalContainer;
@@ -311,6 +315,37 @@ public class UserPanel {
         orderConfirmationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
 
+    // Order Complete Page
+    public void orderCompletPage() {
+        orderCompleteFrame.setBounds(0, 0, 625, 1000);
+
+        // Panel
+        orderCompleteContainer.setBorder(new EmptyBorder(300, 0, 0, 0)); // Add top margin
+        orderCompleteTitleLabel.setFont(font_bold);
+        orderCompleteContainer.add(orderCompleteTitleLabel);
+
+        // Frame 컴포넌트
+        orderCompleteFrame.add("Center",orderCompleteContainer);
+        orderCompleteFrame.setVisible(true);
+        orderCompleteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+    }
+
+    // Insert Card Page
+    public void insertCardFrame() {
+        insertCardFrame.setBounds(0, 0, 625, 1000);
+
+        insertCardContainer.setBorder(new EmptyBorder(300, 0, 0, 0)); // Add top margin
+        insertCardContainer.add(insertCardTitleLabel);
+
+        finalOrderAmountContainer.add(finalOrderAmountTitleLabel);
+        finalOrderAmountContainer.add(finalOrderAmountLabel);
+        insertCardContainer.add(finalOrderAmountContainer);
+
+        insertCardFrame.add(insertCardContainer);
+        orderCompleteFrame.setVisible(true);
+        orderCompleteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+    }
+
     // operation
     public void getBtnPress(JButton button){
         if (button.getText()=="결제"){
@@ -354,5 +389,7 @@ public class UserPanel {
 
         UserPanel userPanel = new UserPanel();
         userPanel.mainPage(menu, menu.length);
+        userPanel.orderCompletPage();
+        userPanel.insertCardFrame();
     }
 }
