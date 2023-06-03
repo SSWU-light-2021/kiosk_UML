@@ -23,7 +23,7 @@ public class Order {
         for (int i=0;i<cm.getMenuName().length;i++) {
             totalPrice+=cm.getMenuQuantity()[i]* cm.getPrice()[i];
         }
-//        cm.setTotalPrice(totalPrice);
+        cm.setTotalPrice(totalPrice);
         controller.ACKorNot(cm,totalPrice);
     }
 
