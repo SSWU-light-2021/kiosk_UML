@@ -20,8 +20,8 @@ public class Controller {
         if (btnText.equals("결제")) {
             System.out.println("카드넣어");
 //            displayPrompt("Input Card");
-            //cartmenu {치즈버거,치즈버거,김치버거} -> 치즈2, 김치1 변경
 
+            //cartmenu {치즈버거,치즈버거,김치버거} -> 치즈2, 김치1 변경
             int p=0; //임시배열인덱스
              int TmenuQuantity[]={0,0,0,0,0,0,0,0,0,0};
              String TmenuName[]=new String[10];
@@ -51,11 +51,6 @@ public class Controller {
         }
 
     }
-
-
-
-
-
 
     public void accept (boolean card) {
         this.cr.inputCardInfo(card);
