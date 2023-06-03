@@ -118,11 +118,11 @@ public class Payment {
         int expirationYear = cardExpirationDate / 100;
         int expirationMonth = cardExpirationDate % 100;
         if (expirationYear < currentYear) {
-            return true; // 유효 기간 만료
+            return false; // 유효 기간 만료
         } else if (expirationYear == currentYear && expirationMonth < currentMonth) {
-            return true; // 유효 기간 만료
+            return false; // 유효 기간 만료
         } else {
-            return false; // 유효 기간 유지
+            return true; // 유효 기간 유지
         }
     }
 
@@ -154,8 +154,8 @@ public class Payment {
         return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
 
-    public String getBarcodeInfo(BarcodeReader barcodeNum, BarcodeReader barcodeExpirationDate, BarcodeReader barcodePrice) {
+    public String getBarcodeInfo(int barcodeNum, int barcodeExpirationDate, int barcodePrice, Order order, Controller c) {
+        checkForValid(barcodeNum,barcodeExpirationDate,order.getTotalPrice(),c);
         return "Barcode Number: " + barcodeNum + " BarcodeExpiration Date: " + barcodeExpirationDate + "BarcodePrice" + barcodePrice;
     }
-    public
 }

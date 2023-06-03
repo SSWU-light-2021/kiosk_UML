@@ -65,7 +65,9 @@ public class Controller {
         else if (btnText.equals("카드 리더기")){
             cr.inputCardInfo(true,this,pay, order);
         }
-
+        else if(btnText.equals("바코드")) {
+            br.inputBarcodeInfo(true,this,pay, order);
+        }
     }
     public void receiveReceipt(CartMenu cm, Order totalPrice, String time) {
         for(int i = 0; i<cm.getNum(); i++) {
@@ -86,6 +88,9 @@ public class Controller {
     }
     public void ACKorNot(long cardN,int Ex, Payment pay, Order order, Controller c){
         pay.getCardInfo(cardN,Ex, order,c);
+    }
+    public void ACKorNot(int barcodeNum, int barcodeExpirationDate, int barcodePrice, Order order, Controller c) {
+        pay.getBarcodeInfo(barcodeNum, barcodeExpirationDate, barcodePrice, order, c);
     }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
