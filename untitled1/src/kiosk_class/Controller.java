@@ -17,8 +17,8 @@ public class Controller {
         if (btnText.equals("카드결제")) {
 //            System.out.println("카드넣어");
 //            displayPrompt("Input Card");
-            //cartmenu {치즈버거,치즈버거,김치버거} -> 치즈2, 김치1 변경
 
+            //cartmenu {치즈버거,치즈버거,김치버거} -> 치즈2, 김치1 변경
             int p=0; //임시배열인덱스
              int TmenuQuantity[]={0,0,0,0,0,0,0,0,0,0};
              String TmenuName[]=new String[10];
@@ -52,15 +52,19 @@ public class Controller {
               System.out.println(cart.getMenuName()[i]);
               System.out.println("수량: "+cart.getMenuQuantity()[i]);}
         }
+        else if(btnText.equals("예")) {
+            long cardNumber = cr.getCardNumber();
+            int totalPrice = order.getTotalPrice();
+            //this.pay.getPaymentInfo(cartItems, totalPrice); 수정 요망
+        }
+        else if(btnText.equals("아니요")) {
+        up.displayPrompt("주문완료");
+        }
 
     }
 
-
-
-
-
-
     public void accept (boolean card, UserPanel up) {
+
         this.cr.inputCardInfo(card);
         up.displayPrompt("Insert Card");
     }
@@ -84,7 +88,9 @@ public class Controller {
         int cardExpirationDate = cr.getCardExpirationDate();
         int totalPrice = order.getTotalPrice();
         int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice);
-        if(validNum == 0 || validNum == 1 ) up.displayPrompt("결제 취소되었습니다.");
+
+        if(validNum == 0 ) up.displayPrompt("한도초과 되었습니다");
+        else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.");
         else up.displayPrompt("영수증을 출력하시겠습니까?");
     }
     //public void accept(JButton Btn) {
@@ -102,9 +108,7 @@ public class Controller {
 
     //}
     //order.setTotalPrice(cm);
-public void displayPrompt(String msg) {
-    System.out.println(msg);
-}
+
     public void receiveReceipt(String[]receipt) {
 
     }

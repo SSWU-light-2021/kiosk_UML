@@ -6,6 +6,7 @@ public class Order {
     private int totalPrice;
     private int totalQuantities;
     Controller controller;
+
     public Order() {
         orderId = ++orderIdCounter;
     }
