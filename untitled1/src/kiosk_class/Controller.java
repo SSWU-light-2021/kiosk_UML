@@ -22,8 +22,6 @@ public class Controller {
             up.userPanelFrame.setVisible(false);
             JOptionPane.showMessageDialog(null, "카드리더기 버튼을 클릭해 카드를 넣어주세요", "알림", JOptionPane.INFORMATION_MESSAGE);
 
-
-
             //cartmenu {치즈버거,치즈버거,김치버거} -> 치즈2, 김치1 변경
             int p=0; //임시배열인덱스
              int TmenuQuantity[]={0,0,0,0,0,0,0,0,0,0};
@@ -45,7 +43,6 @@ public class Controller {
                 }
                 isin=0;
             }
-
             order.setTotalPrice(cart,this);
             up.orderConfirmationPage(this,cart, order);
           //  OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);

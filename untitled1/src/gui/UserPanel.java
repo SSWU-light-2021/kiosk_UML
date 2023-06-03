@@ -117,12 +117,12 @@ public class UserPanel {
 
     // Page
     // Main Page
-    public void mainPage(FoodMenu[] menu, int menu_length, CartMenu cart, Controller c, Order order, UserPanel up) {
+    public void mainPage(FoodMenu[] menu, int menu_length, CartMenu cart, Controller c, Order order) {
         // 프레임 설정
         userPanelFrame.setBounds(0, 0, 625, 1000);
 
         // North
-        foodMenuContainer.setBackground(new Color(180,216,231));
+        foodMenuContainer.setBackground(new Color(245,218,223));
         foodMenuContainer.setLayout(null);
         foodMenuContainer.setPreferredSize(new Dimension(600, 500));
         foodMenuContainer.setFont(font_sans);
@@ -187,7 +187,7 @@ public class UserPanel {
 
         // paymentContainer
         paymentContainer.setFont(font_sans);
-        paymentContainer.setBackground(new Color(180,216,231));
+        paymentContainer.setBackground(new Color(245,218,223));
         paymentContainer.add(paymentBtn);
         paymentContainer.add(couponBtn);
 
@@ -217,7 +217,7 @@ public class UserPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                getBtnPress(paymentBtn, cart, c,order, up);
+                getBtnPress(paymentBtn, cart, c,order, UserPanel.this);
 //                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
@@ -226,7 +226,7 @@ public class UserPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                getBtnPress(insertCardBtn, cart, c,order, up);
+                getBtnPress(insertCardBtn, cart, c,order, UserPanel.this);
 //                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
@@ -250,6 +250,7 @@ public class UserPanel {
                                     + cart.getMenuQuantity()[i] + "         " + cart.getTotalPricePerMenu()[i] + "원" + "\n");
                         }
                     }
+
                 }
 
             });
@@ -260,7 +261,7 @@ public class UserPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                getBtnPress(insertCardBtn, cart, c,order, up);
+                getBtnPress(insertCardBtn, cart, c,order, UserPanel.this);
 //                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
             }
@@ -278,7 +279,7 @@ public class UserPanel {
         // Center
         // 주문 목록
         orderListContainer.setPreferredSize(new Dimension(400, 300));
-        orderListContainer.setBackground(new Color(180,216,231));
+        orderListContainer.setBackground(new Color(245,218,223));
 
         orderListContainer.add(orderProductTitleLabel);
         orderListContainer.add(orderProductQuantityTitleLabel);
@@ -479,7 +480,7 @@ public class UserPanel {
         Order order=new Order();
         UserPanel userPanel = new UserPanel();
 
-        userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
+        userPanel.mainPage(menu, menu.length, cart, c, order);
 
 //
 //        userPanel.orderCompletePage();
