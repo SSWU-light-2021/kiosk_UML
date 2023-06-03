@@ -19,12 +19,12 @@ public class Order {
         return totalPrice;
     }
 
-    public void setTotalPrice(CartMenu cm) {
-        for (int i=0;i<cm.getMenuName().length;i++) {
-            totalPrice+=cm.getMenuQuantity()[i]* cm.getPrice()[i];
+    public void setTotalPrice(CartMenu cm, Controller c) {
+        for (int i=0; i < cm.getTotalPricePerMenu().length; i++) {
+            totalPrice += cm.getTotalPricePerMenu()[i];
         }
-        cm.setTotalPrice(totalPrice);
-        controller.ACKorNot(cm,totalPrice);
+        System.out.println("Order: " + totalPrice);
+        c.ACKorNot(cm,totalPrice);
     }
 
     public int getTotalQuantities() {

@@ -4,21 +4,18 @@ import gui.UserPanel;
 
 import javax.swing.*;
 public class Controller {
-    UserPanel up = new UserPanel();
-    CartMenu cm = new CartMenu();
-    Order order = new Order();
 
     CardReader cr = new CardReader();
     BarcodeReader br = new BarcodeReader();
     Payment pay = new Payment();
-    public  void getCustomerInput(String menuName, int menuPrice) {
-        this.cm.getMenu(menuName, menuPrice);
+    public  void getCustomerInput(String menuName, int menuPrice, CartMenu cart, Order order, Controller c) {
+        cart.getMenu(menuName, menuPrice, order, c);
         System.out.println(menuName+ menuPrice);
     }
-    public void accept (JButton Btn){
+    public void accept (JButton Btn, CartMenu cart, Order order, UserPanel up){
         String btnText = Btn.getText();
-        if (btnText.equals("결제")) {
-            System.out.println("카드넣어");
+        if (btnText.equals("카드결제")) {
+//            System.out.println("카드넣어");
 //            displayPrompt("Input Card");
 
             //cartmenu {치즈버거,치즈버거,김치버거} -> 치즈2, 김치1 변경
@@ -27,27 +24,33 @@ public class Controller {
              String TmenuName[]=new String[10];
             int TmenuPrice[]=new int[10];
              int isin=0;
-            for (int i=0;i<cm.getNum();i++){
-                for (int z=0; z<TmenuName.length;z++){
-                    if (TmenuName[z]==cm.getMenuName()[i]) {
-                        TmenuQuantity[z]++;  isin=1; break;
-                    }
+            for (int i=0;i<cart.getNum();i++){
+                for (int z=0; z<p;z++){
+                    if (TmenuName[z] != null && TmenuName[z].equals(cart.getMenuName()[i])) {
+                        TmenuQuantity[z]++; // 중복된 메뉴의 수량을 증가
+                        isin = 1;
+                        break;}
                 }
                 if(isin==0){
-                    TmenuName[p]=cm.getMenuName()[i];
-                    TmenuPrice[p]=cm.getPrice()[i];
+                    TmenuName[p]=cart.getMenuName()[i];
+                    System.out.println("!!!!!!!!!"+cart.getMenuName()[i]);
+                    TmenuPrice[p]=cart.getPrice()[i];
                     TmenuQuantity[p]+=1;
                     p++;
+                    System.out.println("--메뉴추가--");
+                    System.out.println("p: "+p+ " 메뉴명: "+TmenuName[p-1]+ " 가격: "+TmenuPrice[p-1]);
                 }
                 isin=0;
             }
-            cm.setMenuName(TmenuName);
-            cm.setMenuQuantity(TmenuQuantity);
-            cm.setPrice(TmenuPrice);
-
-            up.orderConfirmationPage(cm);
-//            OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
-
+            cart.setMenuName(TmenuName);
+            cart.setMenuQuantity(TmenuQuantity);
+            cart.setPrice(TmenuPrice);
+            cart.setNum(p);
+            up.orderConfirmationPage(this,cart, order);
+          //  OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
+        for (int i=0; i<cart.num;i++){
+              System.out.println(cart.getMenuName()[i]);
+              System.out.println("수량: "+cart.getMenuQuantity()[i]);}
         }
         else if(btnText.equals("예")) {
             long cardNumber = cr.getCardNumber();
@@ -62,15 +65,14 @@ public class Controller {
         }
     }
 
-    public void accept (boolean card) {
+    public void accept (boolean card, UserPanel up) {
+
         this.cr.inputCardInfo(card);
         up.displayPrompt("Insert Card");
     }
 
-    public void ACKorNot(CartMenu cm){
-        for (int i=0; i<cm.num;i++)
-              System.out.println("카트: "+ cm.getMenuName()[i]);
-//      order.setTotalPrice(cm);
+    public void ACKorNot(CartMenu cart, Order order){
+      order.setTotalPrice(cart,this);
     }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
@@ -82,7 +84,7 @@ public class Controller {
         int cardExpirationDate = cr.getCardExpirationDate();
         pay.getCardInfo(cardNumber, cardExpirationDate);
     }
-    public void ACKorNot(Payment pay) {
+    public void ACKorNot(Payment pay, Order order, UserPanel up) {
         long cardNumber = cr.getCardNumber();
         int cardExpirationDate = cr.getCardExpirationDate();
         int totalPrice = order.getTotalPrice();
