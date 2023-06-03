@@ -31,7 +31,7 @@ public class BarcodeReader {
             this.barcodeNum = 12345678;
             this.barcodePrice = 5000;
             this.barcodeExpirationDate = 240608;
-            c.ACKorNot(barcodeNum, barcodeExpirationDate, pay, order, c);
+            //c.ACKorNot(barcodeNum, barcodeExpirationDate, pay, order, c);
             return successStatus;
         }
         return errorStatus;

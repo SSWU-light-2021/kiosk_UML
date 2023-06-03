@@ -159,7 +159,7 @@ public class Payment {
     }
 
     public String getBarcodeInfo(int barcodeNum, int barcodeExpirationDate, int barcodePrice, Order order, Controller c) {
-        checkForValid(barcodeNum,barcodeExpirationDate,order.getTotalPrice(),c);
+        //checkForValid(barcodeNum,barcodeExpirationDate,order.getTotalPrice(),c);
         return "Barcode Number: " + barcodeNum + " BarcodeExpiration Date: " + barcodeExpirationDate + "BarcodePrice" + barcodePrice;
     }
 }
