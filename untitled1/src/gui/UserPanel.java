@@ -80,25 +80,23 @@ public class UserPanel {
     public JFrame insertCardFrame = new JFrame("Hamburger Kiosk <카드 삽입>");
     public JPanel insertCardContainer = new JPanel(new GridLayout(2,1));
     public JLabel insertCardTitleLabel = new JLabel("카드를 삽입해주세요.");
-    public JPanel finalOrderAmountContainer = new JPanel();
-    public JLabel finalOrderAmountTitleLabel = new JLabel("결제금액");
-    public JLabel finalOrderAmountLabel;
 
-    // 결제완료. 영수증출력여부 묻기기
+    // Is Receipt print Page ------------------------------------------------------------
     public JFrame isReceiptPrintFrame = new JFrame("Hamburger Kiosk <영수증>");
-    public JPanel printReceiptContainer = new JPanel();
+    public JPanel printReceiptContainer = new JPanel(new GridLayout(2,2));
     public JLabel printReceiptTitleLabel = new JLabel("영수증을 출력하시겠습니까?");
     public JButton receiptYesBtn = new JButton("예");
     public JButton receiptNoBtn = new JButton("아니오");
+
+    // Approval Error Page ------------------------------------------------------------
+    public JFrame approvalErrorFrame = new JFrame("Hamburger Kiosk <승인 오류>");
+    public JPanel cardApprovalContainer = new JPanel();
+    public JLabel approvalErrorTitleLabel = new JLabel("승인 오류");
 
     //쿠폰 스캔
     public JPanel scanCouponContainer;
     public JLabel scanCouponLabel;
     public JButton scanCouponOrderCancelBtn;
-
-    //승인여부
-    public JPanel cardApprovalContainer;
-    public JLabel approvalErrorTitleLabel;
 
     // 물리적인 장치
     public JPanel physicalPartsContainer = new JPanel(new GridLayout(2,2));
@@ -327,7 +325,7 @@ public class UserPanel {
         orderCompleteFrame.setBounds(0, 0, 625, 1000);
 
         // Panel
-        orderCompleteContainer.setBorder(new EmptyBorder(300, 0, 0, 0)); // Add top margin
+        orderCompleteContainer.setBorder(new EmptyBorder(400, 0, 0, 0)); // Add top margin
         orderCompleteTitleLabel.setFont(font_bold);
         orderCompleteContainer.add(orderCompleteTitleLabel);
 
@@ -341,14 +339,11 @@ public class UserPanel {
     public void insertCardPage() {
         insertCardFrame.setBounds(0, 0, 625, 1000);
 
-        insertCardContainer.setBorder(new EmptyBorder(300, 0, 0, 0)); // Add top margin
+        insertCardContainer.setBorder(new EmptyBorder(300, 260, 0, 0)); // Add top margin
         insertCardContainer.add(insertCardTitleLabel);
 
-        finalOrderAmountContainer.add(finalOrderAmountTitleLabel);
-//        finalOrderAmountContainer.add(finalOrderAmountLabel);
-        insertCardContainer.add(finalOrderAmountContainer);
-
-        insertCardFrame.add(insertCardContainer);
+        insertCardFrame.add("Center", insertCardContainer);
+        insertCardFrame.add("South", physicalPartsContainer);
         insertCardFrame.setVisible(true);
         insertCardFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
@@ -357,14 +352,30 @@ public class UserPanel {
     public void isReceiptPrintPage() {
         isReceiptPrintFrame.setBounds(0, 0, 625, 1000);
 
-//        printReceiptContainer.setBorder(new EmptyBorder(300, 0, 0, 0)); // Add top margin
+        printReceiptContainer.setBorder(new EmptyBorder(350, 100, 500, 100)); // Add top margin
+        printReceiptContainer.add(printReceiptTitleLabel);
+        printReceiptContainer.add(new JPanel());
         printReceiptContainer.add(receiptYesBtn);
         printReceiptContainer.add(receiptNoBtn);
-        isReceiptPrintFrame.add("Center", printReceiptTitleLabel);
-        isReceiptPrintFrame.add("South", printReceiptContainer);
+//        isReceiptPrintFrame.add("North", printReceiptTitleLabel);
+        isReceiptPrintFrame.add("Center", printReceiptContainer);
+        isReceiptPrintFrame.add("South", physicalPartsContainer);
 
         isReceiptPrintFrame.setVisible(true);
         isReceiptPrintFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+    }
+
+    // Approval Error Page
+    public void approvalErrorPage() {
+        approvalErrorFrame.setBounds(0, 0, 625, 1000);
+
+        cardApprovalContainer.setBorder(new EmptyBorder(350, 100, 500, 100)); // Add top margin
+        approvalErrorTitleLabel.setFont(font_bold);
+        cardApprovalContainer.add(approvalErrorTitleLabel);
+
+        approvalErrorFrame.add(cardApprovalContainer);
+        approvalErrorFrame.setVisible(true);
+        approvalErrorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
 
     // operation
@@ -418,12 +429,12 @@ public class UserPanel {
         FoodMenu cheeseBurger = new FoodMenu("Burger", "치즈버거", "./image/1.jpeg", 5000);
         FoodMenu doubleBurger = new FoodMenu("Burger", "더블버거", "./image/2.jpeg", 6000);
         FoodMenu chickenBurger = new FoodMenu("Burger", "치킨버거", "./image/3.jpeg", 5500);
-        FoodMenu coke = new FoodMenu("drink", "콜라", "./image/4.jpeg", 2500);
+        FoodMenu coke = new FoodMenu("drink", "코카콜라", "./image/4.jpeg", 2500);
         FoodMenu potato = new FoodMenu("side", "감자튀김", "./image/5.jpeg", 1900);
         FoodMenu cheeseStick = new FoodMenu("side", "치즈스틱", "./image/6.jpeg", 2200);
-        FoodMenu chocoIcecream = new FoodMenu("side", "초코 아이스크림", "./image/7.jpeg", 1500);
-        FoodMenu vanilaIcecream = new FoodMenu("side", "바닐라 아이스크림", "./image/8.jpeg", 1500);
-        FoodMenu menu[] = {cheeseBurger, doubleBurger, chickenBurger, coke, potato, cheeseStick, chocoIcecream, vanilaIcecream};
+        FoodMenu cornSalad = new FoodMenu("side", "콘샐러드", "./image/7.png", 3100);
+        FoodMenu onionRing = new FoodMenu("side", "어니언링", "./image/8.png", 2000);
+        FoodMenu menu[] = {cheeseBurger, doubleBurger, chickenBurger, coke, potato, cheeseStick, cornSalad, onionRing};
 
         CartMenu cart=new CartMenu();
         Controller c = new Controller();
@@ -432,8 +443,9 @@ public class UserPanel {
 
         userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
 
-        userPanel.orderCompletePage();
-        userPanel.insertCardPage();
-        userPanel.isReceiptPrintPage();
+//        userPanel.orderCompletePage();
+//        userPanel.insertCardPage();
+//        userPanel.isReceiptPrintPRage();
+        userPanel.approvalErrorPage();
     }
 }
