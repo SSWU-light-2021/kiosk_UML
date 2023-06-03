@@ -389,7 +389,11 @@ public class UserPanel {
 
         }
         else if (button.getText()=="카드 리더기"){
-            c.accept(insertCardBtn, cart,order, up);
+            if (cart.getNum()==0){// 카트에 물건 없음
+                //
+            }
+            else
+                c.accept(insertCardBtn, cart,order, up);
         }
         else
             System.out.println("");
@@ -398,8 +402,12 @@ public class UserPanel {
 
     }
     public void displayPrompt(String text){
-        if (text=="Over Limit" || text=="Expired" || text=="Card Not Read"|| text=="Take Card");
-        JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
+        if (text=="overLimit" || text=="expired" || text=="Card Not Read"|| text=="Take Card")
+           // JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
+            ;
+        else if (text=="영수증받말"){
+            //영수증 받/말 선택화면
+        }
     }
 
     public static void main(String[] args) { // 메인 함수
