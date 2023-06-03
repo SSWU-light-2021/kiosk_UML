@@ -71,9 +71,11 @@ public class CartMenu {
         this.menuName[index] = menuName;
         this.price[index] = price;
         menuQuantity[index] = 1;
+        num+=1;
         setTotalPricePerMenu(index);
 
         c.ACKorNot(this, order);
+
         return index;
     }
 

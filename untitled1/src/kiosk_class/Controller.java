@@ -3,6 +3,7 @@ package kiosk_class;
 import gui.UserPanel;
 
 import javax.swing.*;
+
 public class Controller {
 
     CardReader cr = new CardReader();
@@ -20,6 +21,8 @@ public class Controller {
 //            displayPrompt("Input Card");
             up.userPanelFrame.setVisible(false);
             JOptionPane.showMessageDialog(null, "카드리더기 버튼을 클릭해 카드를 넣어주세요", "알림", JOptionPane.INFORMATION_MESSAGE);
+
+
 
             //cartmenu {치즈버거,치즈버거,김치버거} -> 치즈2, 김치1 변경
             int p=0; //임시배열인덱스
@@ -39,15 +42,11 @@ public class Controller {
                     TmenuPrice[p]=cart.getPrice()[i];
                     TmenuQuantity[p]+=1;
                     p++;
-//                    System.out.println("--메뉴추가--");
-//                    System.out.println("p: "+p+ " 메뉴명: "+TmenuName[p-1]+ " 가격: "+TmenuPrice[p-1]);
                 }
                 isin=0;
             }
-            cart.setMenuName(TmenuName);
-            cart.setMenuQuantity(TmenuQuantity);
-            cart.setPrice(TmenuPrice);
-            cart.setNum(p);
+
+            order.setTotalPrice(cart,this);
             up.orderConfirmationPage(this,cart, order);
           //  OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
         }
@@ -77,10 +76,11 @@ public class Controller {
     public void receiveReceipt(CartMenu cm, Order totalPrice, String time, UserPanel up) {
         System.out.println("================== 영수증 ==================");
 
-        for (int i = 0; i < cm.getNum(); i++) {
+        for (int i = 0; i <10; i++) {
+            if (cm.getMenuQuantity()[i]!=0){
             System.out.println(cm.getMenuName()[i] + "\t\t" + cm.getPrice()[i] + "원" + "\t\t수량: " + cm.getMenuQuantity()[i] + "개");
             System.out.println("\t\t\t\t\t\t합계: " + cm.getPrice()[i] * cm.getMenuQuantity()[i] + "원");
-        }
+        }}
 
         System.out.println("----------------------------------------------");
         System.out.println("총 가격:\t\t\t\t" + totalPrice.getTotalPrice() + "원");

@@ -78,7 +78,6 @@ public class Payment {
     public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c, UserPanel up, CartMenu cart, Order order) {
         boolean isOverLimit = checkLimit(cardNumber, totalPrice);
         boolean isExpired = checkExpiration(cardExpirationDate);
-        isExpired=true;
         if (isOverLimit) {
             System.out.println("Payment declined: overLimit");
             c.ACKorNot(validNum, up, c, cart, order);
@@ -131,7 +130,7 @@ public class Payment {
     }
 
     public void getOrderInfo(CartMenu cartItems, int price) {
-        Order order = new Order();
+       // Order order = new Order();
         int totalPrice = price;
 //        System.out.println("페이먼트: "+totalPrice);
     }

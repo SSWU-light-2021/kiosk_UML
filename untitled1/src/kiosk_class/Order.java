@@ -21,10 +21,11 @@ public class Order {
     }
 
     public void setTotalPrice(CartMenu cm, Controller c) {
-        for (int i=0; i < cm.getNum(); i++)
-            this.totalPrice += cm.getTotalPricePerMenu()[i];
+        totalPrice=0;
+        for (int i=0; i < 10; i++) {
+        this.totalPrice += cm.getTotalPricePerMenu()[i];
         c.ACKorNot(cm,totalPrice);
-    }
+    }}
 
     public int getTotalQuantities() {
         return totalQuantities;
