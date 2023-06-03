@@ -25,7 +25,7 @@ public class CardReader {
             this.cardNumber = 1234567891021098l;
             this.cardExpirationDate = 0426;
             return successStatus;
-        }망
+        }
         else {
             return errorStatus;
         }

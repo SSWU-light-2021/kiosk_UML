@@ -1,7 +1,6 @@
 package kiosk_class;
 
 public class CartMenu {
-    private int totalPrice = 0;
     private int menuQuantity[]=new int[10];
     private String menuName[]=new String[10];
     private int price[]=new int[10];
@@ -43,13 +42,6 @@ public class CartMenu {
         for (int i = 0; i < 10; i++) {
             this.price[i] = price[i];
         }
-    }
-
-    public int getTotalPrice() {
-        return totalPrice;
-    }
-    public void setTotalPrice(int num){
-        this.totalPrice=num;
     }
 
     public void addCartMenu() {

@@ -293,8 +293,8 @@ public class UserPanel {
         }
 
         // 주문 금액
+        c.ACKorNot(cart, order);
         orderAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()));
-
         System.out.println(order.getTotalPrice());
         discountAmountLabel=new JLabel(Integer.toString(0));
         totalPaymentAmountLabel=new JLabel(Integer.toString(order.getTotalPrice()-1));
@@ -409,12 +409,11 @@ public class UserPanel {
         UserPanel userPanel = new UserPanel();
 
         userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
-        cart.setTotalPrice(2000);
-        order.setTotalPrice(cart,c);
+//        order.setTotalPrice(cart, c);
 
         System.out.println("ddddddd: "+order.getTotalPrice());
 
-        userPanel.orderCompletPage();
-        userPanel.insertCardFrame();
+//        userPanel.orderCompletPage();
+//        userPanel.insertCardFrame();
     }
 }

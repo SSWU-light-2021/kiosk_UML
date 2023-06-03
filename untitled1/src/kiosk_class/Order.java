@@ -20,10 +20,10 @@ public class Order {
     }
 
     public void setTotalPrice(CartMenu cm, Controller c) {
-        for (int i=0;i<cm.getMenuName().length;i++) {
-            totalPrice+=cm.getMenuQuantity()[i]* cm.getPrice()[i];
+        for (int i=0; i < cm.getTotalPricePerMenu().length; i++) {
+            totalPrice += cm.getTotalPricePerMenu()[i];
         }
-        cm.setTotalPrice(totalPrice);
+        System.out.println("Order: " + totalPrice);
         c.ACKorNot(cm,totalPrice);
     }
 

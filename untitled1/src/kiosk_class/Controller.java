@@ -69,9 +69,8 @@ public class Controller {
         up.displayPrompt("Insert Card");
     }
 
-    public void ACKorNot(CartMenu cm, Order order){
-
-      order.setTotalPrice(cm,this);
+    public void ACKorNot(CartMenu cart, Order order){
+      order.setTotalPrice(cart,this);
     }
     public void ACKorNot(CartMenu cm, int price){
         pay.getOrderInfo(cm,price);
