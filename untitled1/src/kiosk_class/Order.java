@@ -5,7 +5,8 @@ public class Order {
     private int orderId;
     private int totalPrice;
     private int totalQuantities;
-Controller controller;
+    Controller controller;
+
     public Order() {
         orderId = ++orderIdCounter;
     }
