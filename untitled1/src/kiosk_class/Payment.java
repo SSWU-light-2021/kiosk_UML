@@ -102,14 +102,14 @@ public class Payment {
         }
     }
 
-    private boolean checkLimit(long cardNumber, int totalPrice) {
+    public boolean checkLimit(long cardNumber, int totalPrice) {
         // 카드 한도 확인 로직
         // 예시로 임의로 한도 체크
         long cardLimit = 10000L;
         return totalPrice > cardLimit;
     }
 
-    private boolean checkExpiration(int cardExpirationDate) {
+    public boolean checkExpiration(int cardExpirationDate) {
         // 유효 기간 확인 로직
         // 예시로 임의로 현재 날짜와 비교하여 만료 여부 체크
         int currentYear = 2023; // 현재 연도
@@ -153,11 +153,8 @@ public class Payment {
         return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
 
-    public String getPaymentInfo(CartMenu cartItems, int totalPrice) {
-        return "aaa";
+    public String getBarcodeInfo(BarcodeReader barcodeNum, BarcodeReader barcodeExpirationDate, BarcodeReader barcodePrice) {
+        return "Barcode Number: " + barcodeNum + " BarcodeExpiration Date: " + barcodeExpirationDate + "BarcodePrice" + barcodePrice;
     }
-
-    public String getBarcodeInfo(int barcodeNum, int barcodeExpirationDate, int barcodePrice) {
-        return "aaa";
-    }
+    public
 }

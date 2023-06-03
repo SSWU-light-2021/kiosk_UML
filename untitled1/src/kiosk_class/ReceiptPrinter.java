@@ -17,4 +17,5 @@ public class ReceiptPrinter {
         //System.out.println("현재 시간: " + formattedTime);
         c.receiveReceipt(cm,totalPrice, formattedTime);
     }
+
 }
