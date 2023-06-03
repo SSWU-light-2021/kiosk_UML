@@ -123,7 +123,6 @@ public class Payment {
         }
     }
 
-
     public void displayPrompt(String message) {
         System.out.println(message);
     }
@@ -136,7 +135,7 @@ public class Payment {
     public void getOrderInfo(CartMenu cartItems, int price) {
         Order order = new Order();
         int totalPrice = price;
-        System.out.println("페이먼트: "+totalPrice);
+//        System.out.println("페이먼트: "+totalPrice);
     }
     public int getUpdatedPaymentAmount(int totalPrice, int barcodePrice) {
         if(totalPrice <= barcodePrice ) return 0;

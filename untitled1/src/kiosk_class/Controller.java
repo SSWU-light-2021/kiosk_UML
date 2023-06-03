@@ -1,10 +1,10 @@
 package kiosk_class;
 
-import gui.OrderConfirmationFrame;
+import gui.UserPanel;
 
 import javax.swing.*;
 public class Controller {
-//    UserPanel up = new UserPanel();
+    UserPanel up = new UserPanel();
     CartMenu cm = new CartMenu();
     Order order = new Order();
 
@@ -45,7 +45,8 @@ public class Controller {
             cm.setMenuQuantity(TmenuQuantity);
             cm.setPrice(TmenuPrice);
 
-            OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
+            up.orderConfirmationPage(cm);
+//            OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame(cm);
 
         }
 
