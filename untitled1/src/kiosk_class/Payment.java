@@ -31,7 +31,9 @@ public class Payment {
     public String getPaymentType() {
         return paymentType;
     }
+
     Order o = new Order();
+
     public String getDate() {
         return date;
     }
@@ -59,6 +61,7 @@ public class Payment {
     public void setComplete(boolean complete) {
         this.complete = complete;
     }
+
     public void processPayment() {
         if (isValidated) {
             // 실제 결제 처리 로직
@@ -132,21 +135,29 @@ public class Payment {
         isCancelled = true;
         System.out.println("결제가 취소되었습니다.");
     }
+
     public void getOrderInfo(CartMenu cartItems, int price) {
         Order order = new Order();
         int totalPrice = price;
 //        System.out.println("페이먼트: "+totalPrice);
     }
+
     public int getUpdatedPaymentAmount(int totalPrice, int barcodePrice) {
-        if(totalPrice <= barcodePrice ) return 0;
+        if (totalPrice <= barcodePrice) return 0;
         else return totalPrice - barcodePrice;
     }
+
     CardReader c = new CardReader();
+
     public String getCardInfo(long cardNumber, int cardExpirationDate) {
         return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
+
     public String getPaymentInfo(CartMenu cartItems, int totalPrice) {
-        return  "aaa";
+        return "aaa";
     }
 
+    public String getBarcodeInfo(int barcodeNum, int barcodeExpirationDate, int barcodePrice) {
+        return "aaa";
+    }
 }

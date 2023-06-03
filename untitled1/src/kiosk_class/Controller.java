@@ -52,16 +52,26 @@ public class Controller {
               System.out.println("수량: "+cart.getMenuQuantity()[i]);}
         }
         else if(btnText.equals("예")) {
-            long cardNumber = cr.getCardNumber();
             int totalPrice = order.getTotalPrice();
-            //this.pay.getPaymentInfo(cartItems, totalPrice); 수정 요망
+            ReceiptPrinter rp = new ReceiptPrinter(); //수정요망
+            rp.printReceipt(cart, order, this);
         }
         else if(btnText.equals("아니요")) {
-        up.displayPrompt("주문완료");
+            up.displayPrompt("주문완료");
+        }
+        else if(btnText.equals("기프티콘")) {
+            up.displayPrompt("바코드 인식 부탁드립니다");
         }
 
     }
-
+    public void receiveReceipt(CartMenu cm, Order totalPrice, String time) {
+        for(int i = 0; i<cm.getNum(); i++) {
+            System.out.println(cm.getMenuName()[i]);
+            System.out.println(cm.getPrice()[i] * cm.getMenuQuantity()[i]);
+        }
+        System.out.println(totalPrice.getTotalPrice());
+        System.out.println("현재 시간: " + time);
+    }
     public void accept (boolean card, UserPanel up) {
 
         this.cr.inputCardInfo(card);
