@@ -8,9 +8,11 @@ public class Controller {
     CardReader cr = new CardReader();
     BarcodeReader br = new BarcodeReader();
     Payment pay = new Payment();
-    public  void getCustomerInput(String menuName, int menuPrice, CartMenu cart, Order order, Controller c) {
-        cart.addCartMenu(menuName, menuPrice, order, c);
+
+    public int getCustomerInput(String menuName, int menuPrice, CartMenu cart, Order order, Controller c) {
+        int cartNum = cart.addCartMenu(menuName, menuPrice, order, c);
         System.out.println(menuName+ menuPrice);
+        return cartNum;
     }
     public void accept (JButton Btn, CartMenu cart, Order order, UserPanel up){
         String btnText = Btn.getText();
@@ -26,12 +28,12 @@ public class Controller {
              int isin=0;
             for (int i=0;i<cart.getNum();i++){
                 for (int z=0; z<p;z++){
-                    if (TmenuName[z] != null && TmenuName[z].equals(cart.getMenuName()[i])) {
+                    if (TmenuName[z] != null && TmenuName[z].equals(cart.getMenuName()[i])) { // 중복될 때
                         TmenuQuantity[z]++; // 중복된 메뉴의 수량을 증가
                         isin = 1;
                         break;}
                 }
-                if(isin==0){
+                if(isin==0){ // 중복 안 될 때
                     TmenuName[p]=cart.getMenuName()[i];
                     TmenuPrice[p]=cart.getPrice()[i];
                     TmenuQuantity[p]+=1;
