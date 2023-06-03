@@ -76,13 +76,20 @@ public class UserPanel {
     public JPanel orderCompleteContainer = new JPanel();
     public JLabel orderCompleteTitleLabel = new JLabel("주문 완료");
 
-    // 카드삽입 Page ------------------------------------------------------------
+    // Insert Card Page ------------------------------------------------------------
     public JFrame insertCardFrame = new JFrame("Hamburger Kiosk <카드 삽입>");
     public JPanel insertCardContainer = new JPanel(new GridLayout(2,1));
     public JLabel insertCardTitleLabel = new JLabel("카드를 삽입해주세요.");
     public JPanel finalOrderAmountContainer = new JPanel();
     public JLabel finalOrderAmountTitleLabel = new JLabel("결제금액");
     public JLabel finalOrderAmountLabel;
+
+    // 결제완료. 영수증출력여부 묻기기
+    public JFrame isReceiptPrintFrame = new JFrame("Hamburger Kiosk <영수증>");
+    public JPanel printReceiptContainer = new JPanel();
+    public JLabel printReceiptTitleLabel = new JLabel("영수증을 출력하시겠습니까?");
+    public JButton receiptYesBtn = new JButton("예");
+    public JButton receiptNoBtn = new JButton("아니오");
 
     //쿠폰 스캔
     public JPanel scanCouponContainer;
@@ -92,12 +99,6 @@ public class UserPanel {
     //승인여부
     public JPanel cardApprovalContainer;
     public JLabel approvalErrorTitleLabel;
-
-    //결제완료. 영수증출력여부 묻기기
-    public JPanel printReceiptContainer;
-    public JLabel paymentCompleteTitleLabel;
-    public JButton receiptYesBtn;
-    public JButton receiptNoBtn;
 
     // 물리적인 장치
     public JPanel physicalPartsContainer = new JPanel(new GridLayout(2,2));
@@ -235,26 +236,15 @@ public class UserPanel {
         //담기버튼
         // 이벤트단
         for (int i = 0; i < menu.length; i++) {
-            int j = i;
             final int index =i;
 
-            pickBtn[i].addActionListener(new ActionListener() {
+            pickBtn[index].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
-                    c.getCustomerInput(menu[index].getName(),menu[index].getPrice(), cart, order, c);
-//                    int currentCount = Integer.parseInt(suja[j].getText());
-//                    currentCount++;
-//                    suja[j].setText(Integer.toString(currentCount));
-
-//                    ta.setText("   상품명        단가        수량        합계\n\n");
-//                    for (int k = 0; k < menu.length; k++) {
-//                        int count = Integer.parseInt(suja[k].getText());
-//                        if (count > 0) {
-//                            ta.append("   " + menu[k] + "       " + price[k] + "        " + count
-//                                    + "         " + price[k] * count + "원" + "\n");
-//                        }
-//                    }
+                    int cartNum = c.getCustomerInput(menu[index].getName(),menu[index].getPrice(), cart, order, c);
+                    System.out.println(cart.getMenuName()[cartNum]);
+                    cartMenuContainer.append("   " + cart.getMenuName()[cartNum] + "       " + cart.getPrice()[cartNum] + "        "
+                            + cart.getMenuQuantity()[cartNum] + "         " + cart.getTotalPricePerMenu()[cartNum] + "원" + "\n");
                 }
 
             });
@@ -348,17 +338,31 @@ public class UserPanel {
     }
 
     // Insert Card Page
-    public void insertCardFrame() {
+    public void insertCardPage() {
         insertCardFrame.setBounds(0, 0, 625, 1000);
 
         insertCardContainer.setBorder(new EmptyBorder(300, 0, 0, 0)); // Add top margin
         insertCardContainer.add(insertCardTitleLabel);
 
         finalOrderAmountContainer.add(finalOrderAmountTitleLabel);
-        finalOrderAmountContainer.add(finalOrderAmountLabel);
+//        finalOrderAmountContainer.add(finalOrderAmountLabel);
         insertCardContainer.add(finalOrderAmountContainer);
 
         insertCardFrame.add(insertCardContainer);
+        orderCompleteFrame.setVisible(true);
+        orderCompleteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
+    }
+
+    // Is Receipt print Page
+    public void isReceiptPrintPage() {
+        isReceiptPrintFrame.setBounds(0, 0, 625, 1000);
+
+//        printReceiptContainer.setBorder(new EmptyBorder(300, 0, 0, 0)); // Add top margin
+        printReceiptContainer.add(receiptYesBtn);
+        printReceiptContainer.add(receiptNoBtn);
+        isReceiptPrintFrame.add("Center", printReceiptTitleLabel);
+        isReceiptPrintFrame.add("South", printReceiptContainer);
+
         orderCompleteFrame.setVisible(true);
         orderCompleteFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
@@ -389,7 +393,11 @@ public class UserPanel {
 
         }
         else if (button.getText()=="카드 리더기"){
-            c.accept(insertCardBtn, cart,order, up);
+            if (cart.getNum()==0){// 카트에 물건 없음
+                //
+            }
+            else
+                c.accept(insertCardBtn, cart,order, up);
         }
         else
             System.out.println("");
@@ -398,8 +406,12 @@ public class UserPanel {
 
     }
     public void displayPrompt(String text){
-        if (text=="Over Limit" || text=="Expired" || text=="Card Not Read"|| text=="Take Card");
-        JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
+        if (text=="overLimit" || text=="expired" || text=="Card Not Read"|| text=="Take Card")
+           // JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
+            ;
+        else if (text=="영수증받말"){
+            //영수증 받/말 선택화면
+        }
     }
 
     public static void main(String[] args) { // 메인 함수
@@ -418,10 +430,11 @@ public class UserPanel {
         Order order=new Order();
         UserPanel userPanel = new UserPanel();
 
-        userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
-//        order.setTotalPrice(cart, c);
+//        userPanel.mainPage(menu, menu.length, cart, c, order, userPanel);
 
+//        order.setTotalPrice(cart, c);
 //        userPanel.orderCompletPage();
-//        userPanel.insertCardFrame();
+        userPanel.insertCardPage();
+//        userPanel.isReceiptPrintPage();
     }
 }

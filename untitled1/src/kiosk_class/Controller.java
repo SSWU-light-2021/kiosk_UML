@@ -8,9 +8,11 @@ public class Controller {
     CardReader cr = new CardReader();
     BarcodeReader br = new BarcodeReader();
     Payment pay = new Payment();
-    public  void getCustomerInput(String menuName, int menuPrice, CartMenu cart, Order order, Controller c) {
-        cart.addCartMenu(menuName, menuPrice, order, c);
+
+    public int getCustomerInput(String menuName, int menuPrice, CartMenu cart, Order order, Controller c) {
+        int cartNum = cart.addCartMenu(menuName, menuPrice, order, c);
         System.out.println(menuName+ menuPrice);
+        return cartNum;
     }
     public void accept (JButton Btn, CartMenu cart, Order order, UserPanel up){
         String btnText = Btn.getText();
@@ -26,12 +28,12 @@ public class Controller {
              int isin=0;
             for (int i=0;i<cart.getNum();i++){
                 for (int z=0; z<p;z++){
-                    if (TmenuName[z] != null && TmenuName[z].equals(cart.getMenuName()[i])) {
+                    if (TmenuName[z] != null && TmenuName[z].equals(cart.getMenuName()[i])) { // 중복될 때
                         TmenuQuantity[z]++; // 중복된 메뉴의 수량을 증가
                         isin = 1;
                         break;}
                 }
-                if(isin==0){
+                if(isin==0){ // 중복 안 될 때
                     TmenuName[p]=cart.getMenuName()[i];
                     TmenuPrice[p]=cart.getPrice()[i];
                     TmenuQuantity[p]+=1;
@@ -63,7 +65,7 @@ public class Controller {
 //            cr.inputCardInfo(true, this);
 //        }
         else if (btnText.equals("카드 리더기")){
-            cr.inputCardInfo(true,this,pay, order);
+            cr.inputCardInfo(true,this,pay, order, up);
         }
         else if(btnText.equals("바코드")) {
             br.inputBarcodeInfo(true,this,pay, order);
@@ -86,8 +88,8 @@ public class Controller {
     public void ACKorNot(CartMenu cart, Order order){
       order.setTotalPrice(cart,this);
     }
-    public void ACKorNot(long cardN,int Ex, Payment pay, Order order, Controller c){
-        pay.getCardInfo(cardN,Ex, order,c);
+    public void ACKorNot(long cardN,int Ex, Payment pay, Order order, Controller c, UserPanel up){
+        pay.getCardInfo(cardN,Ex, order,c, up);
     }
     public void ACKorNot(int barcodeNum, int barcodeExpirationDate, int barcodePrice, Order order, Controller c) {
         pay.getBarcodeInfo(barcodeNum, barcodeExpirationDate, barcodePrice, order, c);
@@ -97,24 +99,25 @@ public class Controller {
      //   order.setTotalPrice(cm);
     }
 
-    public void ACKorNot(CardReader cr, Order order, Controller c) {
-        long cardNumber = cr.getCardNumber();
-        int cardExpirationDate = cr.getCardExpirationDate();
-        pay.getCardInfo(cardNumber, cardExpirationDate, order,c);
-    }
     public void ACKorNot(Payment pay, Order order, UserPanel up, Controller c) {
         long cardNumber = cr.getCardNumber();
         int cardExpirationDate = cr.getCardExpirationDate();
         int totalPrice = order.getTotalPrice();
-        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice, c);
+        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice, c, up);
 
         if(validNum == 0 ) up.displayPrompt("한도초과 되었습니다");
         else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.");
         else up.displayPrompt("영수증을 출력하시겠습니까?");
     }
-    public void ACKorNot(int validNum){
+    public void ACKorNot(int validNum, UserPanel up){ //ack6
         if (validNum==2){
-            System.out.println("영수증받을래?");
+            up.displayPrompt("영수증받말");
+        }
+        else if (validNum==0){
+            up.displayPrompt("overLimit");
+        }
+        else if (validNum==1){
+            up.displayPrompt("expired");
         }
     }
     //public void accept(JButton Btn) {

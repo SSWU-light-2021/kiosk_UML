@@ -1,5 +1,7 @@
 package kiosk_class;
 
+import gui.UserPanel;
+
 public class Payment {
     private String paymentType;
     private String date;
@@ -83,21 +85,23 @@ public class Payment {
         }
     }
 
-    public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c) {
+    public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c, UserPanel up) {
         boolean isOverLimit = checkLimit(cardNumber, totalPrice);
         boolean isExpired = checkExpiration(cardExpirationDate);
 
         if (isOverLimit) {
             System.out.println("Payment declined: overLimit");
+            c.ACKorNot(validNum, up);
             return validNum = 0;
             // 추가적인 처리 (예: 거절 메시지 출력)
         } else if (isExpired) {
             System.out.println("Payment declined: expired");
+            c.ACKorNot(validNum, up);
             return validNum = 1;
             // 추가적인 처리 (예: 거절 메시지 출력)
         } else {
             System.out.println("Payment accepted");
-            c.ACKorNot(validNum);
+            c.ACKorNot(validNum, up);
             return validNum = 2;
             // 추가적인 처리 (예: 승인 메시지 출력)
         }
@@ -149,8 +153,8 @@ public class Payment {
 
     CardReader cr = new CardReader();
 
-    public String getCardInfo(long cardNumber, int cardExpirationDate, Order order, Controller c) {
-        checkForValid(cardNumber,cardExpirationDate,order.getTotalPrice(),c);
+    public String getCardInfo(long cardNumber, int cardExpirationDate, Order order, Controller c, UserPanel up) {
+        checkForValid(cardNumber,cardExpirationDate,order.getTotalPrice(),c, up);
         return "Card Number: " + cardNumber + ", Expiration Date: " + cardExpirationDate;
     }
 
