@@ -84,7 +84,7 @@ public class UserPanel {
     // Is Receipt print Page ------------------------------------------------------------
     public JFrame isReceiptPrintFrame = new JFrame("Hamburger Kiosk <영수증>");
     public JPanel printReceiptContainer = new JPanel(new GridLayout(2,2));
-    public JLabel printReceiptTitleLabel = new JLabel("영수증을 출력하시겠습니까?");
+    public JLabel printReceiptTitleLabel = new JLabel("<html><body>카드 승인 완료<br />영수증을 출력하시겠습니까?</body></html>\"");
     public JButton receiptYesBtn = new JButton("예");
     public JButton receiptNoBtn = new JButton("아니오");
 
@@ -386,14 +386,17 @@ public class UserPanel {
     }
 
     // Approval Error Page
-    public void approvalErrorPage() {
+    public void approvalErrorPage(String text) {
         approvalErrorFrame.setBounds(0, 0, 625, 1000);
 
         cardApprovalContainer.setBorder(new EmptyBorder(350, 100, 500, 100)); // Add top margin
         approvalErrorTitleLabel.setFont(font_bold);
         cardApprovalContainer.add(approvalErrorTitleLabel);
 
+        JLabel ll=new JLabel(text);
+        cardApprovalContainer.add(ll);
         approvalErrorFrame.add(cardApprovalContainer);
+
         approvalErrorFrame.setVisible(true);
         approvalErrorFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x클릭 시 run도 종료
     }
@@ -438,8 +441,7 @@ public class UserPanel {
     }
     public void displayPrompt(String text, UserPanel up){
         if (text=="overLimit" || text=="expired" || text=="Card Not Read"|| text=="Take Card")
-           // JOptionPane.showMessageDialog(null, text, "알림", JOptionPane.INFORMATION_MESSAGE);
-            ;
+            up.approvalErrorPage(text);
         else if (text=="Order Complete"){
             up.orderCompletePage();
         }

@@ -74,21 +74,11 @@ public class Payment {
         }
     }
 
-    public void printReceipt() {
-
-        if (isProcessed) {
-            // 영수증 출력 로직
-            System.out.println("영수증을 출력합니다.");
-            System.out.println("결제 금액: " + o.getOrderId());
-        } else {
-            System.out.println("결제가 아직 처리되지 않았습니다.");
-        }
-    }
 
     public int checkForValid(long cardNumber, int cardExpirationDate, int totalPrice, Controller c, UserPanel up, CartMenu cart, Order order) {
         boolean isOverLimit = checkLimit(cardNumber, totalPrice);
         boolean isExpired = checkExpiration(cardExpirationDate);
-
+        isExpired=true;
         if (isOverLimit) {
             System.out.println("Payment declined: overLimit");
             c.ACKorNot(validNum, up, c, cart, order);
