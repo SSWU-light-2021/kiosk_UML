@@ -450,11 +450,12 @@ public class UserPanel {
 
     }
     public void displayPrompt(String text, UserPanel up){
-        if (text=="overLimit" || text=="expired" || text=="Card Not Read"|| text=="Take Card")
-            up.approvalErrorPage(text);
-        else if (text=="Order Complete"){
+        if (text=="Order Complete")
             up.orderCompletePage();
-        }
+        else if (text=="overLimit" || text=="expired" )
+            up.approvalErrorPage(text);
+
+
 
     }
     public void displayPrompt(String text, UserPanel up, Controller c, CartMenu cart, Order order){

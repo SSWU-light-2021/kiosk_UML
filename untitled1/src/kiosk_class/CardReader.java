@@ -23,6 +23,7 @@ public class CardReader {
         return 0;
     }
     public String inputCardInfo(boolean isCardInsertion, Controller c, Payment pay, Order order, UserPanel up, CartMenu cart) {
+
         if (this.isCardInsertion = isCardInsertion) {
             this.cardNumber = 1234567891021098l;
             this.cardExpirationDate = 0426;

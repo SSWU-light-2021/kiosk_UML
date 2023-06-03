@@ -66,6 +66,7 @@ public class Controller {
 //            cr.inputCardInfo(true, this);
 //        }
         else if (btnText.equals("카드 리더기")){
+
             up.orderConfirmationFrame.setVisible(false);
             cr.inputCardInfo(true,this,pay, order, up, cart);
         }
@@ -110,20 +111,20 @@ public class Controller {
      //   order.setTotalPrice(cm);
     }
 
-    public void ACKorNot(Payment pay, Order order, UserPanel up, Controller c, CartMenu cart) {
-        long cardNumber = cr.getCardNumber();
-        int cardExpirationDate = cr.getCardExpirationDate();
-        int totalPrice = order.getTotalPrice();
-        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice, c, up, cart, order);
-
-        if(validNum == 0 ) up.displayPrompt("한도초과 되었습니다", up);
-        else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.", up);
-        else up.displayPrompt("영수증을 출력하시겠습니까?", up);
-    }
+//    public void ACKorNot(Payment pay, Order order, UserPanel up, Controller c, CartMenu cart) {
+//        long cardNumber = cr.getCardNumber();
+//        int cardExpirationDate = cr.getCardExpirationDate();
+//        int totalPrice = order.getTotalPrice();
+//        int validNum = pay.checkForValid(cardNumber,cardExpirationDate ,totalPrice, c, up, cart, order);
+//
+//        if(validNum == 0 ) up.displayPrompt("한도초과 되었습니다", up);
+//        else if (validNum == 1) up.displayPrompt("만료된 카드 입니다.", up);
+//        else up.displayPrompt("영수증을 출력하시겠습니까?", up);
+//    }
     public void ACKorNot(int validNum, UserPanel up, Controller c, CartMenu cart, Order order){ //ack6
+
         if (validNum==2){
             up.displayPrompt("영수증받말", up, c,  cart, order);
-
         }
         else if (validNum==0){
             up.displayPrompt("overLimit", up);
