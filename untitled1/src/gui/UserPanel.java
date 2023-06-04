@@ -650,8 +650,9 @@ public class UserPanel {
     public void displayPrompt(String text, UserPanel up, Controller c, CartMenu cart, Order order, int barcodePrice){
         if (text=="남은 잔액 결제(카드) -카드리더기 클릭해주세요"){
              up.orderConfirmationPage(c, cart, order, barcodePrice);}
-        else if (text=="Barcode Enabled")
-            up.isReceiptPrintPage_barcode(c, cart, order,up,barcodePrice);
+        else if (text=="Barcode Enabled"){
+            up.orderConfirmationPage(c, cart, order, barcodePrice);
+            up.isReceiptPrintPage_barcode(c, cart, order,up,barcodePrice);}
         else if (text=="영수증받말"  ){
             up.isReceiptPrintPage_barcode(c, cart, order,up,barcodePrice);
         }
