@@ -23,7 +23,6 @@ public class Controller {
             rp1.printReceipt(cart, order, this, up, barcodePrice);
         }
         else if (Btn.getText()=="카드 리더기") {
-            System.out.println("확인");
             up.orderConfirmationFrame.setVisible(false);
             cr.inputCardInfo_barcode(true, this, pay, order, up, cart,barcodePrice);
         }
@@ -202,12 +201,8 @@ public class Controller {
     }
     public void ACKorNot_barcode2(int validNum, UserPanel up, Controller c, CartMenu cart, Order order, int barcodePrice){ //ack6
         if (validNum==2){
-            if (order.getTotalPrice()<=barcodePrice){
 
-                up.displayPrompt("영수증받말",up,c,cart,order,barcodePrice);
-            }
-            else{
-                up.displayPrompt("남은 잔액 결제(카드) -카드리더기 클릭해주세요",up,c,cart,order, barcodePrice);}
+            up.displayPrompt("Barcode Enabled",up,c,cart,order,barcodePrice);
         }
         else if (validNum==0){
             up.displayPrompt("overLimit", up);
@@ -220,7 +215,7 @@ public class Controller {
         if (validNum==2){
             if (order.getTotalPrice()<=barcodePrice){
 
-                up.displayPrompt("Barcode Enabled",up,c,cart,order,barcodePrice);
+                up.displayPrompt("Barcode Enabled",up,c,cart,order,barcodePrice); //이걸로 '
             }
             else{
                 up.displayPrompt("남은 잔액 결제(카드) -카드리더기 클릭해주세요",up,c,cart,order, barcodePrice);}

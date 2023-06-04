@@ -99,26 +99,30 @@ public class UserPanel {
     public JLabel scanCouponLabel;
     public JButton scanCouponOrderCancelBtn;
 
-    // 물리적인 장치
+
     public JPanel physicalPartsContainer = new JPanel(new GridLayout(2,2));
     public JLabel receiptLabel = new JLabel("영수증 나오는 곳");
     public JButton insertCardBtn = new JButton("카드 리더기");
+    public JButton insertCardBtn2 = new JButton("카드 리더기");
     public JButton showBarcodeBtn = new JButton("바코드 인식");
-
-    // 폰트
-    public Font font_sans = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
-    public Font font_bold = new Font(Font.MONOSPACED, Font.BOLD, 22);
 
     public UserPanel() {
         physicalPartsContainer.add(receiptLabel);
         physicalPartsContainer.add(insertCardBtn);
-        physicalPartsContainer.add(new JPanel());
+        physicalPartsContainer.add(insertCardBtn);
         physicalPartsContainer.add(showBarcodeBtn);
     }
+    // 폰트
+    public Font font_sans = new Font(Font.SANS_SERIF, Font.PLAIN, 18);
+    public Font font_bold = new Font(Font.MONOSPACED, Font.BOLD, 22);
 
     // Page
     // Main Page
     public void mainPage(FoodMenu[] menu, int menu_length, CartMenu cart, Controller c, Order order) {
+        // 물리적인 장치
+
+
+
         // 프레임 설정
         userPanelFrame.setBounds(0, 0, 625, 1000);
 
@@ -297,6 +301,7 @@ public class UserPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("설마?");
                 getBtnPress(insertCardBtn, cart, c,order, UserPanel.this);
 //                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
@@ -496,6 +501,7 @@ public class UserPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 getBtnPress(receiptYesBtn, cart, c,order, up);
 //                OrderConfirmationFrame orderConfirmationFrame = new OrderConfirmationFrame();
 //                userPanelFrame.setVisible(false); // 창 안보이게 하기
@@ -575,6 +581,8 @@ public class UserPanel {
         }
         else if (button.getText()=="카드 리더기"){
             c.accept_barcode(button, cart, order, up,barcodePrice);
+            System.out.println("테스트용");
+            up.displayPrompt("Barcode Enabled",up,c,cart,order,barcodePrice); //이걸로 인해 생긴 영수증 윗 버튼 누르면 영수증 제대로뜸 ㅁㅊ
         }
         else
             c.accept_barcode(button, cart, order, up,barcodePrice);

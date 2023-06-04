@@ -127,13 +127,33 @@ public class Payment {
             return validNum = 1;
             // 추가적인 처리 (예: 거절 메시지 출력)
         } else {
-//            System.out.println("Payment accepted");
-            c.ACKorNot_barcode(validNum, up, c, cart, order,barcodePrice);
-            return validNum = 2;
+//           System.out.println("Payment accepted");
+            c.ACKorNot_barcode(2, up, c, cart, order,barcodePrice);
+            return validNum=2;
             // 추가적인 처리 (예: 승인 메시지 출력)
         }
     }
+    public int checkForValid2(long cardNumber, int cardExpirationDate, int totalPrice, Controller c, UserPanel up, CartMenu cart, Order order,int barcodePrice) {
+        boolean isOverLimit = checkLimit(cardNumber, totalPrice);
+        boolean isExpired = checkExpiration(cardExpirationDate);
 
+        if (isOverLimit) {
+            System.out.println("Payment declined: overLimit");
+            c.ACKorNot_barcode2(validNum, up, c, cart, order,barcodePrice);
+            return validNum = 0;
+            // 추가적인 처리 (예: 거절 메시지 출력)
+        } else if (isExpired) {
+            System.out.println("Payment declined: expired");
+            c.ACKorNot_barcode2(validNum, up, c, cart, order,barcodePrice);
+            return validNum = 1;
+            // 추가적인 처리 (예: 거절 메시지 출력)
+        } else {
+//           System.out.println("Payment accepted");
+            c.ACKorNot_barcode2(2, up, c, cart, order,barcodePrice);
+            return validNum=2;
+            // 추가적인 처리 (예: 승인 메시지 출력)
+        }
+    }
     public boolean checkLimit(long cardNumber, int totalPrice) {
         // 카드 한도 확인 로직
         // 예시로 임의로 한도 체크
